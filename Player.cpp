@@ -1,18 +1,21 @@
 #include "Player.h"
+
+
+/// sf::Vector2u textureSize = texture.getSize();
+// Obtemos el ancho y el alto de la textura: {textureSize.x , textureSize.y}
+
 Player::Player()
 {
   _velocity = {5,5};
   _shoot = false;
-  _texture.loadFromFile("1942-sprites-player.png");
+  _texture.loadFromFile("img/1942-sprites-player.png");
   _sprite.setTexture(_texture);
   _sprite.setTextureRect({1,62,25,18});
-  _sprite.setPosition(295,550);
+  _sprite.setPosition({295,550});
   _sprite.setScale(3,3);
   _sprite.setOrigin({_sprite.getGlobalBounds().width/2,
                     _sprite.getGlobalBounds().height/2});
 }
-
-
 
 void Player::Update()
 {
@@ -64,10 +67,10 @@ bool Player::Shoot()
       return true;
     }
   }
-    /**
-    **/
   else
   {
+    /**
+    **/
     /// Cuando deje de soltar el espacio, el player va a poder disparar.
     if(!(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
     {
