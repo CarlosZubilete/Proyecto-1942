@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include "Scene.h"
 #include "Player.h"
 #include "Bullet.h"
 #include <list>
@@ -8,11 +10,12 @@ int main()
     sf::RenderWindow window(sf::VideoMode(600, 800), "1942");
     window.setFramerateLimit(60);
 
-    Player jugador = Player();
+    Scene scene;
+    //Player jugador = Player();
 
-    bool bulletActive = false;
+    //bool bulletActive = false;
     /// 1 SOLA BALA.
-    Bullet balaDefault(0,0,0);
+    //Bullet balaDefault(0,0,0);
     //Bullet *balaJugador = nullptr;
     /**
         Bullet *vectorBalas = nullptr;
@@ -31,12 +34,10 @@ int main()
                 window.close();
         }
         /// IMPUT
-
-
-
         ///
-        jugador.Update();
-
+        //jugador.update();
+        scene.update();
+        /**
         if(jugador.Shoot() && !bulletActive)
         {
             //Bullet balaDefault(jugador.getPosicion().x-80,jugador.getPosicion().y - 110,-8);
@@ -49,20 +50,23 @@ int main()
             {
                 vectorBalas[i] = Bullet(jugador.getPosicion().x-80,jugador.getPosicion().y - 110,-8);
             }
-            **/
 
         }
+        **/
 
+
+        /**
         if(bulletActive)
         {
             balaDefault.Update();
             //vectorBalas[i].Update();
             //balaJugador->Update();
         }
-
-
-
+        **/
+        scene.update();
+    /// ANTES DE ELEMINAR LA DIRECCION , DEVUEVLO LA MEMORIA.
         window.clear();
+        /**
         window.draw(jugador);
 
         if(bulletActive)
@@ -73,9 +77,8 @@ int main()
             window.draw(*balaJugador);
             bulletActive = false;
             delete balaJugador;
-            **/
         }
-
+        **/
         // libero la memoria
         /**
         if ( i == 10 )
@@ -87,7 +90,7 @@ int main()
         **/
         //delete []vectorBalas;
         //i++;
-
+        window.draw(scene);
         window.display();
     }
 

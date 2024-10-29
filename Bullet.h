@@ -1,8 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Collisionable.h"
 
 
-class Bullet: public sf::Drawable
+class Bullet: public sf::Drawable, public Collisionable
 {
   public:
     Bullet();
@@ -10,7 +11,7 @@ class Bullet: public sf::Drawable
     //Bullet(int x ,int y, sf::Texture &texture, sf::IntRect intReact , int velociad);
     void Update();
     void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
-
+    sf::FloatRect getBounds() const override;
   private:
     sf::Sprite _sprite;
     sf::Texture *_texture;
