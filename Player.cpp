@@ -15,6 +15,8 @@ Player::Player()
   _sprite.setTexture(*_texture);
   _sprite.setTextureRect({1,62,25,18});
   _sprite.setPosition({295,550});
+  //_sprite.setPosition({300,4900});
+
   _sprite.setScale(3,3);
   _sprite.setOrigin({_sprite.getGlobalBounds().width/2,
                     _sprite.getGlobalBounds().height/2});

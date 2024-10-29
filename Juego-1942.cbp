@@ -49,6 +49,8 @@
 		<Unit filename="Collisionable.h" />
 		<Unit filename="Enemy.cpp" />
 		<Unit filename="Enemy.h" />
+		<Unit filename="GamePlay.cpp" />
+		<Unit filename="GamePlay.h" />
 		<Unit filename="Player.cpp" />
 		<Unit filename="Player.h" />
 		<Unit filename="Scene.cpp" />
