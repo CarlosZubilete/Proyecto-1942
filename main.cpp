@@ -8,7 +8,7 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(600, 800), "1942" sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(600, 800), "1942",sf::Style::Close);
     window.setFramerateLimit(60);
 
 
@@ -36,7 +36,6 @@ int main()
 
 
         gamePlay.update();
-
 
         //view.getCenter(scene.getCameraPosition());
         scene.update();

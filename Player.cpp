@@ -14,7 +14,8 @@ Player::Player()
   _texture->loadFromFile("img/1942-sprites-player.png");
   _sprite.setTexture(*_texture);
   _sprite.setTextureRect({1,62,25,18});
-  _sprite.setPosition({295,550});
+  //_sprite.setPosition({295,550});
+  _sprite.setPosition({375,770});
   //_sprite.setPosition({300,4900});
 
   _sprite.setScale(3,3);

@@ -43,9 +43,10 @@
 			<Add library="sfml-system" />
 			<Add directory="SFML/lib" />
 		</Linker>
+		<Unit filename="Avion.cpp" />
+		<Unit filename="Avion.h" />
 		<Unit filename="Bullet.cpp" />
 		<Unit filename="Bullet.h" />
-		<Unit filename="Collisionable.cpp" />
 		<Unit filename="Collisionable.h" />
 		<Unit filename="Enemy.cpp" />
 		<Unit filename="Enemy.h" />
