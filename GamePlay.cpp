@@ -17,13 +17,13 @@ void GamePlay::update()
 
     if(_player.Shoot())
     {
-            _bulletActive = true;
-            //_bullets.push_back(new Bullet(_player->getPosicion().x-80,_player->getPosicion().y - 110,-7));
-            if (_bullets.size() < 3 &&  _timerReload <= 0)
-            {
-                _bullets.push_back(new Bullet(_player.getPosicion().x-80,_player.getPosicion().y - 110,-7));
-                _timerReload = 30*1;
-            }
+        _bulletActive = true;
+        //_bullets.push_back(new Bullet(_player->getPosicion().x-80,_player->getPosicion().y - 110,-7));
+        if (_bullets.size() < 3 &&  _timerReload <= 0)
+        {
+            _bullets.push_back(new Bullet(_player.getPosicion().x-80,_player.getPosicion().y - 110,-7));
+            _timerReload = 30*1;
+        }
 
         _bulletEnemy.push_back(new Bullet(_enemy.getPosition().x + 35 ,_enemy.getPosition().y + 70 , 7));
         std::cout << "BALA ENEMIGA ->" << std::endl;
