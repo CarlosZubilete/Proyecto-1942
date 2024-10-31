@@ -6,7 +6,7 @@ GamePlay::GamePlay()
     _timerReload = 0;
     _player =  Player();
 
-    std::string namePng = "img/1942-sprites-enemy.png";
+    std::string namePng = "assets/sprites/1942-sprites-enemy.png";
     _enemy = Enemy(namePng,sf::IntRect(223,229,27,25),3.0f,3.0f);
 }
 
