@@ -3,7 +3,7 @@
 
 Scene::Scene()
 {
-  _font.loadFromFile("MONOCOQUE_FUENTE.tft");
+  _font.loadFromFile("assets/fonts/MONOCOQUE_FUENTE.tft");
   _text.setFont(_font);
   _text.setCharacterSize(24);
   _bg.loadFromFile("assets/sprites/bg-maps-1942.png");
