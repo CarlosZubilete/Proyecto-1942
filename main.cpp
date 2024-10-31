@@ -26,15 +26,24 @@ int main()
     /// Gameplay deberia tener a window las ecenas;
     Scene scene;
 
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         /// PULL EVENT
         sf::Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
+
+
+            // Cierra la ventana con ESCAPE
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Escape) {
+                    window.close();
+                }
+            }
         }
+        //end events
+
+
         /// IMPUT
 
 
