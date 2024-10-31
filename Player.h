@@ -16,7 +16,6 @@ class Player: public sf::Drawable, public Collisionable
   private:
     sf::Sprite _sprite;
     sf::Texture *_texture;
-    sf::Font _font;
     sf::Vector2f _velocity;
     bool _shoot;
 };

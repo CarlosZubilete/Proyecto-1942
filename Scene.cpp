@@ -3,12 +3,13 @@
 
 Scene::Scene()
 {
-  _bg.loadFromFile("bg-maps-1942.png");
+  _font.loadFromFile("MONOCOQUE_FUENTE.tft");
+  _text.setFont(_font);
+  _text.setCharacterSize(24);
+  _bg.loadFromFile("assets/sprites/bg-maps-1942.png");
   _bgSprite.setTexture(_bg);
   _bgSprite.setPosition(0, -4200);
 
-  //_playerFixed.setPosition({400,6358});
-  //std::cout << "Posición inicial del sprite: " << _bgSprite.getPosition().x << ", " << _bgSprite.getPosition().y << std::endl;
 }
 
 void Scene::update()

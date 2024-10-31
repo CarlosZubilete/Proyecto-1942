@@ -9,15 +9,10 @@ Player::Player()
   _velocity = {5,5};
   _shoot = false;
   _texture = new sf::Texture;
-  //_texture.loadFromFile("img/1942-sprites-player.png");
-  //_sprite.setTexture(_texture);
-  _texture->loadFromFile("img/1942-sprites-player.png");
+  _texture->loadFromFile("assets/sprites/1942-sprites-player.png");
   _sprite.setTexture(*_texture);
   _sprite.setTextureRect({1,62,25,18});
-  //_sprite.setPosition({295,550});
   _sprite.setPosition({375,770});
-  //_sprite.setPosition({300,4900});
-
   _sprite.setScale(3,3);
   _sprite.setOrigin({_sprite.getGlobalBounds().width/2,
                     _sprite.getGlobalBounds().height/2});

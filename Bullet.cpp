@@ -5,7 +5,7 @@ Bullet::Bullet(){}
 Bullet::Bullet(int horizontal,int vertical, int velocidad)
 {
   _texture = new sf::Texture;
-  _texture->loadFromFile("1942-sprites-effects.png");
+  _texture->loadFromFile("assets/sprites/1942-sprites-effects.png");
   _sprite.setTexture(*_texture);
   _sprite.setTextureRect({4,9,4,10});
   _sprite.setScale(4,4);

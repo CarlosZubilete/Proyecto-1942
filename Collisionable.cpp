@@ -2,5 +2,5 @@
 
 bool Collisionable::isCollision(Collisionable &col) const
 {
-    return getBounds().intersects(col.getBounds());
+  return getBounds().intersects(col.getBounds());
 }
