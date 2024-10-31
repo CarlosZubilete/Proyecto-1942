@@ -8,6 +8,7 @@ Enemy::Enemy(std::string namePng,sf::IntRect rect,float vel_x,float vel_y)
   _texture = new sf::Texture;
   _texture->loadFromFile(namePng.c_str());
   _sprite.setTexture(*_texture);
+  //sf::Vector2f _texturaSize = _texture.getSize();
   _sprite.setTextureRect(rect);
   //_sprite.setOrigin(_sprite.getGlobalBounds().width/2,_sprite.getGlobalBounds().height);
   //_velocity.x = vel_x;

@@ -16,8 +16,11 @@ int main()
     //sf::View view(sf::FloatRect(0.f, 4194.f, 600.f, 800.f));
     sf::View view(sf::FloatRect(0.f, 0.f, 600.f, 800.f));
 
+    //
     // activate it
     window.setView(view);
+
+    //sf::Vector2u getTamnio = view.getSize();
 
     GamePlay gamePlay;
     /// Gameplay deberia tener a window las ecenas;

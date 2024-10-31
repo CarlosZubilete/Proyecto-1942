@@ -88,31 +88,13 @@ sf::Vector2f Player::getPosicion()
   return _sprite.getPosition();
 }
 
+sf::FloatRect Player::getBounds()const
+{
+  return _sprite.getGlobalBounds();
+}
+
 void Player::draw(sf::RenderTarget &target, sf::RenderStates states)const
 {
   target.draw(_sprite, states);
 }
 
-/**
-Player::Player(int x,int y, sf::Texture &texture)
-{
-  _sprite.setTexture(texture);
-  _sprite.setTextureRect(sf::IntRect(1,62,25,18));
-  _sprite.setPosition(x,y);
-  _sprite.setScale(3,3);
-  _sprite.setOrigin({_sprite.getGlobalBounds().width/2,
-                    _sprite.getGlobalBounds().height/2});
-
-}
-**/
-/**
-int getPosicionX()
-{
-  return _sprite.getPosition().x;
-}
-
-int getPosicionY()
-{
-  return _sprite.getPosition().y;
-}
-**/

@@ -14,10 +14,9 @@ class GamePlay: public sf::Drawable
         void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
 
     private:
-
         Player _player;
         std::vector<Bullet*> _bullets;
-         std::vector<Bullet*> _bulletEnemy;
+        std::vector<Bullet*> _bulletEnemy;
         Enemy _enemy;
         Scene _scene;
         bool _bulletActive;
