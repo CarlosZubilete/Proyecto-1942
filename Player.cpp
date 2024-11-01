@@ -1,95 +1,62 @@
 #include "Player.h"
 
-
-/// sf::Vector2u textureSize = texture.getSize();
-// Obtemos el ancho y el alto de la textura: {textureSize.x , textureSize.y}
-
 Player::Player()
 {
-  _velocity = {5,5};
-  _shoot = false;
-  _texture = new sf::Texture;
-  _texture->loadFromFile("assets/sprites/1942-sprites-player.png");
-  _sprite.setTexture(*_texture);
-  _sprite.setTextureRect({1,62,25,18});
-  _sprite.setPosition({375,770});
-  _sprite.setScale(3,3);
-  _sprite.setOrigin({_sprite.getGlobalBounds().width/2,
-                    _sprite.getGlobalBounds().height/2});
+  _puntos = 0;
+  _vida = 100;
 }
 
-void Player::update()
+void Player::setPuntos(int puntos)
 {
-  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+  if (puntos > 0 )
   {
-    _sprite.move(_velocity.x,0);
-  }
-  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-  {
-    _sprite.move(-_velocity.x,0);
-  }
-  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-  {
-    _sprite.move(0,-_velocity.y);
-  }
-  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-  {
-    _sprite.move(0,_velocity.y);
-  }
-  /// Restricciones de pantalla
-  if (_sprite.getGlobalBounds().left < 0 )
-  {
-    _sprite.setPosition((_sprite.getOrigin().x + _sprite.getGlobalBounds().width) ,
-                        _sprite.getPosition().y);
-  }
-  if (_sprite.getGlobalBounds().top < 0){
-    _sprite.setPosition(_sprite.getPosition().x,
-                        (_sprite.getOrigin().y + _sprite.getGlobalBounds().height));
-  }
-  if(_sprite.getGlobalBounds().left + _sprite.getGlobalBounds().width > 600){
-    _sprite.setPosition(600 - ( _sprite.getOrigin().x - _sprite.getGlobalBounds().width),
-                        _sprite.getPosition().y);
-  }
-  if(_sprite.getGlobalBounds().top + _sprite.getGlobalBounds().height > 800){
-    _sprite.setPosition(_sprite.getPosition().x,
-                        800 + ( _sprite.getGlobalBounds().height - _sprite.getOrigin().y));
+    _puntos = puntos;
   }
 }
 
-bool Player::Shoot()
+void Player::setVida(int vida)
 {
-  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+  if (vida < 0 )
   {
-    if (!_shoot)
-    {
-      _shoot = true;
-      return true;
-    }
+    _vida = vida;
+  }
+}
+
+void Player::changePuntos(int puntos)
+{
+  if(puntos > 0 )
+  {
+    _puntos++;
   }
   else
   {
-    /// Cuando deje de soltar el espacio, el player va a poder disparar.
-    if(!(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
-    {
-      _shoot = false;
-    }
+    _puntos--;
   }
-
-  return false;
 }
 
-sf::Vector2f Player::getPosicion()
+void Player::changeVidas(int vidas)
 {
-  return _sprite.getPosition();
+  _vida -= vidas;
 }
 
-sf::FloatRect Player::getBounds()const
+int Player::getVida()const
 {
-  return _sprite.getGlobalBounds();
+  return _vida;
 }
 
-void Player::draw(sf::RenderTarget &target, sf::RenderStates states)const
+int Player::getPuntos()const
 {
-  target.draw(_sprite, states);
+  return _puntos;
 }
+
+
+
+/// Clse control boleanos , abcde , cada vez que hacemos un cmd,
+///
+/**
+  Mapeo de teclado -> archivo
+
+
+*/
+
 

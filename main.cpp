@@ -1,30 +1,32 @@
 #include <SFML/Graphics.hpp>
-#include <vector>
 #include "GamePlay.h"
 #include "Scene.h"
 #include "Player.h"
-#include "Bullet.h"
-#include <list>
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(600, 800), "1942",sf::Style::Close);
     window.setFramerateLimit(60);
 
-
-    // let's define a view
-    //sf::View view(sf::FloatRect(0.f, 4194.f, 600.f, 800.f));
     sf::View view(sf::FloatRect(0.f, 0.f, 600.f, 800.f));
-
-    //
-    // activate it
     window.setView(view);
 
-    //sf::Vector2u getTamnio = view.getSize();
 
+    Scene scene;
     GamePlay gamePlay;
     /// Gameplay deberia tener a window las ecenas;
-    Scene scene;
+    Player player;
+
+    sf::Font font;
+    font.loadFromFile("assets/fonts/MONOCOQUE_FUENTE.ttf");
+
+    sf::Text puntos;
+    puntos.setFont(font);
+    puntos.setPosition(3,0);
+
+    sf::Text vidas;
+    vidas.setFont(font);
+    vidas.setPosition(3,30);
 
     while (window.isOpen()) {
         /// PULL EVENT
@@ -45,18 +47,27 @@ int main()
 
 
         /// IMPUT
-
-
         gamePlay.update();
-
-        //view.getCenter(scene.getCameraPosition());
         scene.update();
 
+        if (gamePlay.isCollisionWithEnemy())
+        {
+            player.changePuntos(1);
+        }
+
+        if (gamePlay.isCollisionWithPersonaje())
+        {
+            player.changeVidas(10);
+        }
+
+        puntos.setString("PUNTOS " + std::to_string(player.getPuntos()));
+        vidas.setString("VIDA " + std::to_string(player.getVida()));
+
         window.clear();
-
-
         window.draw(scene);
         window.draw(gamePlay);
+        window.draw(puntos);
+        window.draw(vidas);
         window.display();
     }
 

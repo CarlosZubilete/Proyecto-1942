@@ -11,20 +11,12 @@ Enemy::Enemy(std::string namePng,sf::IntRect rect,float vel_x,float vel_y)
   //sf::Vector2f _texturaSize = _texture.getSize();
   _sprite.setTextureRect(rect);
   //_sprite.setOrigin(_sprite.getGlobalBounds().width/2,_sprite.getGlobalBounds().height);
-  //_velocity.x = vel_x;
-  //_velocity.y = vel_y;
   _velocity = {vel_x,vel_y};
   _sprite.setPosition(375,170);
   _sprite.setScale(3,3);
   _canShoot = true;
 }
 
-/**
-void sf::Vector2f getPosition()const
-{
-
-}
-**/
 
 void Enemy::cmd()
 {

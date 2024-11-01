@@ -1,21 +1,33 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "Collisionable.h"
+//#include <SFML/Graphics.hpp>
 
-class Player: public sf::Drawable, public Collisionable
+
+class Player
 {
   public:
     Player();
-    //Player(int x,int y, sf::Texture &texture);
-    void update();
-    void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
-    sf::FloatRect getBounds() const override; /// Hereda de collisionable.
-    bool Shoot();
-    sf::Vector2f getPosicion();
+    int getPuntos()const;
+    void setPuntos(int puntos);
+    void changePuntos(int puntos);
+    void changeVidas(int vidas);
+    int getVida()const;
+    void setVida(int vida);
 
   private:
-    sf::Sprite _sprite;
-    sf::Texture *_texture;
-    sf::Vector2f _velocity;
-    bool _shoot;
+    int _puntos; /// *READ DOWN*
+    int _vida; ///
+
 };
+
+
+/**
+    TODO: completar
+    _puntos :
+        -> Cada vez que mata un enemigo suma puntos
+        -> mostrar en pantalla cuantos puntos acumula
+
+
+    _vidas:
+        -> Por cada bala recibida, desminuiremos vidas.
+        -> Si hagarramos los powerUp...
+*/
