@@ -5,7 +5,7 @@ GamePlay::GamePlay()
 {
     _timerReload = 0;
     std::string namePng = "assets/sprites/1942-sprites-enemy.png";
-    _enemy = Enemy(namePng,sf::IntRect(223,229,27,25),3.0f,3.0f);
+    _enemy = Enemy(namePng,sf::IntRect(59,56,16,16),3.0f,3.0f);
 
     /**
     _font.loadFromFile("assets/fonts/MONOCOQUE_FUENTE.ttf");
