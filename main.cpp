@@ -1,20 +1,24 @@
-#include <SFML/Graphics.hpp>
-#include "GamePlay.h"
 #include "Scene.h"
 #include "Player.h"
+#include "Bullet.h"
+#include "Menu.h"
+#include "GamePlay.h"
+#include <list>
 
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode(600, 800), "1942",sf::Style::Close);
+int main() {
+
+    sf::RenderWindow window(sf::VideoMode(600, 800), "MENU 1942", sf::Style::Default);
+
+    Menu mainMenu(window.getSize().x, window.getSize().y);
+
     window.setFramerateLimit(60);
 
+    // Definir la vista
     sf::View view(sf::FloatRect(0.f, 0.f, 600.f, 800.f));
     window.setView(view);
 
-
-    Scene scene;
     GamePlay gamePlay;
-    /// Gameplay deberia tener a window las ecenas;
+    Scene scene;
     Player player;
 
     sf::Font font;
@@ -22,53 +26,116 @@ int main()
 
     sf::Text puntos;
     puntos.setFont(font);
-    puntos.setPosition(3,0);
+    puntos.setPosition(3, 0);
 
     sf::Text vidas;
     vidas.setFont(font);
-    vidas.setPosition(3,30);
+    vidas.setPosition(3, 30);
 
-    while (window.isOpen()){
-        /// PULL EVENT
+    while (window.isOpen()) {
+
         sf::Event event;
+
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
+
+            if (event.type == sf::Event::Closed) {
                 window.close();
+            }
 
+            if (event.type == sf::Event::KeyReleased) {
 
-            // Cierra la ventana con ESCAPE
-            if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::Escape) {
-                    window.close();
+                if (event.key.code == sf::Keyboard::Up) {
+                    mainMenu.moveUp();
+
+                } else if (event.key.code == sf::Keyboard::Down) {
+                    mainMenu.moveDown();
+
+                } else if (event.key.code == sf::Keyboard::Return) {
+
+                    if (mainMenu.showInsertCoin) {
+                        mainMenu.handleEnterPress();
+
+                    } else {
+
+                        int x = mainMenu.getPressedItem();
+
+                        if (x == 0) {
+
+                            sf::RenderWindow Play(sf::VideoMode(600, 800), "1942");
+                            Play.setFramerateLimit(60);
+                            window.close();
+
+                            while (Play.isOpen()) {
+
+                                sf::Event playEvent;
+
+                                while (Play.pollEvent(playEvent)) {
+
+                                    if (playEvent.type == sf::Event::Closed ||
+                                        (playEvent.type == sf::Event::KeyPressed && playEvent.key.code == sf::Keyboard::Escape)) {
+                                        Play.close();
+                                    }
+                                }
+
+                                gamePlay.update();
+                                scene.update();
+
+                                if (gamePlay.isCollisionWithEnemy()) {
+                                    player.changePuntos(1);
+                                }
+
+                                if (gamePlay.isCollisionWithPersonaje()) {
+                                    player.changeVidas(10);
+                                }
+
+                                puntos.setString("PUNTOS " + std::to_string(player.getPuntos()));
+                                vidas.setString("VIDA " + std::to_string(player.getVida()));
+
+                                Play.clear();
+                                Play.draw(scene);
+                                Play.draw(gamePlay);
+                                Play.draw(puntos);
+                                Play.draw(vidas);
+                                Play.display();
+                            }
+
+                        } else if (x == 1) {
+
+                            sf::RenderWindow CREDITOS(sf::VideoMode(600, 820), "CREDITOS");
+
+                            while (CREDITOS.isOpen()) {
+
+                                sf::Event optionsEvent;
+
+                                while (CREDITOS.pollEvent(optionsEvent)) {
+
+                                    if (optionsEvent.type == sf::Event::Closed ||
+                                        (optionsEvent.type == sf::Event::KeyPressed && optionsEvent.key.code == sf::Keyboard::Escape)) {
+                                        CREDITOS.close();
+                                    }
+                                }
+
+                                CREDITOS.clear();
+                                CREDITOS.display();
+                            }
+
+                        } else if (x == 2) {
+                            window.close();
+
+                        }
+                    }
                 }
             }
         }
-        //end events
 
-        /// IMPUT
-        gamePlay.update();
-        scene.update();
-
-        if (gamePlay.isCollisionWithEnemy())
-        {
-            player.changePuntos(1);
-        }
-
-        if (gamePlay.isCollisionWithPersonaje())
-        {
-            player.changeVidas(10);
-        }
-
-        puntos.setString("PUNTOS " + std::to_string(player.getPuntos()));
-        vidas.setString("VIDA " + std::to_string(player.getVida()));
-
+        mainMenu.update();
         window.clear();
-        window.draw(scene);
-        window.draw(gamePlay);
-        window.draw(puntos);
-        window.draw(vidas);
+        mainMenu.draw(window);
         window.display();
     }
 
     return 0;
 }
+
+
+

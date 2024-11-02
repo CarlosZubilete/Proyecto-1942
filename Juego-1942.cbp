@@ -12,9 +12,14 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-pedantic-errors" />
+					<Add option="-pedantic" />
+					<Add option="-Wall" />
+					<Add option="-std=c17" />
 					<Add option="-g" />
 					<Add directory="../Juego-1942" />
 					<Add directory="../Proyecto-1942" />
+					<Add directory="./" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -26,6 +31,7 @@
 					<Add option="-O2" />
 					<Add directory="../Juego-1942" />
 					<Add directory="../Proyecto-1942" />
+					<Add directory="./" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -52,6 +58,8 @@
 		<Unit filename="Enemy.h" />
 		<Unit filename="GamePlay.cpp" />
 		<Unit filename="GamePlay.h" />
+		<Unit filename="Menu.cpp" />
+		<Unit filename="Menu.h" />
 		<Unit filename="Personaje.cpp" />
 		<Unit filename="Personaje.h" />
 		<Unit filename="Player.cpp" />
