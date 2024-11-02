@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Player.h"
 
 class Scene: public sf::Drawable
 {
@@ -13,9 +12,6 @@ class Scene: public sf::Drawable
   private:
     sf::Texture _bg;
     sf::Sprite _bgSprite;
-    sf::Font _font;
-    sf::Text _textPuntos;
-    Player _player;
 };
 
 

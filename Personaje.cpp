@@ -14,32 +14,78 @@ Personaje::Personaje()
   _sprite.setTextureRect({1,62,25,18});
   _sprite.setPosition({375,770});
   _sprite.setScale(3,3);
-  _sprite.setOrigin({_sprite.getGlobalBounds().width/2,
-                    _sprite.getGlobalBounds().height/2});
+  _sprite.setOrigin({_sprite.getGlobalBounds().width/2,_sprite.getGlobalBounds().height/2});
+  //_state = PersonajeState::Idle;
+  //_frame = 0;
 }
 
 void Personaje::cmd()
 {
+
+ // _state = PersonajeState::Idle;
+
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
   {
     _sprite.move(_velocity.x,0);
+    //_state = PersonajeState::Move_Right;
   }
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
   {
     _sprite.move(-_velocity.x,0);
+    //_state = PersonajeState::Move_Left;
   }
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
   {
     _sprite.move(0,-_velocity.y);
+    //_state = PersonajeState::Move_Up;
   }
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
   {
     _sprite.move(0,_velocity.y);
+    //_state = PersonajeState::Move_Down;
   }
+
+  /**
+  if(sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+  {
+    _state = PersonajeState::Move_Back;
+  }
+  */
+
 }
 
 void Personaje::update()
 {
+
+  /*
+  switch (_state)
+  {
+    case PersonajeState::Idle:
+      _sprite.setTextureRect({213,33,50,34});
+
+      break;
+    case PersonajeState::Move_Right:
+      _frame += 0.2;
+
+      if(_frame >= 4){ _frame = 0;}
+
+      _sprite.setTextureRect({270 + int(_frame)*40,33,65,34});
+      break;
+    case PersonajeState::Move_Left:
+
+      break;
+    case PersonajeState::Move_Up:
+
+      break;
+    case PersonajeState::Move_Down:
+
+      break;
+    case PersonajeState::Move_Back:
+
+      break;
+  }
+*/
+
 
   /// Restricciones de pantalla
   if (_sprite.getGlobalBounds().left < 0 )
@@ -84,7 +130,7 @@ bool Personaje::Shoot()
 }
 
 
-sf::Vector2f Personaje::getPosicion()
+sf::Vector2f Personaje::getPosition()
 {
   return _sprite.getPosition();
 }

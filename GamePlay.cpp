@@ -20,7 +20,6 @@ GamePlay::GamePlay()
 void GamePlay::update()
 {
 
-
     _player.cmd();
     _enemy.cmd();
     _player.update();
@@ -31,7 +30,7 @@ void GamePlay::update()
         if (_bullets.size() < 5  &&  _timerReload <= 0)
         {
             /// INSTANCIAMOS UNA BALA DEL PERSONAJE.
-            _bullets.push_back(new Bullet(_player.getPosicion().x-80,_player.getPosicion().y - 110,-7));
+            _bullets.push_back(new Bullet(_player.getPosition().x-80,_player.getPosition().y - 110,-7));
             /// CADA 10MS PODEMOS DISPARAR.
             _timerReload = 15*1;
         }
@@ -69,8 +68,6 @@ void GamePlay::update()
         }
     }
 
-
-
     for(int i=0; i<_bulletEnemy.size(); i++)
     {
         if (_bulletEnemy[i]->getBounds().top +_bulletEnemy[i]->getBounds().height > 800)
@@ -80,6 +77,7 @@ void GamePlay::update()
             _bulletEnemy.erase(_bulletEnemy.begin()+i, _bulletEnemy.begin()+i+1);
         }
     }
+
 
     //_textPuntos.setString("PUNTOS: " + std::to_string(_player.getPuntos()));
 

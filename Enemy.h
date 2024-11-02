@@ -12,13 +12,13 @@ class Enemy: public sf::Drawable, public Collisionable, public Avion
         /**
         void sf::Vector2f getPosition() const override;
         **/
-        void respawn();
         void cmd() override; /// HEREDA DE AVION
         void update() override; /// HEREDA DE AVION
-        sf::Vector2f getPosition();
-        bool shot();
+        sf::Vector2f getPosition() override; /// HEREDA DE AVION
         void draw(sf::RenderTarget &target , sf::RenderStates states)const override;/// HEREDA DE COLLISIONABLE
         sf::FloatRect getBounds() const override; /// HEREDA DE DIBUJABLE
+        bool shot();
+        void respawn();
     private:
         sf::Vector2f _newPosition;
         bool _canShoot;

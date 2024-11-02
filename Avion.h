@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-class Avion
+class Avion /// CLASE ABSTRACTA, ["Avionabel" o "IAvion"]
 {
   public:
   /**
@@ -10,10 +10,10 @@ class Avion
     void setTexture(sf::Texture *textura);
     void setSprite(sf::Sprite sprite);
     void setVelocity(sf::Vector2f velocity);
-    virtual void sf::Vector2f getPosition() const = 0;
   **/
-    virtual void update() = 0;
-    virtual void cmd() = 0;
+    virtual void update() = 0; /// VIRTUAL PURO
+    virtual void cmd() = 0; /// VIRTUAL PURO
+    virtual sf::Vector2f getPosition() = 0; /// VIRTUAL PURO
 
   protected:
     sf::Texture *_texture;

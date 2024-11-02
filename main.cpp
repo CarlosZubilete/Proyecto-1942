@@ -28,7 +28,7 @@ int main()
     vidas.setFont(font);
     vidas.setPosition(3,30);
 
-    while (window.isOpen()) {
+    while (window.isOpen()){
         /// PULL EVENT
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -44,7 +44,6 @@ int main()
             }
         }
         //end events
-
 
         /// IMPUT
         gamePlay.update();

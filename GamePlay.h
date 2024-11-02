@@ -2,7 +2,6 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Avion.h"
-//#include "Scene.h"
 #include "Player.h"
 #include "Personaje.h"
 #include "Bullet.h"
@@ -22,7 +21,6 @@ class GamePlay: public sf::Drawable
         std::vector<Bullet*> _bullets;
         std::vector<Bullet*> _bulletEnemy;
         Enemy _enemy;
-        //Scene _scene;
         bool _bulletActive;
         int _timerReload;
         sf::Font _font;
