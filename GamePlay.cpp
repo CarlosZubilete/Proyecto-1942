@@ -6,15 +6,8 @@ GamePlay::GamePlay()
     _timerReload = 0;
     std::string namePng = "assets/sprites/1942-sprites-enemy.png";
     _enemy = Enemy(namePng,sf::IntRect(59,56,16,16),3.0f,3.0f);
-
-    /**
-    _font.loadFromFile("assets/fonts/MONOCOQUE_FUENTE.ttf");
-    _textPuntos.setFont(_font);
-    _textPuntos.setCharacterSize(24); /// SETEMOS LOS PIXELES DEL TEXTO
-    _textPuntos.setPosition({0,0});
-    _textPuntos.setFillColor(sf::Color::Black);
-    */
-
+    _frameExplosion  = 0.f;
+    _isExplosionActive = false;
 }
 
 void GamePlay::update()
@@ -27,15 +20,16 @@ void GamePlay::update()
     if(_player.Shoot())
     {
         _bulletActive = true;
+
         if (_bullets.size() < 5  &&  _timerReload <= 0)
         {
             /// INSTANCIAMOS UNA BALA DEL PERSONAJE.
-            _bullets.push_back(new Bullet(_player.getPosition().x-80,_player.getPosition().y - 110,-7));
+            _bullets.push_back(new Bullet(_player.getPosition().x-123,_player.getPosition().y - 110,-7));
             /// CADA 10MS PODEMOS DISPARAR.
             _timerReload = 15*1;
         }
 
-        _bulletEnemy.push_back(new Bullet(_enemy.getPosition().x + 35 ,_enemy.getPosition().y + 70 , 7));
+        _bulletEnemy.push_back(new Bullet(_enemy.getPosition().x  ,_enemy.getPosition().y + 35 , 7));
         std::cout << "BALA ENEMIGA ->" << std::endl;
     }
 
@@ -78,8 +72,19 @@ void GamePlay::update()
         }
     }
 
+    if(_isExplosionActive)
+    {
+        _explosion.smallExplosion();
+        _frameExplosion += 0.2f;
 
-    //_textPuntos.setString("PUNTOS: " + std::to_string(_player.getPuntos()));
+        if (_frameExplosion >= 5.f)
+        {
+            _isExplosionActive = false;
+            _frameExplosion = 0.0f;
+        }
+        std::cout << "frame: " << _frameExplosion  << std::endl;
+        std::cout << "_isExplosionActive...." << _isExplosionActive <<std::endl;
+    }
 
 }
 
@@ -112,8 +117,14 @@ bool GamePlay::isCollisionWithEnemy()
             std::cout<< "COLLISION CON ENEMIGO" << std::endl;
             delete _bullets[i];
             _bullets.erase(_bullets.begin()+i);
-            result = true;
+
+            _explosion =  Explosion(_enemy.getPosition().x,_enemy.getPosition().y);
+            _isExplosionActive = true;  // Activa la animación
+            _frameExplosion = 0.0f;     // Reinicia el frame
+
+            std::cout << "_isExplosionActive...." << _isExplosionActive <<std::endl;
             _enemy.respawn();
+            result = true;
         }
     }
 
@@ -133,6 +144,8 @@ void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states)const
         target.draw(*_bulletEnemy[i],states);
     }
 
+
+    target.draw(_explosion,states);
     target.draw(_player,states);
     target.draw(_enemy,states);
 

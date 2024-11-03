@@ -15,6 +15,7 @@ Enemy::Enemy(std::string namePng,sf::IntRect rect,float vel_x,float vel_y)
   _sprite.setPosition(375,170);
   _sprite.setScale(3,3);
   _canShoot = true;
+  _frame = 0;
 }
 
 

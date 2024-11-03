@@ -6,6 +6,7 @@
 #include "Personaje.h"
 #include "Bullet.h"
 #include "Enemy.h"
+#include "Explosion.h"
 
 class GamePlay: public sf::Drawable
 {
@@ -23,8 +24,9 @@ class GamePlay: public sf::Drawable
         Enemy _enemy;
         bool _bulletActive;
         int _timerReload;
-        sf::Font _font;
-        sf::Text _textPuntos;
         Player player;
+        Explosion _explosion;
+        float _frameExplosion;
+        bool _isExplosionActive;
 };
 

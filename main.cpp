@@ -3,7 +3,6 @@
 #include "Bullet.h"
 #include "Menu.h"
 #include "GamePlay.h"
-#include <list>
 
 int main() {
 
@@ -94,8 +93,8 @@ int main() {
                                 Play.clear();
                                 Play.draw(scene);
                                 Play.draw(gamePlay);
-                                Play.draw(puntos);
-                                Play.draw(vidas);
+                                //Play.draw(puntos);
+                                //Play.draw(vidas);
                                 Play.display();
                             }
 
