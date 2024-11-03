@@ -7,8 +7,8 @@ Bullet::Bullet(int horizontal,int vertical, int velocidad)
   _texture = new sf::Texture;
   _texture->loadFromFile("assets/sprites/1942-sprites-effects.png");
   _sprite.setTexture(*_texture);
-  _sprite.setTextureRect({2,10,8,8});
-  _sprite.setScale(4,4);
+  _sprite.setTextureRect({5,10,2,8});
+  _sprite.setScale(3,3);
   _sprite.setPosition(horizontal,vertical);
   _velocidad = velocidad;
 }
