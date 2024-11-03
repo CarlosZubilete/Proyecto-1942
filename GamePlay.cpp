@@ -24,7 +24,8 @@ void GamePlay::update()
         if (_bullets.size() < 5  &&  _timerReload <= 0)
         {
             /// INSTANCIAMOS UNA BALA DEL PERSONAJE.
-            _bullets.push_back(new Bullet(_player.getPosition().x-123,_player.getPosition().y - 110,-7));
+            _bullets.push_back(new Bullet(_player.getPosition().x-_player.getBounds().width-48/2+1,_player.getPosition().y-_player.getBounds().height-48,-7));
+            std::cout << _player.getPosition().x << std::endl;
             /// CADA 10MS PODEMOS DISPARAR.
             _timerReload = 15*1;
         }
@@ -119,7 +120,7 @@ bool GamePlay::isCollisionWithEnemy()
             _bullets.erase(_bullets.begin()+i);
 
             _explosion =  Explosion(_enemy.getPosition().x,_enemy.getPosition().y);
-            _isExplosionActive = true;  // Activa la animación
+            _isExplosionActive = true;  // Activa la animaciï¿½n
             _frameExplosion = 0.0f;     // Reinicia el frame
 
             std::cout << "_isExplosionActive...." << _isExplosionActive <<std::endl;
