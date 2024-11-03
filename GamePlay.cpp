@@ -25,7 +25,6 @@ void GamePlay::update()
         {
             /// INSTANCIAMOS UNA BALA DEL PERSONAJE.
             _bullets.push_back(new Bullet(_player.getPosition().x-_player.getBounds().width-48/2+1,_player.getPosition().y-_player.getBounds().height-48,-7));
-            std::cout << _player.getPosition().x << std::endl;
             /// CADA 10MS PODEMOS DISPARAR.
             _timerReload = 15*1;
         }

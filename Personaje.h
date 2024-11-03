@@ -24,8 +24,10 @@ class Personaje: public sf::Drawable, public Collisionable, public Avion
     sf::FloatRect getBounds() const override; /// HEREDA DE COLLISIONABLE
     bool Shoot(); /// SI APRETAMOS LA TECLA DISPARO
     sf::Vector2f getPosition() override;/// OBTENMOS LA POSICION DEL PERSONAJE ACTUALIZADO
+    bool getTeclaAnterior()const;
+    void setTeclaAnterior(bool);
   private:
-
+    bool _teclaAnterior = false;
     //float _frame;
    // PersonajeState _state;
   /// TODO: Machine states

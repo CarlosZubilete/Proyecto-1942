@@ -17,6 +17,7 @@ Personaje::Personaje()
   _sprite.setOrigin({_sprite.getGlobalBounds().width/2,_sprite.getGlobalBounds().height/2});
   //_state = PersonajeState::Idle;
   //_frame = 0;
+
 }
 
 void Personaje::cmd()
@@ -24,14 +25,27 @@ void Personaje::cmd()
 
  // _state = PersonajeState::Idle;
 
+
+ bool teclaMovimientoPresionada;
+
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
   {
+    teclaMovimientoPresionada = true;
     _sprite.move(_velocity.x,0);
+    _sprite.setTextureRect({177,17,32,18});
     //_state = PersonajeState::Move_Right;
   }
+
+  if (!teclaMovimientoPresionada && getTeclaAnterior())
+  {
+    _sprite.setTextureRect({107,17,32,18}); // tamaño x3 = 75x54
+  }
+
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
   {
     _sprite.move(-_velocity.x,0);
+    teclaMovimientoPresionada = true;
+    _sprite.setTextureRect({2,17,32,18});
     //_state = PersonajeState::Move_Left;
   }
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
@@ -45,6 +59,7 @@ void Personaje::cmd()
     //_state = PersonajeState::Move_Down;
   }
 
+  setTeclaAnterior(teclaMovimientoPresionada);
   /**
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::T))
   {
@@ -143,6 +158,16 @@ sf::FloatRect Personaje::getBounds()const
 void Personaje::draw(sf::RenderTarget &target, sf::RenderStates states)const
 {
   target.draw(_sprite, states);
+}
+
+void Personaje::setTeclaAnterior(bool teclaAnterior)
+{
+  _teclaAnterior = teclaAnterior;
+}
+
+bool Personaje::getTeclaAnterior() const
+{
+  return _teclaAnterior;
 }
 
 
