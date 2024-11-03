@@ -12,7 +12,7 @@ Enemy::Enemy(std::string namePng,sf::IntRect rect,float vel_x,float vel_y)
   _sprite.setTextureRect(rect);
   //_sprite.setOrigin(_sprite.getGlobalBounds().width/2,_sprite.getGlobalBounds().height);
   _velocity = {vel_x,vel_y};
-  _sprite.setPosition(375,170);
+  _sprite.setPosition( std::rand()%600,0-48-48);
   _sprite.setScale(3,3);
   _canShoot = true;
   _frame = 0;
@@ -43,6 +43,7 @@ void Enemy::cmd()
 
   if (_sprite.getPosition().y  > 800)
   {
+    _velocity.x = (std::rand()%2 == 0) ? _velocity.x : -_velocity.x; // aleatoriamente decidimos si el respawn va para un lado o para el otro
     respawn();
   }
 
@@ -67,7 +68,7 @@ void Enemy::update()
 
 void Enemy::respawn()
 {
-  _sprite.setPosition(0,-300);
+  _sprite.setPosition(std::rand()%600,0-48-48);
   //_newPosition = (std::rand() % 600 + _sprite.getGlobalBounds().width,
   //                    std::rand() % 600 + _sprite.getGlobalBounds().height);
 }
