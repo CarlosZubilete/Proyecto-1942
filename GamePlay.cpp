@@ -137,10 +137,13 @@ bool GamePlay::isCollisionWithEnemy()
 void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states)const
 {
 
-    for(int i=0; i < _bullets.size(); i++)
+
+    for (Bullet *bullet: _bullets)
     {
-        target.draw(*_bullets[i],states);
+      target.draw(*bullet, states);
     }
+
+
 
     for(int i=0; i<_bulletEnemy.size(); i++)
     {
