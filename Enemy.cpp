@@ -72,7 +72,7 @@ void Enemy::respawn()
 
   //_newPosition = (std::rand() % 600 + _sprite.getGlobalBounds().width,
   //                    std::rand() % 600 + _sprite.getGlobalBounds().height);
-  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10 : -(float)(std::rand()%30)/10;
+  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+0.1 : -(float)(std::rand()%30)/10+0.1;
 }
 
 bool Enemy::shot()
