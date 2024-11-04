@@ -69,8 +69,10 @@ void Enemy::update()
 void Enemy::respawn()
 {
   _sprite.setPosition(std::rand()%600,0-48-48);
+
   //_newPosition = (std::rand() % 600 + _sprite.getGlobalBounds().width,
   //                    std::rand() % 600 + _sprite.getGlobalBounds().height);
+  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10 : -(float)(std::rand()%30)/10;
 }
 
 bool Enemy::shot()

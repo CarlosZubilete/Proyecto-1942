@@ -5,7 +5,7 @@ GamePlay::GamePlay()
 {
     _timerReload = 0;
     std::string namePng = "assets/sprites/1942-sprites-enemy.png";
-    _enemy = Enemy(namePng,sf::IntRect(59,56,16,16),std::rand()%2?3.0f:-3.0f,4.0f);
+    _enemy = Enemy(namePng,sf::IntRect(59,55,17,18),std::rand()%2 ? (float)(std::rand()%30)/10 : -(float)(std::rand()%30)/10, 4.0f);
     _frameExplosion  = 0.f;
     _isExplosionActive = false;
 }
@@ -99,6 +99,7 @@ bool GamePlay::isCollisionWithPersonaje()
             std::cout<<"COLLISION CON PLAYER" << std::endl;
             delete _bulletEnemy[i];
             _bulletEnemy.erase(_bulletEnemy.begin()+i);
+
             result = true;
         }
     }
