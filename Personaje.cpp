@@ -13,7 +13,7 @@ Personaje::Personaje()
   _texture->loadFromFile("assets/sprites/1942-sprites-player.png");
   _sprite.setTexture(*_texture);
   _sprite.setTextureRect({107,17,32,18}); // tamaño x3 = 75x54
-//  _sprite.setPosition({375,770});
+  move((600-96)/2+2,700);
   _sprite.setScale(3,3);
 //  _sprite.setOrigin({_sprite.getGlobalBounds().width/2,_sprite.getGlobalBounds().height/2});
   //_state = PersonajeState::Idle;
