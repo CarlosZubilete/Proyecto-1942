@@ -14,7 +14,8 @@ class Enemy: public sf::Drawable, public Collisionable, public Avion
         **/
         void cmd() override; /// HEREDA DE AVION
         void update() override; /// HEREDA DE AVION
-        sf::Vector2f getPosition() override; /// HEREDA DE AVION
+//        sf::Vector2f getPosition() override; /// HEREDA DE AVION
+        sf::Vector2f getPosition(); /// HEREDA DE AVION
         void draw(sf::RenderTarget &target , sf::RenderStates states)const override;/// HEREDA DE DIBUJABLE
         sf::FloatRect getBounds() const override; /// HEREDA DE COLLISIONABLE
         bool shot();

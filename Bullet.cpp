@@ -29,6 +29,15 @@ sf::FloatRect Bullet::getBounds()const
    return _sprite.getGlobalBounds();
 }
 
-
+Bullet::Bullet(sf::Vector2f position)
+{
+  _texture = new sf::Texture;
+  _texture->loadFromFile("assets/sprites/1942-sprites-projectiles.png");
+  _sprite.setTexture(*_texture);
+  _sprite.setTextureRect({21,10,16,16}); // tamaño x 3 = 48*48
+  _sprite.setScale(3,3);
+  _sprite.setPosition(position);
+  _velocidad = -7;
+}
 
 

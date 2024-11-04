@@ -1,4 +1,5 @@
 #include "Personaje.h"
+#include <iostream>
 
 
 /// sf::Vector2u textureSize = texture.getSize();
@@ -12,9 +13,9 @@ Personaje::Personaje()
   _texture->loadFromFile("assets/sprites/1942-sprites-player.png");
   _sprite.setTexture(*_texture);
   _sprite.setTextureRect({107,17,32,18}); // tamaño x3 = 75x54
-  _sprite.setPosition({375,770});
+//  _sprite.setPosition({375,770});
   _sprite.setScale(3,3);
-  _sprite.setOrigin({_sprite.getGlobalBounds().width/2,_sprite.getGlobalBounds().height/2});
+//  _sprite.setOrigin({_sprite.getGlobalBounds().width/2,_sprite.getGlobalBounds().height/2});
   //_state = PersonajeState::Idle;
   //_frame = 0;
 
@@ -31,7 +32,7 @@ void Personaje::cmd()
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
   {
     teclaMovimientoPresionada = true;
-    _sprite.move(_velocity.x,0);
+    move(_velocity.x,0);
     _sprite.setTextureRect({177,17,32,18});
     //_state = PersonajeState::Move_Right;
   }
@@ -43,19 +44,19 @@ void Personaje::cmd()
 
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
   {
-    _sprite.move(-_velocity.x,0);
+    move(-_velocity.x,0);
     teclaMovimientoPresionada = true;
     _sprite.setTextureRect({2,17,32,18});
     //_state = PersonajeState::Move_Left;
   }
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
   {
-    _sprite.move(0,-_velocity.y);
+    move(0,-_velocity.y);
     //_state = PersonajeState::Move_Up;
   }
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
   {
-    _sprite.move(0,_velocity.y);
+    move(0,_velocity.y);
     //_state = PersonajeState::Move_Down;
   }
 
@@ -68,6 +69,18 @@ void Personaje::cmd()
   */
 
 }
+
+//sf::Vector2f Personaje::getPosition()
+//{
+//  return _sprite.getPosition();
+//  return getPosition();
+
+sf::Vector2f Personaje::getBulletOrigin() const
+{
+  return {getPosition().x + (96-48)/2 ,getPosition().y};
+}
+
+
 
 void Personaje::update()
 {
@@ -101,26 +114,24 @@ void Personaje::update()
   }
 */
 
+  cartel_personaje.showPositionOnScreen("Player:", {getPosition().x+100,getPosition().y-50},{getPosition().x,getPosition().y});
 
   /// Restricciones de pantalla
-  if (_sprite.getGlobalBounds().left < 0 )
-  {
-    _sprite.setPosition((_sprite.getOrigin().x + _sprite.getGlobalBounds().width) ,
-                        _sprite.getPosition().y);
+  if (getPosition().x < -74/2 ){
+    setPosition(-74/2,getPosition().y);
   }
-  if (_sprite.getGlobalBounds().top < 0){
-    _sprite.setPosition(_sprite.getPosition().x,
-                        (_sprite.getOrigin().y + _sprite.getGlobalBounds().height));
+  if (getPosition().y < 0) {
+    setPosition(getPosition().x, 0);
   }
-  if(_sprite.getGlobalBounds().left + _sprite.getGlobalBounds().width > 600){
-    _sprite.setPosition(600 - ( _sprite.getOrigin().x - _sprite.getGlobalBounds().width),
-                        _sprite.getPosition().y);
+  if(getPosition().x > 600+ 74/2 - getBounds().width) {
+    setPosition(600 + 74/2 - getBounds().width, getPosition().y);
   }
-  if(_sprite.getGlobalBounds().top + _sprite.getGlobalBounds().height > 800){
-    _sprite.setPosition(_sprite.getPosition().x,
-                        800 + ( _sprite.getGlobalBounds().height - _sprite.getOrigin().y));
+  if(getPosition().y > 800 - getBounds().height) {
+    setPosition(getPosition().x, 800 - getBounds().height);
   }
+
 }
+
 
 bool Personaje::Shoot()
 {
@@ -144,11 +155,7 @@ bool Personaje::Shoot()
   return false;
 }
 
-
-sf::Vector2f Personaje::getPosition()
-{
-  return _sprite.getPosition();
-}
+//}
 
 sf::FloatRect Personaje::getBounds()const
 {
@@ -157,7 +164,9 @@ sf::FloatRect Personaje::getBounds()const
 
 void Personaje::draw(sf::RenderTarget &target, sf::RenderStates states)const
 {
+  states.transform *= getTransform();
   target.draw(_sprite, states);
+  target.draw(cartel_personaje);
 }
 
 void Personaje::setTeclaAnterior(bool teclaAnterior)
@@ -168,11 +177,6 @@ void Personaje::setTeclaAnterior(bool teclaAnterior)
 bool Personaje::getTeclaAnterior() const
 {
   return _teclaAnterior;
-}
-
-sf::Vector2f Personaje::getBulletOrigin() const
-{
-  return sf::Transformable::getPosition();
 }
 
 

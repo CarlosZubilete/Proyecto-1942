@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Collisionable.h"
 #include "Avion.h"
+#include "CartelPosicion.h"
 
 /*
 enum class PersonajeState {
@@ -23,10 +24,12 @@ class Personaje: public sf::Drawable, public Collisionable, public Avion, public
     void draw(sf::RenderTarget &target, sf::RenderStates states)const override;/// HEREDA DE COLLISIONABLE
     sf::FloatRect getBounds() const override; /// HEREDA DE COLLISIONABLE
     bool Shoot(); /// SI APRETAMOS LA TECLA DISPARO
-    sf::Vector2f getPosition() override;/// OBTENMOS LA POSICION DEL PERSONAJE ACTUALIZADO
+//    sf::Vector2f getPosition() override;/// OBTENMOS LA POSICION DEL PERSONAJE ACTUALIZADO
     bool getTeclaAnterior()const;
     void setTeclaAnterior(bool);
     sf::Vector2f getBulletOrigin() const;
+    CartelPosicion cartel_personaje;
+
   private:
     bool _teclaAnterior = false;
     //float _frame;

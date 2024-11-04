@@ -7,6 +7,7 @@
 #include "Bullet.h"
 #include "Enemy.h"
 #include "Explosion.h"
+#include "CartelPosicion.h"
 
 class GamePlay: public sf::Drawable
 {
@@ -17,6 +18,9 @@ class GamePlay: public sf::Drawable
         bool isCollisionWithPersonaje();
         bool isCollisionWithEnemy();
         void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
+        CartelPosicion cartel_player;
+        CartelPosicion cartel_bullets;
+
 
     private:
         Personaje _player;

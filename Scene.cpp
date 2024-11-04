@@ -10,7 +10,7 @@ Scene::Scene()
 
 void Scene::update()
 {
-  _bgSprite.move(0,1);
+  _bgSprite.move(0,0.8);
 }
 
 sf::Vector2f Scene::getCameraPosition()
