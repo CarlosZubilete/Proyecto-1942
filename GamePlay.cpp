@@ -5,7 +5,7 @@ GamePlay::GamePlay()
 {
     _timerReload = 0;
     std::string namePng = "assets/sprites/1942-sprites-enemy.png";
-    _enemy = Enemy(namePng,sf::IntRect(59,56,16,16),3.0f,3.0f);
+    _enemy = Enemy(namePng,sf::IntRect(59,56,16,16),std::rand()%2?3.0f:-3.0f,4.0f);
     _frameExplosion  = 0.f;
     _isExplosionActive = false;
 }

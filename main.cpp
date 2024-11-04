@@ -1,3 +1,8 @@
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <cstdlib>
+#include <ctime>
 #include "Scene.h"
 #include "Player.h"
 #include "Bullet.h"
@@ -5,6 +10,7 @@
 #include "GamePlay.h"
 
 int main() {
+   std::srand((unsigned)std::time(0));
 
     sf::RenderWindow window(sf::VideoMode(600, 800), "MENU 1942", sf::Style::Default);
 
