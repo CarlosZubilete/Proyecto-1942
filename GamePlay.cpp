@@ -26,10 +26,7 @@ void GamePlay::update()
         if (_bullets.size() < 5  &&  _timerReload <= 0)
         {
             /// INSTANCIAMOS UNA BALA DEL PERSONAJE.
-//            _bullets.push_back(new Bullet(_player.getPosition().x-_player.getBounds().width-48/2+1,_player.getPosition().y-_player.getBounds().height-48,-7));
           _bullets.push_back(new Bullet( {_player.getBulletOrigin().x , _player.getBulletOrigin().y }));
-//
-//          cartel_bullets.showPositionOnScreen("Bullets origin", {200,700}, {_player.getBulletOrigin().x, _player.getBulletOrigin().y});
 
             /// CADA 10MS PODEMOS DISPARAR.
             _timerReload = 15*1;

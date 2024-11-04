@@ -4,7 +4,7 @@
 #include "Avion.h"
 #include <string>
 
-class Enemy: public sf::Drawable, public Collisionable, public Avion
+class Enemy: public sf::Drawable, public Collisionable, public Avion, public sf::Transformable
 {
     public:
         Enemy();
