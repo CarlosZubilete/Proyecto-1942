@@ -10,11 +10,15 @@ GamePlay::GamePlay()
     _isExplosionActive = false;
 }
 
+void GamePlay::cmd()
+{
+    _player.cmd();
+    _enemy.cmd();
+}
+
 void GamePlay::update()
 {
 
-    _player.cmd();
-    _enemy.cmd();
     _player.update();
 
     if(_player.Shoot())
@@ -106,7 +110,6 @@ bool GamePlay::isCollisionWithPersonaje()
 
     return result;
 }
-
 
 bool GamePlay::isCollisionWithEnemy()
 {

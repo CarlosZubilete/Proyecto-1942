@@ -26,7 +26,7 @@ void Personaje::cmd()
  // _state = PersonajeState::Idle;
 
 
- bool teclaMovimientoPresionada;
+  bool teclaMovimientoPresionada;
 
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
   {
@@ -168,6 +168,11 @@ void Personaje::setTeclaAnterior(bool teclaAnterior)
 bool Personaje::getTeclaAnterior() const
 {
   return _teclaAnterior;
+}
+
+sf::Vector2f Personaje::getBulletOrigin() const
+{
+  return sf::Transformable::getPosition();
 }
 
 

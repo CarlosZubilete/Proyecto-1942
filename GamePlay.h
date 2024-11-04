@@ -12,6 +12,7 @@ class GamePlay: public sf::Drawable
 {
     public:
         GamePlay();
+        void cmd();
         void update();
         bool isCollisionWithPersonaje();
         bool isCollisionWithEnemy();
@@ -24,7 +25,7 @@ class GamePlay: public sf::Drawable
         Enemy _enemy;
         bool _bulletActive;
         int _timerReload;
-        Player player;
+//        Player player; // no se usa por el momento
         Explosion _explosion;
         float _frameExplosion;
         bool _isExplosionActive;

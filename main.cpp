@@ -37,6 +37,7 @@ int main() {
     vidas.setFont(font);
     vidas.setPosition(3, 30);
 
+    // GAME LOOP
     while (window.isOpen()) {
 
         sf::Event event;
@@ -46,6 +47,8 @@ int main() {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
+
+            // CMD
 
             if (event.type == sf::Event::KeyReleased) {
 
@@ -70,7 +73,12 @@ int main() {
                             Play.setFramerateLimit(60);
                             window.close();
 
+
+                            // GAME LOOP
+
                             while (Play.isOpen()) {
+
+                                // EVENTS
 
                                 sf::Event playEvent;
 
@@ -82,9 +90,13 @@ int main() {
                                     }
                                 }
 
+                                // CMD
+                                 gamePlay.cmd();
+
+
+                                // UPDATE
                                 gamePlay.update();
                                 scene.update();
-
                                 if (gamePlay.isCollisionWithEnemy()) {
                                     player.changePuntos(1);
                                 }
@@ -96,12 +108,20 @@ int main() {
                                 puntos.setString("PUNTOS " + std::to_string(player.getPuntos()));
                                 vidas.setString("VIDA " + std::to_string(player.getVida()));
 
+
+                                // DRAW
                                 Play.clear();
                                 Play.draw(scene);
                                 Play.draw(gamePlay);
                                 //Play.draw(puntos);
                                 //Play.draw(vidas);
+
+                                // FLIP
                                 Play.display();
+
+                                // LIBERACION DEL JUEGO
+
+
                             }
 
                         } else if (x == 1) {
@@ -137,6 +157,10 @@ int main() {
         window.clear();
         mainMenu.draw(window);
         window.display();
+
+
+
+
     }
 
     return 0;

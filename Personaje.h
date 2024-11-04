@@ -14,7 +14,7 @@ enum class PersonajeState {
 };
 */
 
-class Personaje: public sf::Drawable, public Collisionable, public Avion
+class Personaje: public sf::Drawable, public Collisionable, public Avion, public sf::Transformable
 {
   public:
     Personaje();
@@ -26,6 +26,7 @@ class Personaje: public sf::Drawable, public Collisionable, public Avion
     sf::Vector2f getPosition() override;/// OBTENMOS LA POSICION DEL PERSONAJE ACTUALIZADO
     bool getTeclaAnterior()const;
     void setTeclaAnterior(bool);
+    sf::Vector2f getBulletOrigin() const;
   private:
     bool _teclaAnterior = false;
     //float _frame;
