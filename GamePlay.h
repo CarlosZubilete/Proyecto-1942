@@ -20,6 +20,10 @@ class GamePlay: public sf::Drawable
         void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
         CartelPosicion cartel_player;
         CartelPosicion cartel_bullets;
+        CartelPosicion cartel_colision;
+        int getPuntos() const;
+        int getVidas() const;
+
 
 
     private:
@@ -29,9 +33,10 @@ class GamePlay: public sf::Drawable
         Enemy _enemy;
         bool _bulletActive;
         int _timerReload;
-//        Player player; // no se usa por el momento
+        Player _juego;
         Explosion _explosion;
         float _frameExplosion;
         bool _isExplosionActive;
+
 };
 

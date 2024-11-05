@@ -3,40 +3,34 @@
 Player::Player()
 {
   _puntos = 0;
-  _vida = 100;
+  _vida = 3;
 }
 
-void Player::setPuntos(int puntos)
-{
-  if (puntos > 0 )
-  {
-    _puntos = puntos;
-  }
-}
-
-void Player::setVida(int vida)
-{
-  if (vida < 0 )
-  {
-    _vida = vida;
-  }
-}
-
+//void Player::setPuntos(int puntos)
+//{
+//  if (puntos > 0 )
+//  {
+//    _puntos = puntos;
+//  }
+//}
+//
+//void Player::setVida(int vida)
+//{
+//  if (vida < 0 )
+//  {
+//    _vida = vida;
+//  }
+//}
+//
 void Player::changePuntos(int puntos)
 {
-  if(puntos > 0 )
-  {
-    _puntos++;
-  }
-  else
-  {
-    _puntos--;
-  }
+    _puntos += puntos;
 }
 
-void Player::changeVidas(int vidas)
+
+void Player::changeVidas()
 {
-  _vida -= vidas;
+  _vida--;
 }
 
 int Player::getVida()const
