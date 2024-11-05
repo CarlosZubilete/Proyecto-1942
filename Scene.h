@@ -13,8 +13,11 @@ class Scene: public sf::Drawable
     GamePlay _gamePlay;
     // Display de puntajes y vidas:
     sf::Text _puntos;
-    sf::Font _font;
+    sf::Font _font1;
+    sf::Font _font2;
     sf::Text _vidas;
+    sf::Text _frames_cartel;
+    int _frames;
 
 
   private:
