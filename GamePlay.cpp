@@ -166,14 +166,9 @@ bool GamePlay::isCollisionWithEnemy()
     bool result = false;
     for ( int i = 0 ; i < _bullets.size() ; i++ )
     {
-
-//        std::cout << _bullets[i]->getBounds().top  << std::endl;
-        std::cout << _player.getBounds().top  << std::endl;
-
-
         if(_bullets[i]->isCollision(enemigo1))
         {
-
+            _juego.changePuntos(100);
 //            std::cout<< "COLLISION CON ENEMIGO" << std::endl;
             delete _bullets[i];
             _bullets.erase(_bullets.begin()+i);
@@ -196,7 +191,7 @@ void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states)const
     for(int i=0; i < _bullets.size(); i++)
     {
         target.draw(*_bullets[i], states);
-        target.draw(*bala_cartel[i], states);
+//        target.draw(*bala_cartel[i], states);
     }
 
 //    for(int i=0; i<_enemyBullets.size(); i++)
@@ -207,8 +202,8 @@ void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states)const
     target.draw(_player,states);
     target.draw(_explosion,states);
     target.draw(enemigo1,states);
-    target.draw(enemigo1_cartel,states);
-    target.draw(player_cartel,states);
+//    target.draw(enemigo1_cartel,states);
+//    target.draw(player_cartel,states);
 
 //    for(Enemy *enemy: _enemies)
 //    {

@@ -11,19 +11,20 @@ Enemy::Enemy()
   _sprite.setScale(3,3);
   _canShoot = true;
   _frame = 0;
-//  setPosition( std::rand()%600+1,0-48-48);
-//  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+0.1 :  - (float)(std::rand()%30)/10+0.1;
-  _sprite.setPosition( 320,400);
-  _velocity.x = 0.5;
-  _velocity.y = 0.5;
+  _sprite.setPosition( std::rand()%600+1,0-48-48);
+  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+0.1 :  - (float)(std::rand()%30)/10+0.1;
+//  _sprite.setPosition( 320,400);
+//  _velocity.x = 0.5;
+  _velocity.y = 3.f;
 }
 
 void Enemy::cmd() {
 
-  if (_sprite.getPosition().x + getBounds().width < 0  ) {
+  // rebote en los costados:
+  if (_sprite.getPosition().x + getBounds().width < 0 + getBounds().width/2  ) {
     _velocity.x = -_velocity.x;
   }
-  if (_sprite.getPosition().x - getBounds().width > 600) {
+  if (_sprite.getPosition().x + getBounds().width > 600 + getBounds().width/2) {
     _velocity.x = -_velocity.x;
   }
   if (_sprite.getPosition().y - getBounds().height > 800){
