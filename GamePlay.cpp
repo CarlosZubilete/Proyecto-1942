@@ -2,23 +2,15 @@
 #include <iostream>
 
 
-GamePlay::GamePlay()
-{
+GamePlay::GamePlay() {
     _timerReload = 0;
     _frameExplosion  = 0.f;
     _isExplosionActive = false;
-
-
 }
 
-void GamePlay::cmd()
-{
+void GamePlay::cmd() {
     _player.cmd();
     enemigo1.cmd();
-//    for(Enemy *enemy: _enemies)
-//    {
-//      enemy->cmd();
-//    }
 }
 
 void GamePlay::update()
@@ -31,16 +23,14 @@ void GamePlay::update()
             /// INSTANCIAMOS UNA BALA DEL PERSONAJE.
 //            _bullets.push_back(new Bullet(_player.getPosition().x-_player.getBounds().width-48/2+1,_player.getPosition().y-_player.getBounds().height-48,-7));
           _bullets.push_back(new Bullet( {_player.getBulletOrigin().x , _player.getBulletOrigin().y }));
-//
+          bala_cartel.push_back(new CartelPosicion());
 
             /// CADA 10MS PODEMOS DISPARAR.
             _timerReload = 15*1;
         }
-
 //      _enemyBullets.push_back(new EnemyBullet(_enemy.getPosition().x  ,_enemy.getPosition().y + 35 , 7));
 //        std::cout << "BALA ENEMIGA ->" << std::endl;
     }
-
 
 
 
@@ -48,6 +38,7 @@ void GamePlay::update()
     for(int i=0; i<_bullets.size(); i++)// de esta manera suben las balas disparadas
     {
         _bullets[i]->update();
+      bala_cartel[i]->showPositionOnScreen("Bala", {_bullets[i]->getBounds().left+50, _bullets[i]->getBounds().top-50 },{_bullets[i]->getBounds().left, _bullets[i]->getBounds().top});
     }
     /// DEPENDIENDO DE CUANTO DISPARE, VAMOS A ELIMINAR
 
@@ -63,7 +54,9 @@ void GamePlay::update()
         {
 //            std::cout<<_bullets.size()<<std::endl;
             delete _bullets[i];
+            delete bala_cartel[i];
             _bullets.erase(_bullets.begin()+i, _bullets.begin()+i+1);
+            bala_cartel.erase(bala_cartel.begin()+i, bala_cartel.begin()+i+1);
         }
     }
 
@@ -101,7 +94,6 @@ void GamePlay::update()
   if (isCollisionWithEnemy()) {
 //    _juego.changePuntos(100);
 //  _juego.changePuntos(100);
-
   }
 
 //  for(int i = 0; i<4; i++) {
@@ -113,7 +105,7 @@ void GamePlay::update()
   _player.update();
   enemigo1.update();
 
-  enemigo1_cartel.showPositionOnScreen("Enemigo1",{enemigo1.getPosition().x+enemigo1.getBounds().width,enemigo1.getPosition().y-50},{enemigo1.getPosition().x,enemigo1.getPosition().y});
+  enemigo1_cartel.showPositionOnScreen("Enemigo1 GlobalBounds",{enemigo1.getPosition().x+enemigo1.getBounds().width,enemigo1.getPosition().y-50},{enemigo1.getBounds().top,enemigo1.getPosition().y});
   player_cartel.showPositionOnScreen("Player",{_player.getPosition().x+_player.getBounds().width,_player.getPosition().y-50},{_player.getPosition().x,_player.getPosition().y});
 
 
@@ -122,7 +114,32 @@ void GamePlay::update()
 //    enemy->update();
 //  }
   _timerReload--;
+
+//  if(checkCollision(enemigo1)){
+//    std::cout << "COLISION ENTRE AVIONES" << std::endl;
+//  }
+
+//    std::cout << _player.getBounds().top  << std::endl;
+//    std::cout << _player.getBounds().left  << std::endl;
+//    std::cout << "-----------"  << std::endl;
+//    std::cout << enemigo1.getBounds().top  << std::endl;
+//    std::cout << enemigo1.getBounds().left  << std::endl;
+//    std::cout << enemigo1.getPosition().x << std::endl;
+//    std::cout << "-----------"  << std::endl;
+//
+//    std::cout << "-----------"  << std::endl;
+//    std::cout << "-----------"  << std::endl;
+//
+
 }
+
+//
+//
+//bool GamePlay::checkCollision(const Enemy& col) const {
+//    return _player.getBounds().intersects(col.getBounds());
+//  }
+
+
 
 bool GamePlay::isCollisionWithPersonaje()
 {
@@ -149,6 +166,11 @@ bool GamePlay::isCollisionWithEnemy()
     bool result = false;
     for ( int i = 0 ; i < _bullets.size() ; i++ )
     {
+
+//        std::cout << _bullets[i]->getBounds().top  << std::endl;
+        std::cout << _player.getBounds().top  << std::endl;
+
+
         if(_bullets[i]->isCollision(enemigo1))
         {
 
@@ -166,7 +188,6 @@ bool GamePlay::isCollisionWithEnemy()
         }
     }
     return result;
-  return true;
 }
 
 void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states)const
@@ -175,6 +196,7 @@ void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states)const
     for(int i=0; i < _bullets.size(); i++)
     {
         target.draw(*_bullets[i], states);
+        target.draw(*bala_cartel[i], states);
     }
 
 //    for(int i=0; i<_enemyBullets.size(); i++)

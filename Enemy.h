@@ -5,7 +5,7 @@
 #include <string>
 #include "CartelPosicion.h"
 
-class Enemy: public sf::Drawable, public Collisionable, public Avion, public sf::Transformable
+class Enemy: public sf::Drawable, public Collisionable, public Avion
 {
     public:
         Enemy();
@@ -17,6 +17,7 @@ class Enemy: public sf::Drawable, public Collisionable, public Avion, public sf:
         void respawn();
         void explosion();
         sf::Vector2f getBulletOrigin();
+        sf::Vector2f getPosition() const;
 
     private:
         sf::Vector2f _newPosition;

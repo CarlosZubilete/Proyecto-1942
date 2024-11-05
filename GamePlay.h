@@ -23,10 +23,13 @@ class GamePlay: public sf::Drawable
         int getVidas() const;
         CartelPosicion enemigo1_cartel;
         CartelPosicion player_cartel;
+        std::vector<CartelPosicion*> bala_cartel;
+        bool checkCollision(const Enemy& enemigo1) const;
 
 
 
-    private:
+
+private:
         Personaje _player;
         std::vector<Bullet*> _bullets;
         std::vector<EnemyBullet*> _enemyBullets;

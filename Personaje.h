@@ -5,7 +5,7 @@
 #include <string>
 #include "CartelPosicion.h"
 
-class Personaje: public sf::Drawable, public Collisionable, public Avion, public sf::Transformable
+class Personaje: public sf::Drawable, public Collisionable, public Avion
 {
   public:
     Personaje();
@@ -17,8 +17,12 @@ class Personaje: public sf::Drawable, public Collisionable, public Avion, public
     bool getTeclaAnterior()const;
     void setTeclaAnterior(bool);
     sf::Vector2f getBulletOrigin() const;
+    sf::Vector2f getPosition() const;
+
+
 
   private:
     bool _teclaAnterior = false;
+    sf::Vector2f _position;
   /// TODO: Machine states
 };

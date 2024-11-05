@@ -13,7 +13,9 @@ Personaje::Personaje()
   _texture->loadFromFile("assets/sprites/1942-sprites-player.png");
   _sprite.setTexture(*_texture);
   _sprite.setTextureRect({107,17,32,18}); // tamaño x3 = 75x54
-  move((600-96)/2+2,700);
+  _position = {(600-96)/2+2,700};
+//  move((600-96)/2+2,700);
+  _sprite.setPosition(_position);
   _sprite.setScale(3,3);
 //  _sprite.setOrigin({_sprite.getGlobalBounds().width/2,_sprite.getGlobalBounds().height/2});
   //_state = PersonajeState::Idle;
@@ -24,60 +26,51 @@ Personaje::Personaje()
 void Personaje::cmd()
 {
 
- // _state = PersonajeState::Idle;
-
+  _velocity = {0, 0};
 
   bool teclaMovimientoPresionada;
 
-  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-  {
+  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
     teclaMovimientoPresionada = true;
-    move(_velocity.x,0);
+    _velocity.x = 5;
     _sprite.setTextureRect({177,17,32,18});
-    //_state = PersonajeState::Move_Right;
   }
 
-  if (!teclaMovimientoPresionada && getTeclaAnterior())
-  {
+  if (!teclaMovimientoPresionada && getTeclaAnterior()) {
     _sprite.setTextureRect({107,17,32,18}); // tamaño x3 = 75x54
   }
 
-  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-  {
-    move(-_velocity.x,0);
+  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
     teclaMovimientoPresionada = true;
-    _sprite.setTextureRect({2,17,32,18});
-    //_state = PersonajeState::Move_Left;
+    _velocity.x = -5;
+    _sprite.setTextureRect({177,17,32,18});
   }
+
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
   {
-    move(0,-_velocity.y);
-    //_state = PersonajeState::Move_Up;
+    _velocity.y = -5;
   }
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
   {
-    move(0,_velocity.y);
-    //_state = PersonajeState::Move_Down;
+    _velocity.y = 5;
   }
 
   setTeclaAnterior(teclaMovimientoPresionada);
-  /**
-  if(sf::Keyboard::isKeyPressed(sf::Keyboard::T))
-  {
-    _state = PersonajeState::Move_Back;
-  }
-  */
+
+
+//  /**
+//  if(sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+//  {
+//    _state = PersonajeState::Move_Back;
+//  }
+//  */
 
 }
 
-//sf::Vector2f Personaje::getPosition()
-//{
-//  return _sprite.getPosition();
-//  return getPosition();
 
 sf::Vector2f Personaje::getBulletOrigin() const
 {
-  return {getPosition().x + (96-48)/2 ,getPosition().y};
+  return {_sprite.getPosition().x + (96-48)/2 ,_sprite.getPosition().y};
 }
 
 
@@ -114,9 +107,20 @@ void Personaje::update()
   }
 */
 
-
-
-
+  /// Restricciones de pantalla
+  if (_sprite.getPosition().x < -74/2 ){
+    _sprite.setPosition(-74/2, _sprite.getPosition().y);
+  }
+  if (_sprite.getPosition().y < 0) {
+    _sprite.setPosition(_sprite.getPosition().x, 0);
+  }
+  if(_sprite.getPosition().x > 600+ 74/2 - getBounds().width) {
+    _sprite.setPosition(600 + 74/2 - getBounds().width, _sprite.getPosition().y);
+  }
+  if(_sprite.getPosition().y > 800 - getBounds().height) {
+    _sprite.setPosition(_sprite.getPosition().x, 800 - getBounds().height);
+  }
+  _sprite.move({_velocity.x, _velocity.y});
 }
 
 
@@ -151,7 +155,6 @@ sf::FloatRect Personaje::getBounds()const
 
 void Personaje::draw(sf::RenderTarget &target, sf::RenderStates states)const
 {
-  states.transform *= getTransform();
   target.draw(_sprite, states);
 }
 
@@ -163,6 +166,11 @@ void Personaje::setTeclaAnterior(bool teclaAnterior)
 bool Personaje::getTeclaAnterior() const
 {
   return _teclaAnterior;
+}
+
+sf::Vector2f Personaje::getPosition() const
+{
+  return sf::Vector2f(_sprite.getPosition().x, _sprite.getPosition().y);
 }
 
 
