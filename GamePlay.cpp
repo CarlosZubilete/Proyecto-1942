@@ -115,29 +115,20 @@ void GamePlay::update()
 //  }
   _timerReload--;
 
-//  if(checkCollision(enemigo1)){
-//    std::cout << "COLISION ENTRE AVIONES" << std::endl;
-//  }
+  if(checkCollision(enemigo1)){
+    _juego.changeVidas();
+    _player.respawn();
+    enemigo1.respawn();
+  }
 
-//    std::cout << _player.getBounds().top  << std::endl;
-//    std::cout << _player.getBounds().left  << std::endl;
-//    std::cout << "-----------"  << std::endl;
-//    std::cout << enemigo1.getBounds().top  << std::endl;
-//    std::cout << enemigo1.getBounds().left  << std::endl;
-//    std::cout << enemigo1.getPosition().x << std::endl;
-//    std::cout << "-----------"  << std::endl;
-//
-//    std::cout << "-----------"  << std::endl;
-//    std::cout << "-----------"  << std::endl;
-//
 
 }
 
 //
 //
-//bool GamePlay::checkCollision(const Enemy& col) const {
-//    return _player.getBounds().intersects(col.getBounds());
-//  }
+bool GamePlay::checkCollision(const Enemy& col) const {
+    return _player.getBounds().intersects(col.getBounds());
+  }
 
 
 

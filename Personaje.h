@@ -18,6 +18,7 @@ class Personaje: public sf::Drawable, public Collisionable, public Avion
     void setTeclaAnterior(bool);
     sf::Vector2f getBulletOrigin() const;
     sf::Vector2f getPosition() const;
+    void respawn();
 
 
 

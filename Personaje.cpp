@@ -173,6 +173,11 @@ sf::Vector2f Personaje::getPosition() const
   return sf::Vector2f(_sprite.getPosition().x, _sprite.getPosition().y);
 }
 
+void Personaje::respawn()
+{
+  _sprite.setPosition((600-96)/2+2, 700);
+}
+
 
 /// Clse control boleanos , abcde , cada vez que hacemos un cmd,
 ///

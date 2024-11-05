@@ -40,8 +40,8 @@ void Enemy::update()
 }
 
 void Enemy::respawn() {
-  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+0.1 :  - (float)(std::rand()%30)/10+0.1;
   _sprite.setPosition(std::rand()%600,0-48-48);
+  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+0.1 :  - (float)(std::rand()%30)/10+0.1;
 }
 
 bool Enemy::shot() {
