@@ -114,21 +114,8 @@ void Personaje::update()
   }
 */
 
-  cartel_personaje.showPositionOnScreen("Player:", {getPosition().x+100,getPosition().y-50},{getPosition().x,getPosition().y});
 
-  /// Restricciones de pantalla
-  if (getPosition().x < -74/2 ){
-    setPosition(-74/2,getPosition().y);
-  }
-  if (getPosition().y < 0) {
-    setPosition(getPosition().x, 0);
-  }
-  if(getPosition().x > 600+ 74/2 - getBounds().width) {
-    setPosition(600 + 74/2 - getBounds().width, getPosition().y);
-  }
-  if(getPosition().y > 800 - getBounds().height) {
-    setPosition(getPosition().x, 800 - getBounds().height);
-  }
+
 
 }
 
@@ -166,7 +153,6 @@ void Personaje::draw(sf::RenderTarget &target, sf::RenderStates states)const
 {
   states.transform *= getTransform();
   target.draw(_sprite, states);
-  target.draw(cartel_personaje);
 }
 
 void Personaje::setTeclaAnterior(bool teclaAnterior)
