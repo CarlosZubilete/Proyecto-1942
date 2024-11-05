@@ -3,24 +3,21 @@
 #include "Collisionable.h"
 #include "Avion.h"
 #include <string>
+#include "CartelPosicion.h"
 
-class Enemy: public sf::Drawable, public Collisionable, public Avion
+class Enemy: public sf::Drawable, public Collisionable, public Avion, public sf::Transformable
 {
     public:
         Enemy();
-        Enemy(std::string namePng,sf::IntRect rect,float vel_x,float vel_y);
-        /**
-        void sf::Vector2f getPosition() const override;
-        **/
         void cmd() override; /// HEREDA DE AVION
         void update() override; /// HEREDA DE AVION
-//        sf::Vector2f getPosition() override; /// HEREDA DE AVION
-        sf::Vector2f getPosition(); /// HEREDA DE AVION
         void draw(sf::RenderTarget &target , sf::RenderStates states)const override;/// HEREDA DE DIBUJABLE
         sf::FloatRect getBounds() const override; /// HEREDA DE COLLISIONABLE
         bool shot();
         void respawn();
         void explosion();
+        sf::Vector2f getBulletOrigin();
+
     private:
         sf::Vector2f _newPosition;
         bool _canShoot;

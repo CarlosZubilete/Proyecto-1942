@@ -16,6 +16,7 @@ class Scene: public sf::Drawable
     sf::Font _font;
     sf::Text _vidas;
 
+
   private:
     sf::Texture _bg;
     sf::Sprite _bgSprite;

@@ -1,82 +1,47 @@
 #include "Enemy.h"
 #include "cstring"
+#include <iostream>
 
-Enemy::Enemy(){}
-
-Enemy::Enemy(std::string namePng,sf::IntRect rect,float vel_x,float vel_y)
+Enemy::Enemy()
 {
   _texture = new sf::Texture;
-  _texture->loadFromFile(namePng.c_str());
+  _texture->loadFromFile("assets/sprites/1942-sprites-enemy.png");
   _sprite.setTexture(*_texture);
-  //sf::Vector2f _texturaSize = _texture.getSize();
-  _sprite.setTextureRect(rect);
-  //_sprite.setOrigin(_sprite.getGlobalBounds().width/2,_sprite.getGlobalBounds().height);
-  _velocity = {vel_x,vel_y};
-  _sprite.setPosition( std::rand()%600,0-48-48);
+  _sprite.setTextureRect({59,55,17,18});
   _sprite.setScale(3,3);
   _canShoot = true;
   _frame = 0;
+  setPosition( std::rand()%600+1,0-48-48);
+  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+0.1 :  - (float)(std::rand()%30)/10+0.1;
+  _velocity.y = 0.5;
 }
 
+void Enemy::cmd() {
 
-void Enemy::cmd()
-{
-  /**
-  if(_newPosition.x > _sprite.getPosition().x)
-  {
-    _sprite.move(_velocity);
-  }
-
-  _newPosition = (std::rand() % 600 + _sprite.getGlobalBounds().width,
-                      std::rand() % 600 + _sprite.getGlobalBounds().height);
-
-  */
-  if (_sprite.getPosition().x < 0  )
-  {
+  if (getPosition().x + getBounds().width < 0  ) {
     _velocity.x = -_velocity.x;
   }
-
-  if (_sprite.getPosition().x + _sprite.getGlobalBounds().width > 600)
-  {
+  if (getPosition().x - getBounds().width > 600) {
     _velocity.x = -_velocity.x;
   }
-
-  if (_sprite.getPosition().y  > 800)
-  {
-    _velocity.x = (std::rand()%2 == 0) ? _velocity.x : -_velocity.x; // aleatoriamente decidimos si el respawn va para un lado o para el otro
+  if (getPosition().y - getBounds().height > 800){
     respawn();
   }
 
-  /*
-  if(_sprite.getPosition().y < 0 )
-  {
-    _velocity.y = -_velocity.y;
-  }
-
-  if(_sprite.getPosition().y + _sprite.getGlobalBounds().height > 600)
-  {
-    _velocity.y = -_velocity.y;
-  }
-  */
 }
-
 
 void Enemy::update()
 {
-  _sprite.move(_velocity);
+
+  move(_velocity.x,_velocity.y);
 }
 
-void Enemy::respawn()
-{
-  _sprite.setPosition(std::rand()%600,0-48-48);
-
-  //_newPosition = (std::rand() % 600 + _sprite.getGlobalBounds().width,
-  //                    std::rand() % 600 + _sprite.getGlobalBounds().height);
-  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+0.1 : -(float)(std::rand()%30)/10+0.1;
+void Enemy::respawn() {
+  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+0.1 :  - (float)(std::rand()%30)/10+0.1;
+  setPosition(std::rand()%600,0-48-48);
 }
 
-bool Enemy::shot()
-{
+bool Enemy::shot() {
   if (_canShoot)
   {
     return true;
@@ -84,17 +49,16 @@ bool Enemy::shot()
   return false;
 }
 
-sf::Vector2f Enemy::getPosition()
-{
-  return _sprite.getPosition();
+void Enemy::draw(sf::RenderTarget &target , sf::RenderStates states)const {
+  states.transform *= getTransform();
+  target.draw(_sprite, states);
 }
 
-void Enemy::draw(sf::RenderTarget &target , sf::RenderStates states)const
-{
-  target.draw(_sprite,states);
-}
-
-sf::FloatRect Enemy::getBounds()const
-{
+sf::FloatRect Enemy::getBounds()const {
   return _sprite.getGlobalBounds();
+}
+
+sf::Vector2f Enemy::getBulletOrigin()
+{
+  return {getPosition().x + (18-48)/2 ,getPosition().y};
 }

@@ -14,13 +14,14 @@ Bullet::Bullet(int horizontal,int vertical, int velocidad)
   _velocidad = velocidad;
 }
 
-void Bullet::Update()
+void Bullet::update()
 {
   _sprite.move(0,_velocidad);
 }
 
 void Bullet::draw(sf::RenderTarget &target, sf::RenderStates states)const
 {
+  states.transform *= getTransform();
   target.draw(_sprite, states);
 }
 
