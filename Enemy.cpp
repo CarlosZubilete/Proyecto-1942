@@ -67,5 +67,10 @@ sf::Vector2f Enemy::getBulletOrigin()
 
 sf::Vector2f Enemy::getPosition() const
 {
-  return sf::Vector2f(_sprite.getPosition().x, _sprite.getPosition().y);
+  return _sprite.getPosition();
+}
+
+void Enemy::explosion()
+{
+
 }

@@ -9,7 +9,7 @@ class Personaje: public sf::Drawable, public Collisionable, public Avion
 {
   public:
     Personaje();
-    void cmd()override; /// HEREDA DE AVION
+    void cmd() override; /// HEREDA DE AVION
     void update() override; /// HEREDA DE AVION
     void draw(sf::RenderTarget &target, sf::RenderStates states)const override;/// HEREDA DE COLLISIONABLE
     sf::FloatRect getBounds() const override; /// HEREDA DE COLLISIONABLE
@@ -17,7 +17,7 @@ class Personaje: public sf::Drawable, public Collisionable, public Avion
     bool getTeclaAnterior()const;
     void setTeclaAnterior(bool);
     sf::Vector2f getBulletOrigin() const;
-    sf::Vector2f getPosition() const;
+    sf::Vector2f getPosition() const override;
     void respawn();
 
 

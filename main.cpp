@@ -48,7 +48,7 @@ int main() {
                 window.close();
             }
 
-            // CMD
+
 
             if (event.type == sf::Event::KeyReleased) {
 

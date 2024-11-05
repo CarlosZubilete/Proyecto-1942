@@ -10,17 +10,16 @@ class Scene: public sf::Drawable
     sf::Vector2f getCameraPosition();
     void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
     void cmd();
-    GamePlay _gamePlay;
+
+  private:
     // Display de puntajes y vidas:
+    GamePlay _gamePlay;
     sf::Text _puntos;
     sf::Font _font1;
     sf::Font _font2;
     sf::Text _vidas;
     sf::Text _frames_cartel;
     int _frames;
-
-
-  private:
     sf::Texture _bg;
     sf::Sprite _bgSprite;
 };

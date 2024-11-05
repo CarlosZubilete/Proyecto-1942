@@ -13,7 +13,7 @@ class Avion /// CLASE ABSTRACTA, ["Avionabel" o "IAvion"]
   **/
     virtual void update() = 0; /// VIRTUAL PURO
     virtual void cmd() = 0; /// VIRTUAL PURO
-//    virtual sf::Vector2f getPosition() = 0; /// VIRTUAL PURO
+    virtual sf::Vector2f getPosition() const = 0; /// VIRTUAL PURO
 
   protected:
     sf::Texture *_texture;

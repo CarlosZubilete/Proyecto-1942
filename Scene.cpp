@@ -27,7 +27,7 @@ void Scene::cmd()
 
 void Scene::update()
 {
-  _bgSprite.move(0,0.8);
+  _bgSprite.move(0,3.f);
   _gamePlay.update();
   _puntos.setString("PUNTOS " + std::to_string(_gamePlay.getPuntos()));
   _vidas.setString("VIDA "    + std::to_string(_gamePlay.getVidas  ()));
