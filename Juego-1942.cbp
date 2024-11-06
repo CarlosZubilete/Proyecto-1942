@@ -52,10 +52,14 @@
 		<Unit filename="Avion.h" />
 		<Unit filename="Bullet.cpp" />
 		<Unit filename="Bullet.h" />
+		<Unit filename="CartelPosicion.cpp" />
+		<Unit filename="CartelPosicion.h" />
 		<Unit filename="Collisionable.cpp" />
 		<Unit filename="Collisionable.h" />
 		<Unit filename="Enemy.cpp" />
 		<Unit filename="Enemy.h" />
+		<Unit filename="EnemyBullet.cpp" />
+		<Unit filename="EnemyBullet.h" />
 		<Unit filename="Explosion.cpp" />
 		<Unit filename="Explosion.h" />
 		<Unit filename="GamePlay.cpp" />

@@ -9,6 +9,7 @@
 #include "EnemyBullet.h"
 #include "Explosion.h"
 #include "CartelPosicion.h"
+#include "EnemyB.h"
 
 class GamePlay: public sf::Drawable
 {
