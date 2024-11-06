@@ -33,7 +33,7 @@ void EnemyB::cmd()
   /// SI LA NUEVA POS EN X ESTA ADELANTE DE LA ACUTUAL POSICION
   if(_newPosition.x > _sprite.getPosition().x){
     _sprite.move(_velocity.x,0);
-    _moveHacia.x = _velocity.x;
+
   }
   /// SI LA NUEVA POS EN X ESTA ATRAS DE LA ACTUAL POSICION
   if(_newPosition.x <  _sprite.getPosition().x){

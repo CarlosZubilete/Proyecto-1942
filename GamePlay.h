@@ -28,8 +28,6 @@ class GamePlay: public sf::Drawable
         bool checkCollision(const Enemy& enemigo1) const;
         int getFrames() const;
 
-
-
 private:
         Personaje _player;
         std::vector<Bullet*> _bullets;
