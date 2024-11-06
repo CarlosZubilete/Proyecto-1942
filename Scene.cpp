@@ -32,7 +32,7 @@ void Scene::update()
   _puntos.setString("PUNTOS " + std::to_string(_gamePlay.getPuntos()));
   _vidas.setString("VIDA "    + std::to_string(_gamePlay.getVidas  ()));
   _frames_cartel.setString("Frames= " + std::to_string(_frames) + "\nTiempo= " + std::to_string(_frames/60));
-  _frames++;
+  _frames = _gamePlay.getFrames();
 }
 
 sf::Vector2f Scene::getCameraPosition()
