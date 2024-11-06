@@ -15,7 +15,6 @@ Scene::Scene()
   _frames_cartel.setFont(_font2);
   _frames_cartel.setPosition(500,0);
   _frames_cartel.setCharacterSize(14);
-  _frames=0;
 
 
 }

@@ -12,7 +12,7 @@ Enemy::Enemy()
   _canShoot = true;
   _frame = 0;
   _sprite.setPosition( std::rand()%600+1,0-48-48);
-  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+0.1 :  - (float)(std::rand()%30)/10+0.1;
+  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+1.0 :  - (float)(std::rand()%30)/10+1.0;
 //  _sprite.setPosition( 320,400);
 //  _velocity.x = 0.5;
   _velocity.y = 3.f;
@@ -41,7 +41,7 @@ void Enemy::update()
 
 void Enemy::respawn() {
   _sprite.setPosition(std::rand()%600,0-48-48);
-  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+0.1 :  - (float)(std::rand()%30)/10+0.1;
+//  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+1.0 :  - (float)(std::rand()%30)/10+1.0;
 }
 
 bool Enemy::shot() {

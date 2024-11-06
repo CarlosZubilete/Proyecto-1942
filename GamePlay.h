@@ -25,7 +25,7 @@ class GamePlay: public sf::Drawable
         CartelPosicion player_cartel;
         std::vector<CartelPosicion*> bala_cartel;
         bool checkCollision(const Enemy& enemigo1) const;
-
+        int getFrames() const;
 
 
 
@@ -41,6 +41,7 @@ private:
         Explosion _explosion;
         float _frameExplosion;
         bool _isExplosionActive;
+        int _frames;
 
 
 };

@@ -6,6 +6,7 @@ GamePlay::GamePlay() {
     _timerReload = 0;
     _frameExplosion  = 0.f;
     _isExplosionActive = false;
+    _frames = 0;
 }
 
 void GamePlay::cmd() {
@@ -21,15 +22,25 @@ void GamePlay::update()
         if (_bullets.size() < 5  &&  _timerReload <= 0)
         {
             /// INSTANCIAMOS UNA BALA DEL PERSONAJE.
-//            _bullets.push_back(new Bullet(_player.getPosition().x-_player.getBounds().width-48/2+1,_player.getPosition().y-_player.getBounds().height-48,-7));
           _bullets.push_back(new Bullet( {_player.getBulletOrigin().x , _player.getBulletOrigin().y }));
-          bala_cartel.push_back(new CartelPosicion());
 
             /// CADA 10MS PODEMOS DISPARAR.
             _timerReload = 15*1;
         }
-//      _enemyBullets.push_back(new EnemyBullet(_enemy.getPosition().x  ,_enemy.getPosition().y + 35 , 7));
-//        std::cout << "BALA ENEMIGA ->" << std::endl;
+    }
+
+    if (true)
+    {
+        sf::Vector2f direccion;
+        float direccion_relacion;
+        direccion.x = _player.getPosition().x - enemigo1.getPosition().x;
+        direccion.y = _player.getPosition().y - enemigo1.getPosition().y;
+        direccion_relacion = direccion.x / direccion.y;
+        (direccion.x < 0 ) ?  direccion.x = -3.7f : direccion.x= 3.7f;
+        (direccion.y < 0 ) ?  direccion.y = - 3.7f * std::abs(direccion_relacion) : direccion.y =  3.7f * std::abs(direccion_relacion);
+
+        _enemyBullets.push_back(new EnemyBullet( enemigo1.getBulletOrigin().x, enemigo1.getBulletOrigin().y, direccion.x, direccion.y));
+
     }
 
 
@@ -38,37 +49,32 @@ void GamePlay::update()
     for(int i=0; i<_bullets.size(); i++)// de esta manera suben las balas disparadas
     {
         _bullets[i]->update();
-      bala_cartel[i]->showPositionOnScreen("Bala", {_bullets[i]->getBounds().left+50, _bullets[i]->getBounds().top-50 },{_bullets[i]->getBounds().left, _bullets[i]->getBounds().top});
     }
     /// DEPENDIENDO DE CUANTO DISPARE, VAMOS A ELIMINAR
 
-//    for(int i=0; i < _enemyBullets.size(); i++) // de esta manera bajan las balas enemigas
-//    {
-//      _enemyBullets[i]->update();
-//    }
+    for(int i=0; i < _enemyBullets.size(); i++) // de esta manera bajan las balas enemigas
+    {
+      _enemyBullets[i]->update();
+    }
 
 
     for(int i=0; i < _bullets.size(); i++)
     {
         if(_bullets[i]->getBounds().top + _bullets[i]->getBounds().height < 0)
         {
-//            std::cout<<_bullets.size()<<std::endl;
             delete _bullets[i];
-            delete bala_cartel[i];
             _bullets.erase(_bullets.begin()+i, _bullets.begin()+i+1);
-            bala_cartel.erase(bala_cartel.begin()+i, bala_cartel.begin()+i+1);
         }
     }
 
-//    for(int i=0; i < _enemyBullets.size(); i++)
-//    {
-//        if (_enemyBullets[i]->getBounds().top +_enemyBullets[i]->getBounds().height > 800)
-//        {
-////            std::cout<<"DELETE BALAS ENEMIGA " << std::endl;
-//            delete _enemyBullets[i];
-//          _enemyBullets.erase(_enemyBullets.begin()+i, _enemyBullets.begin()+i+1);
-//        }
-//    }
+    for(int i=0; i < _enemyBullets.size(); i++)
+    {
+        if (_enemyBullets[i]->getBounds().top +_enemyBullets[i]->getBounds().height > 800)
+        {
+            delete _enemyBullets[i];
+          _enemyBullets.erase(_enemyBullets.begin()+i, _enemyBullets.begin()+i+1);
+        }
+    }
 
     if(_isExplosionActive)
     {
@@ -80,33 +86,23 @@ void GamePlay::update()
             _isExplosionActive = false;
             _frameExplosion = 0.0f;
         }
-//        std::cout << "frame: " << _frameExplosion  << std::endl;
-//        std::cout << "_isExplosionActive...." << _isExplosionActive <<std::endl;
     }
 
 
 
-//  if (isCollisionWithPersonaje()) {
-//    std::cout << "resta vidas" << std::endl;
-//    _juego.changeVidas();
-//  }
-//
-  if (isCollisionWithEnemy()) {
-//    _juego.changePuntos(100);
-//  _juego.changePuntos(100);
+  if (isCollisionWithPersonaje()) {
+    _juego.changeVidas();
+    _player.respawn();
   }
 
-//  for(int i = 0; i<4; i++) {
+  if (isCollisionWithEnemy()) {
+    _juego.changePuntos(100);
+  }
 
-//    _bullets.push_back(new Bullet( {_player.getBulletOrigin().x , _player.getBulletOrigin().y }));
-
-//  }
 
   _player.update();
   enemigo1.update();
 
-  enemigo1_cartel.showPositionOnScreen("Enemigo1 GlobalBounds",{enemigo1.getPosition().x+enemigo1.getBounds().width,enemigo1.getPosition().y-50},{enemigo1.getBounds().top,enemigo1.getPosition().y});
-  player_cartel.showPositionOnScreen("Player",{_player.getPosition().x+_player.getBounds().width,_player.getPosition().y-50},{_player.getPosition().x,_player.getPosition().y});
 
 
 //  for(Enemy *enemy: _enemies)
@@ -121,7 +117,7 @@ void GamePlay::update()
     enemigo1.respawn();
   }
 
-
+  _frames++;
 }
 
 //
@@ -132,27 +128,22 @@ bool GamePlay::checkCollision(const Enemy& col) const {
 
 
 
-bool GamePlay::isCollisionWithPersonaje()
+bool GamePlay::isCollisionWithPersonaje() // cuando te disparan
 {
-//    bool result = false;
-//    for(int i=0; i<_enemyBullets.size(); i++)
-//    {
-//        if (_enemyBullets[i]->isCollision(_player))
-//        {
-//          std::cout << "COLLISION CON PLAYER: "
-//                    << "Bala en (" << _enemyBullets[i]->getBounds().left << ", " << _enemyBullets[i]->getBounds().top << "), "
-//                    << "Jugador en (" << _player.getBounds().left << ", " << _player.getBounds().top << ")\n";
-//
-//          delete _enemyBullets[i];
-//          _enemyBullets.erase(_enemyBullets.begin()+i);
-//            result = true;
-//        }
-//    }
-//    return result;
-  return true;
+    bool result = false;
+    for(int i=0; i<_enemyBullets.size(); i++)
+    {
+        if (_enemyBullets[i]->isCollision(_player))
+        {
+          delete _enemyBullets[i];
+          _enemyBullets.erase(_enemyBullets.begin()+i);
+            result = true;
+        }
+    }
+    return result;
 }
 
-bool GamePlay::isCollisionWithEnemy()
+bool GamePlay::isCollisionWithEnemy() // cuando destruis aviones enemigos
 {
     bool result = false;
     for ( int i = 0 ; i < _bullets.size() ; i++ )
@@ -160,7 +151,6 @@ bool GamePlay::isCollisionWithEnemy()
         if(_bullets[i]->isCollision(enemigo1))
         {
             _juego.changePuntos(100);
-//            std::cout<< "COLLISION CON ENEMIGO" << std::endl;
             delete _bullets[i];
             _bullets.erase(_bullets.begin()+i);
 
@@ -168,7 +158,6 @@ bool GamePlay::isCollisionWithEnemy()
             _isExplosionActive = true;  // Activa la animaci�n
             _frameExplosion = 0.0f;     // Reinicia el frame
 
-//            std::cout << "_isExplosionActive...." << _isExplosionActive <<std::endl;
             enemigo1.respawn();
             result = true;
         }
@@ -185,10 +174,10 @@ void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states)const
 //        target.draw(*bala_cartel[i], states);
     }
 
-//    for(int i=0; i<_enemyBullets.size(); i++)
-//    {
-//        target.draw(*_enemyBullets[i], states);
-//    }
+    for(int i=0; i<_enemyBullets.size(); i++)
+    {
+        target.draw(*_enemyBullets[i], states);
+    }
 
     target.draw(_player,states);
     target.draw(_explosion,states);
@@ -211,6 +200,11 @@ int GamePlay::getPuntos() const
 int GamePlay::getVidas() const
 {
   return _juego.getVida();
+}
+
+int GamePlay::getFrames() const
+{
+  return _frames;
 }
 
 
