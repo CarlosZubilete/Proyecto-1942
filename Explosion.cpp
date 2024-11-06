@@ -18,13 +18,14 @@ void Explosion::smallExplosion()
 
   /// Dependiendo del rectangulo , tengo que dibujarlo...
 
-  _frame+=0.2f;
-  if(_frame >= 6)
+  _sprite.setTextureRect({1+int(_frame)*30,110,32,32});
+
+    _frame+=0.2f;
+  if(_frame >= 8)
   {
     _frame = 0.f;
   }
-  _sprite.setTextureRect({1+int(_frame)*30,110,32,32});
-
+   _sprite.setTextureRect({38*(int)(_frame/1.5),110,33,32});
 }
 
 

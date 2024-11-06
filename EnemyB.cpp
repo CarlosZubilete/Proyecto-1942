@@ -6,7 +6,7 @@ EnemyB::EnemyB()
   _texture->loadFromFile("assets/sprites/1942-sprites-enemy.png");
   _sprite.setTexture(*_texture);
   _sprite.setTextureRect({425,320,33,32});
-  _velocity = {5,5};
+  _velocity = {3,3};
   _sprite.setPosition(std::rand()%600,0-48-48); /// APARECE EN EL LADO NEGATIVO.
   _sprite.setScale(2,2);
   _sprite.setOrigin(_sprite.getGlobalBounds().width/2,_sprite.getGlobalBounds().height/2);

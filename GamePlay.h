@@ -29,19 +29,20 @@ class GamePlay: public sf::Drawable
         int getFrames() const;
 
 private:
+        void inicioEnemyB();
+
         Personaje _player;
         std::vector<Bullet*> _bullets;
         std::vector<EnemyBullet*> _enemyBullets;
         Enemy enemigo1;
         std::vector<Enemy*> _enemies;
-        bool _bulletActive;
         int _timerReload;
         Player _juego;
         Explosion _explosion;
         float _frameExplosion;
         bool _isExplosionActive;
         int _frames;
-
-
+        std::vector <EnemyB*> _vEnemiesB;
+        std::vector<Bullet*> _bullets_vEnemyB;
 };
 

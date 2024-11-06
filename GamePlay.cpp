@@ -7,18 +7,41 @@ GamePlay::GamePlay() {
     _frameExplosion  = 0.f;
     _isExplosionActive = false;
     _frames = 0;
+
+
+}
+
+void GamePlay::inicioEnemyB()
+{
+    ////////////////////////////////////////////////////////////////////////
+    /// CREAMOS EL VECTOR DE ENEMIGOS: CON UN CONTADOR ...
+    if (_frames%120 == 0)
+    {
+        if ( _vEnemiesB.size() < 2)
+        {
+            _vEnemiesB.push_back(new EnemyB());
+            std::cout << " TAMANIO DE VECTOR -> ENEMY B" << _vEnemiesB.size() << std::endl;
+        }
+    }
 }
 
 void GamePlay::cmd() {
     _player.cmd();
     enemigo1.cmd();
+
+    for ( int i = 0 ; i < _vEnemiesB.size() ;  i++)
+    {
+        _vEnemiesB[i]->cmd();
+    }
+
 }
 
 void GamePlay::update()
 {
+    inicioEnemyB();
+
     if(_player.Shoot())
     {
-        _bulletActive = true;
         if (_bullets.size() < 5  &&  _timerReload <= 0)
         {
             /// INSTANCIAMOS UNA BALA DEL PERSONAJE.
@@ -28,6 +51,39 @@ void GamePlay::update()
             _timerReload = 15*1;
         }
     }
+
+    /// CREAMOS LAS BALAS DE VECTOR DEL ENEMIGO
+    for ( int i = 0; i < _vEnemiesB.size() ; i++)
+    {
+        if(_vEnemiesB[i]->shot())
+        {
+            _bullets_vEnemyB.push_back(new Bullet(_vEnemiesB[i]->getPosition().x -50,_vEnemiesB[i]->getPosition().y - 30,7));
+        }
+    }
+
+    /// ACTUALIZAMOS LOS COMANDOS
+    for ( int i = 0 ; i < _vEnemiesB.size() ;  i++)
+    {
+        _vEnemiesB[i]->update();
+    }
+
+    /// DIBUJAMOS LAS BALAS DEL ENEMIGO
+    for ( int i = 0 ; i < _bullets_vEnemyB.size() ; i++)
+    {
+        _bullets_vEnemyB[i]->update();
+    }
+
+    /// ELIMINAMOS DE LA PANTALLA
+    for ( int i = 0 ;  i < _bullets_vEnemyB.size() ; i++ )
+    {
+        if(_bullets_vEnemyB[i]->getBounds().top + _bullets_vEnemyB[i]->getBounds().height > 800)
+        {
+            std::cout<<"TAMANIO DE BALAS V-ENEMIGOS" <<_bullets_vEnemyB.size()<<std::endl;
+            delete _bullets_vEnemyB[i];
+            _bullets_vEnemyB.erase(_bullets_vEnemyB.begin()+i);
+        }
+    }
+
 
     if (_frames%60 == 0.f)
     {
@@ -76,18 +132,18 @@ void GamePlay::update()
         }
     }
 
+
     if(_isExplosionActive)
     {
         _explosion.smallExplosion();
         _frameExplosion += 0.2f;
 
-        if (_frameExplosion >= 5.f)
-        {
-            _isExplosionActive = false;
-            _frameExplosion = 0.0f;
-        }
+            if (_frameExplosion >= 6.f)
+            {
+                _isExplosionActive = false;
+                _frameExplosion = 0.0f;
+            }
     }
-
 
 
   if (isCollisionWithPersonaje()) {
@@ -178,6 +234,18 @@ void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states)const
     {
         target.draw(*_enemyBullets[i], states);
     }
+
+
+    for ( int i = 0 ; i<_vEnemiesB.size() ; i++)
+    {
+        target.draw(*_vEnemiesB[i],states);
+    }
+
+    for (int i = 0; i < _bullets_vEnemyB.size(); i++)
+    {
+        target.draw(*_bullets_vEnemyB[i],states);
+    }
+
 
     target.draw(_player,states);
     target.draw(_explosion,states);

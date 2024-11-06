@@ -28,7 +28,7 @@ void Bullet::draw(sf::RenderTarget &target, sf::RenderStates states)const
 
 sf::FloatRect Bullet::getBounds()const
 {
-   return _sprite.getGlobalBounds();
+  return _sprite.getGlobalBounds();
 }
 
 Bullet::Bullet(sf::Vector2f position)

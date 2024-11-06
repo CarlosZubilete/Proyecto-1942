@@ -58,6 +58,8 @@
 		<Unit filename="Collisionable.h" />
 		<Unit filename="Enemy.cpp" />
 		<Unit filename="Enemy.h" />
+		<Unit filename="EnemyB.cpp" />
+		<Unit filename="EnemyB.h" />
 		<Unit filename="EnemyBullet.cpp" />
 		<Unit filename="EnemyBullet.h" />
 		<Unit filename="Explosion.cpp" />
@@ -70,6 +72,8 @@
 		<Unit filename="Personaje.h" />
 		<Unit filename="Player.cpp" />
 		<Unit filename="Player.h" />
+		<Unit filename="PowerUp.cpp" />
+		<Unit filename="PowerUp.h" />
 		<Unit filename="Scene.cpp" />
 		<Unit filename="Scene.h" />
 		<Unit filename="main.cpp" />
