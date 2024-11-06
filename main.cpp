@@ -24,6 +24,20 @@ int main() {
 
 //    GamePlay gamePlay;
     Scene scene;
+
+  sf::SoundBuffer buffer_main_theme_v2;
+  buffer_main_theme_v2.loadFromFile("assets/sounds/themes/02_main_theme_v2_stereo.mp3");
+  sf::Sound main_theme_v2;
+  main_theme_v2.setBuffer(buffer_main_theme_v2);
+  main_theme_v2.play();
+
+  sf::SoundBuffer buffer_main_theme_v1;
+  buffer_main_theme_v1.loadFromFile("assets/sounds/themes/01_main_theme_v1_stereo.mp3");
+  sf::Sound main_theme_v1;
+  main_theme_v1.setBuffer(buffer_main_theme_v1);
+
+
+
 //    Player player;
 
 //    sf::Font font;
@@ -72,6 +86,8 @@ int main() {
                             sf::RenderWindow Play(sf::VideoMode(600, 800), "1942");
                             Play.setFramerateLimit(60);
                             window.close();
+                            main_theme_v2.stop();
+                            main_theme_v1.play();
 
 
                             // GAME LOOP
@@ -88,6 +104,7 @@ int main() {
                                         (playEvent.type == sf::Event::KeyPressed && playEvent.key.code == sf::Keyboard::Escape)) {
                                         Play.close();
                                     }
+
                                 }
 
                                 // CMD
