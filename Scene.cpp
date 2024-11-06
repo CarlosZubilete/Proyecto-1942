@@ -4,7 +4,7 @@ Scene::Scene()
 {
   _bg.loadFromFile("assets/sprites/bg-maps-1942.png");
   _bgSprite.setTexture(_bg);
-  _bgSprite.setPosition(0, -4200);
+  _bgSprite.setPosition(0, -5051+800);
   //Display de vidas y puntaje
   _font1.loadFromFile("assets/fonts/MONOCOQUE_FUENTE.ttf");
   _puntos.setFont(_font1);
@@ -26,12 +26,18 @@ void Scene::cmd()
 
 void Scene::update()
 {
-  _bgSprite.move(0,3.f);
+  _bgSprite.move(0,2.3f);
+
   _gamePlay.update();
   _puntos.setString("PUNTOS " + std::to_string(_gamePlay.getPuntos()));
   _vidas.setString("VIDA "    + std::to_string(_gamePlay.getVidas  ()));
   _frames_cartel.setString("Frames= " + std::to_string(_frames) + "\nTiempo= " + std::to_string(_frames/60));
   _frames = _gamePlay.getFrames();
+
+  if(_bgSprite.getPosition().y > 0 )
+  {
+    respawnBackground();
+  }
 }
 
 sf::Vector2f Scene::getCameraPosition()
@@ -47,6 +53,15 @@ void Scene::draw(sf::RenderTarget &target, sf::RenderStates states)const
   target.draw(_vidas,states);
   target.draw(_frames_cartel,states);
 }
+
+void Scene::respawnBackground()
+{
+  _bgSprite.setPosition({0,-5051+800});
+}
+
+
+
+
 
 
 

@@ -9,13 +9,11 @@ Enemy::Enemy()
   _sprite.setTexture(*_texture);
   _sprite.setTextureRect({59,55,17,18});
   _sprite.setScale(3,3);
-  _canShoot = true;
-  _frame = 0;
   _sprite.setPosition( std::rand()%600+1,0-48-48);
   _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+1.0 :  - (float)(std::rand()%30)/10+1.0;
 //  _sprite.setPosition( 320,400);
 //  _velocity.x = 0.5;
-  _velocity.y = 3.f;
+  _velocity.y = 3.2f;
 }
 
 void Enemy::cmd() {
@@ -44,14 +42,6 @@ void Enemy::respawn() {
 //  _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+1.0 :  - (float)(std::rand()%30)/10+1.0;
 }
 
-bool Enemy::shot() {
-  if (_canShoot)
-  {
-    return true;
-  }
-  return false;
-}
-
 void Enemy::draw(sf::RenderTarget &target , sf::RenderStates states)const {
   target.draw(_sprite, states);
 }
@@ -70,7 +60,4 @@ sf::Vector2f Enemy::getPosition() const
   return _sprite.getPosition();
 }
 
-void Enemy::explosion()
-{
 
-}

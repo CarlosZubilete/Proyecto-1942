@@ -10,6 +10,8 @@ class Scene: public sf::Drawable
     sf::Vector2f getCameraPosition();
     void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
     void cmd();
+    void respawnBackground();
+
 
   private:
     // Display de puntajes y vidas:

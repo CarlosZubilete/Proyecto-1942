@@ -29,7 +29,7 @@ void GamePlay::update()
         }
     }
 
-    if (true)
+    if (_frames%60 == 0.f)
     {
         sf::Vector2f direccion;
         float direccion_relacion;
