@@ -128,7 +128,7 @@ void GamePlay::update()
         if (_enemyBullets[i]->getBounds().top +_enemyBullets[i]->getBounds().height > 800)
         {
             delete _enemyBullets[i];
-          _enemyBullets.erase(_enemyBullets.begin()+i, _enemyBullets.begin()+i+1);
+          _enemyBullets.erase(_enemyBullets.begin()+i);
         }
     }
 
@@ -146,12 +146,14 @@ void GamePlay::update()
     }
 
 
-  if (isCollisionWithPersonaje()) {
+  if (isCollisionWithPersonaje() ||
+      (isCollision_vBullestEnemyB_whitPersonaje())) {
     _juego.changeVidas();
     _player.respawn();
   }
 
-  if (isCollisionWithEnemy()) {
+  if (isCollisionWithEnemy() ||
+    (isCollision_bullets_whitEnemyB())){
     _juego.changePuntos(100);
   }
 
@@ -176,12 +178,32 @@ void GamePlay::update()
   _frames++;
 }
 
-//
-//
-bool GamePlay::checkCollision(const Enemy& col) const {
-    return _player.getBounds().intersects(col.getBounds());
-  }
 
+
+bool GamePlay::checkCollision(const Enemy& col) const
+{
+    return _player.getBounds().intersects(col.getBounds());
+}
+
+
+/// SI LA BALA DEL VECTOR ENEMIGOS B COLISIONA CON EL PERSONAJE.
+bool GamePlay::isCollision_vBullestEnemyB_whitPersonaje()
+{
+    bool result = false;
+
+    for ( int i = 0 ; i < _bullets_vEnemyB.size() ; i++)
+    {
+        if (_bullets_vEnemyB[i]->isCollision(_player))
+        {
+            std::cout << "COLIION , VECTOR BALAS B CON PERSONAJE " << std::endl;
+            delete _bullets_vEnemyB[i];
+            _bullets_vEnemyB.erase(_bullets_vEnemyB.begin()+i);
+            result = true;
+        }
+    }
+
+    return result;
+}
 
 
 bool GamePlay::isCollisionWithPersonaje() // cuando te disparan
@@ -220,6 +242,33 @@ bool GamePlay::isCollisionWithEnemy() // cuando destruis aviones enemigos
     }
     return result;
 }
+
+bool GamePlay::isCollision_bullets_whitEnemyB()
+{
+
+    /// RECORRO LAS BALAS QUE DISPARO EL PERSONAJE
+    for ( int i = 0 ; i < _bullets.size() ; i++ )
+    {
+        /// RECORREMOS TODOS LOS ENEMIGOS B EN PANTALLA
+        for ( int j = 0 ; j < _vEnemiesB.size() ; j++ )
+        {
+            if (_bullets[i]->isCollision(*_vEnemiesB[j]))
+            {
+                std::cout << "COLLISION -> BULLEST PERSONAJE CON ENEMIGO B" << std::endl;
+                delete _bullets[i];
+                _bullets.erase(_bullets.begin()+i);
+
+                _vEnemiesB[j]->respawn();
+                return true;
+
+            }
+        }
+    }
+
+    return false;
+
+}
+
 
 void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states)const
 {

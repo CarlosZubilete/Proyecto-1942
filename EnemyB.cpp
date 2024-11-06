@@ -25,7 +25,7 @@ void EnemyB::cmd()
 
   if (_timeRespawn < 0 )
   {
-    _timeRespawn = 90;
+    _timeRespawn = 60*2;
     _canShoot = true;
   }
 
@@ -58,12 +58,12 @@ void EnemyB::update()
 
   ///CORREGIR: SI LA DIFERENCIA ABSOLUTA ES MENOR ENTRE LA POSICION ACTUAL Y LA NUEVA POSICION,
   /// NOS MOVEMOS EN
-  if (std::abs(_newPosition.x - _sprite.getPosition().x) <= 5)
+  if (std::abs(_newPosition.x - _sprite.getPosition().x) <= 15)
   {
     //_sprite.setPosition(_newPosition.x,_sprite.getPosition().y);
     _newPosition = {std::rand() % 400 + _sprite.getGlobalBounds().width, std::rand() % 400 + _sprite.getGlobalBounds().height};
   }
-  if (std::abs(_newPosition.y - _sprite.getPosition().y) <= 5)
+  if (std::abs(_newPosition.y - _sprite.getPosition().y) <= 15)
   {
     //_sprite.setPosition(_sprite.getPosition().x,_newPosition.y);
     _newPosition = {std::rand() % 400 + _sprite.getGlobalBounds().width, std::rand() % 400 + _sprite.getGlobalBounds().height};

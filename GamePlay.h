@@ -22,15 +22,17 @@ class GamePlay: public sf::Drawable
         void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
         int getPuntos() const;
         int getVidas() const;
-        CartelPosicion enemigo1_cartel;
-        CartelPosicion player_cartel;
-        std::vector<CartelPosicion*> bala_cartel;
         bool checkCollision(const Enemy& enemigo1) const;
         int getFrames() const;
+        bool isCollision_vBullestEnemyB_whitPersonaje();
+        bool isCollision_bullets_whitEnemyB();
 
 private:
         void inicioEnemyB();
 
+        CartelPosicion enemigo1_cartel;
+        CartelPosicion player_cartel;
+        std::vector<CartelPosicion*> bala_cartel;
         Personaje _player;
         std::vector<Bullet*> _bullets;
         std::vector<EnemyBullet*> _enemyBullets;
