@@ -52,7 +52,7 @@ sf::FloatRect Enemy::getBounds()const {
 
 sf::Vector2f Enemy::getBulletOrigin()
 {
-  return {_sprite.getPosition().x + (18-48)/2 ,_sprite.getPosition().y};
+  return {_sprite.getPosition().x + 20 ,_sprite.getPosition().y+54};
 }
 
 sf::Vector2f Enemy::getPosition() const
