@@ -8,7 +8,7 @@ Bullet::Bullet(int horizontal,int vertical, int velocidad)
   _texture = new sf::Texture;
   _texture->loadFromFile("assets/sprites/1942-sprites-projectiles.png");
   _sprite.setTexture(*_texture);
-  _sprite.setTextureRect({21,10,16,16}); // tamaño x 3 = 48*48
+  _sprite.setTextureRect({23,16,11,10}); // tamaño x 3 = 48*48
   _sprite.setScale(3,3);
   _sprite.setPosition(horizontal,vertical);
   _velocidad = velocidad;
@@ -36,7 +36,7 @@ Bullet::Bullet(sf::Vector2f position)
   _texture = new sf::Texture;
   _texture->loadFromFile("assets/sprites/1942-sprites-projectiles.png");
   _sprite.setTexture(*_texture);
-  _sprite.setTextureRect({21,10,16,16}); // tamaño x 3 = 48*48
+  _sprite.setTextureRect({23,16,11,10}); // tamaño x 3 = 48*48
   _sprite.setScale(3,3);
   _sprite.setPosition(position);
   _velocidad = -7;
