@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 
 class Explosion: public sf::Drawable
 {
@@ -9,12 +10,14 @@ class Explosion: public sf::Drawable
     Explosion(int horizontal , int vertical);
     void smallExplosion();
     void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
-
+    void Play();
   private:
     sf::Texture *_texture;
     sf::Sprite _sprite;
     float _frame;
-    float _accumulatedTime;
-    float _frameDuration;
+    sf::SoundBuffer _buffer;
+    sf::Sound _sound;
+    bool _reproducirExplosion;
+
 };
 

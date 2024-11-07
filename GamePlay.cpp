@@ -7,8 +7,6 @@ GamePlay::GamePlay() {
     _frameExplosion  = 0.f;
     _isExplosionActive = false;
     _frames = 0;
-
-
 }
 
 void GamePlay::inicioEnemyB()
@@ -20,7 +18,7 @@ void GamePlay::inicioEnemyB()
         if ( _vEnemiesB.size() < 2)
         {
             _vEnemiesB.push_back(new EnemyB());
-            std::cout << " TAMANIO DE VECTOR -> ENEMY B" << _vEnemiesB.size() << std::endl;
+            //std::cout << " TAMANIO DE VECTOR -> ENEMY B" << _vEnemiesB.size() << std::endl;
         }
     }
 }
@@ -78,7 +76,7 @@ void GamePlay::update()
     {
         if(_bullets_vEnemyB[i]->getBounds().top + _bullets_vEnemyB[i]->getBounds().height > 800)
         {
-            std::cout<<"TAMANIO DE BALAS V-ENEMIGOS" <<_bullets_vEnemyB.size()<<std::endl;
+            //std::cout<<"TAMANIO DE BALAS V-ENEMIGOS" <<_bullets_vEnemyB.size()<<std::endl;
             delete _bullets_vEnemyB[i];
             _bullets_vEnemyB.erase(_bullets_vEnemyB.begin()+i);
         }
@@ -135,7 +133,9 @@ void GamePlay::update()
 
     if(_isExplosionActive)
     {
+
         _explosion.smallExplosion();
+
         _frameExplosion += 0.2f;
 
             if (_frameExplosion >= 6.f)
@@ -228,6 +228,7 @@ bool GamePlay::isCollisionWithEnemy() // cuando destruis aviones enemigos
     {
         if(_bullets[i]->isCollision(enemigo1))
         {
+            _sound.playExplosionSmall();
             _juego.changePuntos(100);
             delete _bullets[i];
             _bullets.erase(_bullets.begin()+i);
