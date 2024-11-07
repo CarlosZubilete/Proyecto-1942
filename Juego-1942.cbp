@@ -57,6 +57,8 @@
 		<Unit filename="CartelPosicion.h" />
 		<Unit filename="Collisionable.cpp" />
 		<Unit filename="Collisionable.h" />
+		<Unit filename="Creditos.cpp" />
+		<Unit filename="Creditos.h" />
 		<Unit filename="Enemy.cpp" />
 		<Unit filename="Enemy.h" />
 		<Unit filename="EnemyB.cpp" />

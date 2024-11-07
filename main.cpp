@@ -8,6 +8,7 @@
 #include "Bullet.h"
 #include "Menu.h"
 #include "GamePlay.h"
+#include "Creditos.h"
 
 int main() {
    std::srand((unsigned)std::time(0));
@@ -148,6 +149,7 @@ int main() {
                         } else if (x == 1) {
 
                             sf::RenderWindow CREDITOS(sf::VideoMode(600, 820), "CREDITOS");
+                            Creditos creditosObj;
 
                             while (CREDITOS.isOpen()) {
 
@@ -161,7 +163,10 @@ int main() {
                                     }
                                 }
 
+                                creditosObj.update();
+
                                 CREDITOS.clear();
+                                CREDITOS.draw(creditosObj);
                                 CREDITOS.display();
                             }
 
@@ -176,7 +181,7 @@ int main() {
 
         mainMenu.update();
         window.clear();
-        mainMenu.draw(window);
+        window.draw(mainMenu);
         window.display();
 
 

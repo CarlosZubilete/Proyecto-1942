@@ -132,26 +132,26 @@ Menu::Menu(float width, float height) {
 // METODO QUE DIBUJA TODOS LOS ELEMENTOS DEL VISUALES DEL MENU
 //-------------------------------------------------------------
 
-void Menu::draw(sf::RenderWindow &window) {
+void Menu::draw(sf::RenderTarget &target , sf::RenderStates states)const{
 
-    window.draw(logoSprite); //DIBUJA EL LOGO 1942
+    target.draw(logoSprite,states); //DIBUJA EL LOGO 1942
 
-    window.draw(capcom); //DIBUJA EL TEXTO @1984 CAPCOM
+    target.draw(capcom,states); //DIBUJA EL TEXTO @1984 CAPCOM
 
-    window.draw(capcomSprite); //DIBUJA EL LOGO DE CAPCOM
+    target.draw(capcomSprite,states); //DIBUJA EL LOGO DE CAPCOM
 
     //blinkState controla el parpadeo del texto "Insert Coin". Si está en true, dibuja insertCoin en la ventana, haciendo que el texto "Insert Coin" parpadee.
     if (showInsertCoin) {
         if (blinkState) {
-            window.draw(insertCoin);
+            target.draw(insertCoin,states);
         }
     }
     //Verifica si showMenuOptions está en true
     if (showMenuOptions) {
         for (int i = 0; i < 3; i++) {
-            window.draw(menu[i]);      //Si es así, recorre el arreglo menu y dibuja cada elemento de las opciones del menú
+            target.draw(menu[i],states);      //Si es así, recorre el arreglo menu y dibuja cada elemento de las opciones del menú
         }
-        window.draw(planeSprite); // dibuja el sprite planeSprite, que representa la imagen del avión
+        target.draw(planeSprite,states); // dibuja el sprite planeSprite, que representa la imagen del avión
     }
 }
 

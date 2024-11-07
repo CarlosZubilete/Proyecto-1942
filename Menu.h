@@ -1,13 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-class Menu {
+class Menu:public sf::Drawable {
 public:
     //CONSTRUCTOR DE LA CLASE MENU
     Menu(float width, float height);
 
     //DIBUJA EN LA VENTANA DE LA APLICACION LOS ELEMENTOS DEL MENU
-    void draw(sf::RenderWindow &window);
+    void draw(sf::RenderTarget &target , sf::RenderStates states) const override;
 
     //CAMBIA LA SELECCION DEL MENU HACIA ARRIBA
     void moveUp();
@@ -67,5 +67,7 @@ private:
 
 
 };
+
+
 
 
