@@ -4,6 +4,7 @@
 #include "Avion.h"
 #include <string>
 #include "CartelPosicion.h"
+#include "Sounds.h"
 
 class Personaje: public sf::Drawable, public Collisionable, public Avion
 {
@@ -25,5 +26,6 @@ class Personaje: public sf::Drawable, public Collisionable, public Avion
   private:
     bool _teclaAnterior = false;
     sf::Vector2f _position;
+    Sounds _disparoPew;
   /// TODO: Machine states
 };

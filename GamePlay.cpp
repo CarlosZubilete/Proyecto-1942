@@ -20,8 +20,15 @@ void GamePlay::inicioEnemyB()
             _vEnemiesB.push_back(new EnemyB());
 
 
-            //std::cout << " TAMANIO DE VECTOR -> ENEMY B" << _vEnemiesB.size() << std::endl;
+            std::cout << " TAMANIO DE VECTOR -> ENEMY B" << _vEnemiesB.size() << std::endl;
         }
+    }
+
+    if(_frames%360 == 0)
+    {
+        _powerUp = new PowerUp();
+        _powerUp->respawn();
+
     }
 }
 
@@ -45,8 +52,7 @@ void GamePlay::update()
         if (_bullets.size() < 5  &&  _timerReload <= 0)
         {
             /// INSTANCIAMOS UNA BALA DEL PERSONAJE.
-          _bullets.push_back(new Bullet( {_player.getBulletOrigin().x , _player.getBulletOrigin().y }));
-
+          _bullets.push_back(new Bullet( {_player.getBulletOrigin().x , _player.getBulletOrigin().y, }));
             /// CADA 10MS PODEMOS DISPARAR.
             _timerReload = 15*1;
         }
@@ -337,6 +343,7 @@ void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states)const
     target.draw(_player,states);
     target.draw(_explosion,states);
     target.draw(enemigo1,states);
+    target.draw(*_powerUp,states);
 //    target.draw(enemigo1_cartel,states);
 //    target.draw(player_cartel,states);
 

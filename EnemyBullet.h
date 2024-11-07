@@ -3,6 +3,7 @@
 #include "Collisionable.h"
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
+
 class EnemyBullet: public sf::Drawable, public Collisionable
 {
 public:

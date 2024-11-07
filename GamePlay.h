@@ -13,6 +13,7 @@
 #include "CartelPosicion.h"
 #include "EnemyB.h"
 #include "Sounds.h"
+#include "PowerUp.h"
 
 class GamePlay: public sf::Drawable
 {
@@ -55,5 +56,7 @@ private:
         std::vector<Explosion*> _vExplosiones; /// SI HAY EXPLISION
         std::vector<bool*> _vec_isExplosiveActive; /// VERIFICAR SI ESTA EN VERDADERO
         std::vector<float*> _vec_frameExplosive; /// LOS FRAMES PARA MANDERSELO A LA FUNCION
+
+        PowerUp *_powerUp;
 };
 

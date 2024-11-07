@@ -130,6 +130,7 @@ bool Personaje::Shoot()
   {
     if (!_shoot)
     {
+      _disparoPew.playDisparoPew();
       _shoot = true;
       return true;
     }
