@@ -1,10 +1,19 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 #include <cmath>
 //#define M_PI 3.14159265358979323846
 //#include <iostream>
 #include "Collisionable.h"
 #include "Avion.h"
+#include "Sounds.h"
+#include "Explosion.h"
+
+enum class EnemyBState{
+        Vivo=0,
+        Muerto
+};
 
 class EnemyB: public sf::Drawable, public Collisionable, public Avion
 {
@@ -18,12 +27,17 @@ class EnemyB: public sf::Drawable, public Collisionable, public Avion
         bool shot();
         void respawn();
         void explosion();
+        void setStateMuerto();
     private:
         sf::Vector2f _newPosition;
         bool _canShoot;
         float _frame;
         int _timeRespawn;
         int _timeReload;
+        Sounds _sound;
+        float _frameExplosion;
+        Explosion *_explosion;
+        EnemyBState _state;
         //sf::Vector2f _moveHacia;
         //float _angle;
         //int _horizonte;

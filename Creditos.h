@@ -13,7 +13,4 @@ class Creditos: public sf::Drawable{
         sf::Font font;
         sf::Text texts[5];
         float velocidad;
-
-
-
 };
