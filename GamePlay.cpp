@@ -18,6 +18,8 @@ void GamePlay::inicioEnemyB()
         if ( _vEnemiesB.size() < 2)
         {
             _vEnemiesB.push_back(new EnemyB());
+
+
             //std::cout << " TAMANIO DE VECTOR -> ENEMY B" << _vEnemiesB.size() << std::endl;
         }
     }
@@ -131,18 +133,43 @@ void GamePlay::update()
     }
 
 
+
     if(_isExplosionActive)
     {
+        _explosion.smallExplosion(_frameExplosion);
 
-        _explosion.smallExplosion();
-
-        _frameExplosion += 0.2f;
-
-            if (_frameExplosion >= 6.f)
+            if (_frameExplosion >= 8.f)
             {
                 _isExplosionActive = false;
                 _frameExplosion = 0.0f;
             }
+    }
+
+    /// RECORREMOS LAS EXPLOSIONES DINAMICAS
+    for ( int i = 0 ; i< _vec_isExplosiveActive.size() ; i++ )
+    {
+        if(*_vec_isExplosiveActive[i] == true)
+        {
+
+            _vExplosiones[i]->smallExplosion(*_vec_frameExplosive[i]);
+
+            if (*_vec_frameExplosive[i] >= 8.f){
+
+                delete _vec_isExplosiveActive[i];
+                _vec_isExplosiveActive.erase(_vec_isExplosiveActive.begin()+i);
+
+                delete _vec_frameExplosive[i];
+                _vec_frameExplosive.erase(_vec_frameExplosive.begin()+i);
+
+                delete _vExplosiones[i];
+                _vExplosiones.erase(_vExplosiones.begin()+i);
+                /*
+                *_vec_isExplosiveActive[i] = false;
+                *_vec_frameExplosive[i] = 0.f;
+                */
+                //std::cout << ""
+            }
+        }
     }
 
 
@@ -234,8 +261,8 @@ bool GamePlay::isCollisionWithEnemy() // cuando destruis aviones enemigos
             _bullets.erase(_bullets.begin()+i);
 
             _explosion =  Explosion(enemigo1.getPosition().x,enemigo1.getPosition().y);
-            _isExplosionActive = true;  // Activa la animaci�n
-            _frameExplosion = 0.0f;     // Reinicia el frame
+            _isExplosionActive = true;  // ACTIVA LA ANIMACION
+            _frameExplosion = 0.0f;     // ESTAMOS EN EL PRIMER FRAME
 
             enemigo1.respawn();
             result = true;
@@ -259,7 +286,12 @@ bool GamePlay::isCollision_bullets_whitEnemyB()
                 delete _bullets[i];
                 _bullets.erase(_bullets.begin()+i);
 
-                _vEnemiesB[j]->respawn();
+                _vExplosiones.push_back(new Explosion(_vEnemiesB[j]->getPosition().x -50, _vEnemiesB[j]->getPosition().y-50));
+                _vec_isExplosiveActive.push_back(new bool(true)) ;
+                _vec_frameExplosive.push_back( new float(0.0f));
+
+                _vEnemiesB[j]->respawn();/// TODO: SE TIENE QUE ELIMINAR.
+
                 return true;
 
             }
@@ -296,6 +328,11 @@ void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states)const
         target.draw(*_bullets_vEnemyB[i],states);
     }
 
+
+    for ( int i = 0 ; i < _vExplosiones.size() ; i++)
+    {
+        target.draw(*_vExplosiones[i],states);
+    }
 
     target.draw(_player,states);
     target.draw(_explosion,states);
