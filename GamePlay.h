@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 #include "Avion.h"
 #include "Player.h"
 #include "Personaje.h"
@@ -10,6 +12,7 @@
 #include "Explosion.h"
 #include "CartelPosicion.h"
 #include "EnemyB.h"
+#include "Sounds.h"
 
 class GamePlay: public sf::Drawable
 {
@@ -40,11 +43,13 @@ private:
         std::vector<Enemy*> _enemies;
         int _timerReload;
         Player _juego;
+
         Explosion _explosion;
         float _frameExplosion;
         bool _isExplosionActive;
         int _frames;
         std::vector <EnemyB*> _vEnemiesB;
         std::vector<Bullet*> _bullets_vEnemyB;
+        Sounds _sound;
 };
 
