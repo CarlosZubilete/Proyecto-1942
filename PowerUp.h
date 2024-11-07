@@ -9,8 +9,7 @@ class PowerUp : public sf::Drawable, public Collisionable
     void respawn();
     void draw(sf::RenderTarget &, sf::RenderStates)const override;
     sf::FloatRect getBounds() const override;
-
   private:
-    sf::Sprite _sprite;
     sf::Texture _texture;
+    sf::Sprite _sprite;
 };

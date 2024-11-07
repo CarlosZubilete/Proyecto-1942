@@ -13,7 +13,7 @@ EnemyB::EnemyB()
   _timeRespawn = 60*2;
   _canShoot = false;
   _frameExplosion = 0.f;
-    _state = EnemyBState::Vivo;
+   // _state = EnemyBState::Vivo;
 }
 
 void EnemyB::cmd()

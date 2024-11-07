@@ -2,6 +2,7 @@
 
 EnemyBullet::EnemyBullet(float horizontal,float vertical, float velocidadX, float velocidadY)
 {
+
   _texture = new sf::Texture;
   _texture->loadFromFile("assets/sprites/1942-sprites-projectiles.png");
   _sprite.setTexture(*_texture);
@@ -10,6 +11,7 @@ EnemyBullet::EnemyBullet(float horizontal,float vertical, float velocidadX, floa
   _sprite.setPosition(horizontal,vertical);
   _velocidadX = velocidadX;
   _velocidadY = velocidadY;
+
 }
 
 void EnemyBullet::update()
