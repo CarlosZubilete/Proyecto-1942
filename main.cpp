@@ -3,14 +3,25 @@
 #include <SFML/Audio/Sound.hpp>
 #include <cstdlib>
 #include <ctime>
+#include <string>
+#include <iostream>
+#include <fstream>
 #include "Scene.h"
 #include "Player.h"
 #include "Bullet.h"
 #include "Menu.h"
 #include "GamePlay.h"
 #include "Creditos.h"
+#include "RankingArchivo.h"
+#include "Ranking.h"
 
 int main() {
+
+//  Ranking _partida;
+//  _partida.cargar();
+
+
+
    std::srand((unsigned)std::time(0));
 
     sf::RenderWindow window(sf::VideoMode(600, 800), "MENU 1942", sf::Style::Default);
