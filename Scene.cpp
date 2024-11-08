@@ -59,6 +59,10 @@ void Scene::respawnBackground()
   _bgSprite.setPosition({0,-5051+800});
 }
 
+/**
+  TRANSFORMACION , AL BOUDS ,
+  EL X E Y SON RELATIVOS
+*/
 
 
 

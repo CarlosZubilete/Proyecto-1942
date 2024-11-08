@@ -24,11 +24,10 @@ void GamePlay::inicioEnemyB()
         }
     }
 
-    if(_frames%360 == 0)
+    if(_frames < 360 )
     {
         _powerUp = new PowerUp();
-        _powerUp->respawn();
-
+        //_powerUp->respawn();
     }
 }
 
@@ -105,7 +104,11 @@ void GamePlay::update()
 
     }
 
-
+    /// DIBUJAMOS EL POWER UP
+    if (_frames % 360 == 0.f)
+    {
+        _powerUp->respawn();
+    }
 
     /// DEPENDIENDO DE CUANTO DISPARE, VAMOS A MOVER
     for(int i=0; i<_bullets.size(); i++)// de esta manera suben las balas disparadas
@@ -193,7 +196,7 @@ void GamePlay::update()
 
   _player.update();
   enemigo1.update();
-
+    _powerUp->update();
 
 
 //  for(Enemy *enemy: _enemies)
@@ -206,6 +209,12 @@ void GamePlay::update()
     _juego.changeVidas();
     _player.respawn();
     enemigo1.respawn();
+  }
+
+  if(_player.isCollision(*_powerUp))
+  {
+    _juego.addVidas();
+    _powerUp->respawn();
   }
 
   _frames++;
@@ -308,6 +317,10 @@ bool GamePlay::isCollision_bullets_whitEnemyB()
 
 }
 
+bool GamePlay::isCollision_withPowerUp()
+{
+
+}
 
 void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states)const
 {

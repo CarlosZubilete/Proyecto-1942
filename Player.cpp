@@ -33,6 +33,11 @@ void Player::changeVidas()
   _vida--;
 }
 
+void Player::addVidas()
+{
+  _vida++;
+}
+
 int Player::getVida()const
 {
   return _vida;

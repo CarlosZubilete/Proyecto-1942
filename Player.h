@@ -9,6 +9,7 @@ class Player
     void setPuntos(int puntos);
     void changePuntos(int puntos);
     void changeVidas();
+    void addVidas();
     int getVida()const;
     void setVida(int vida);
 

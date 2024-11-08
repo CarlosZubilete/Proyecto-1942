@@ -69,7 +69,10 @@ void EnemyB::cmd()
   }
 
 }
-
+/*
+ PUNTO DE ORIGEN Y PUNTO DESTINO
+ SI LA H ES 30 , CUANDO TIENE QUE VALER LOS CATETOS...
+*/
 void EnemyB::update()
 {
     /*
