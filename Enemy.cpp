@@ -7,7 +7,7 @@ Enemy::Enemy()
   _texture = new sf::Texture;
   _texture->loadFromFile("assets/sprites/1942-sprites-enemy.png");
   _sprite.setTexture(*_texture);
-  _sprite.setTextureRect({59,55,17,18});
+  _sprite.setTextureRect({59,57,15,14});
   _sprite.setScale(3,3);
   _sprite.setPosition( std::rand()%600+1,0-48-48);
   _velocity.x = std::rand()%2 ? (float)(std::rand()%30)/10+1.0 :  - (float)(std::rand()%30)/10+1.0;

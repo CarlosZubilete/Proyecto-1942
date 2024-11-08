@@ -5,7 +5,7 @@ EnemyB::EnemyB()
   _texture = new sf::Texture;
   _texture->loadFromFile("assets/sprites/1942-sprites-enemy.png");
   _sprite.setTexture(*_texture);
-  _sprite.setTextureRect({425,320,33,32});
+  _sprite.setTextureRect({426,324,31,23});
   _velocity = {3,3};
   _sprite.setPosition(std::rand()%600,0-48-48); /// APARECE EN EL LADO NEGATIVO.
   _sprite.setScale(2,2);
@@ -136,17 +136,17 @@ void EnemyB::draw(sf::RenderTarget &target , sf::RenderStates states)const
     _angle = atan2(_velocity.y, _velocity.x);
 
 2. _angle = _angle * (180 / M_PI);
-    Ajustar el rango del ángulo: Si angle es negativo, puedes convertirlo a un     ángulo positivo sumando 360.
+    Ajustar el rango del ï¿½ngulo: Si angle es negativo, puedes convertirlo a un     ï¿½ngulo positivo sumando 360.
 
 3.
-Asignar el ángulo a un horizonte: Divide los 360 grados en 16 partes (22.5 grados cada una) para mapear el ángulo a los horizontes. Por ejemplo:
+Asignar el ï¿½ngulo a un horizonte: Divide los 360 grados en 16 partes (22.5 grados cada una) para mapear el ï¿½ngulo a los horizontes. Por ejemplo:
 
     if (_angle < 0) {
     _angle += 360;
     }
 
 4.
-Esto funciona al redondear el ángulo a la parte más cercana de 22.5 grados y mapearlo a un valor entre 1 y 16.
+Esto funciona al redondear el ï¿½ngulo a la parte mï¿½s cercana de 22.5 grados y mapearlo a un valor entre 1 y 16.
 
 int horizonte = static_cast<int>((angle + 11.25) / 22.5) % 16 + 1;
 */

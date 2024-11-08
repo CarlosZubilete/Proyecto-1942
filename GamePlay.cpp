@@ -24,7 +24,11 @@ void GamePlay::inicioEnemyB()
         }
     }
 
+<<<<<<< HEAD
     if(_frames < 360 )
+=======
+    if(_frames%360 == 0 )
+>>>>>>> 073d115da019cf2a31b0b82c9b72df3a3ee0de76
     {
         _powerUp = new PowerUp();
         //_powerUp->respawn();
@@ -44,6 +48,8 @@ void GamePlay::cmd() {
 
 void GamePlay::update()
 {
+
+
     inicioEnemyB();
 
     if(_player.Shoot())
@@ -193,7 +199,7 @@ void GamePlay::update()
     _juego.changePuntos(100);
   }
 
-
+  _powerUp->update();
   _player.update();
   enemigo1.update();
     _powerUp->update();
@@ -353,10 +359,10 @@ void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states)const
         target.draw(*_vExplosiones[i],states);
     }
 
+    target.draw(*_powerUp,states);
     target.draw(_player,states);
     target.draw(_explosion,states);
     target.draw(enemigo1,states);
-    target.draw(*_powerUp,states);
 //    target.draw(enemigo1_cartel,states);
 //    target.draw(player_cartel,states);
 
