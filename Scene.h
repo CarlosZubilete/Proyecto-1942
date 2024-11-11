@@ -13,6 +13,7 @@ class Scene: public sf::Drawable
     void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
     void cmd();
     void respawnBackground();
+    void start(int nivel);
 
 
   private:
@@ -26,6 +27,9 @@ class Scene: public sf::Drawable
     int _frames;
     sf::Texture _bg;
     sf::Sprite _bgSprite;
+    int nivel;
+    bool nivelTerminado;
+
 };
 
 

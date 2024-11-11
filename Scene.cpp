@@ -2,6 +2,7 @@
 
 Scene::Scene()
 {
+
   _bg.loadFromFile("assets/sprites/bg-maps-1942.png");
   _bgSprite.setTexture(_bg);
   _bgSprite.setPosition(0, -5051+800);
@@ -57,6 +58,46 @@ void Scene::draw(sf::RenderTarget &target, sf::RenderStates states)const
 void Scene::respawnBackground()
 {
   _bgSprite.setPosition({0,-5051+800});
+}
+
+void Scene::start(int nivel)
+{
+  switch(nivel)
+  {
+    case 1:
+    {
+      _bg.loadFromFile("assets/sprites/bg-maps-1942.png");
+      _bgSprite.setTexture(_bg);
+      _bgSprite.setPosition(0, -5051+800);
+      //Display de vidas y puntaje
+    }
+      break;
+    case 2:
+    {
+      _bg.loadFromFile("assets/sprites/bg-maps-1942.png");
+      _bgSprite.setTexture(_bg);
+      _bgSprite.setPosition(0, -5051+800);
+      //Display de vidas y puntaje
+    }
+      break;
+    case 3:
+      break;
+    case 4:
+      break;
+    case 5:
+      break;
+    case 6:
+      break;
+    case 7:
+      break;
+    case 8:
+      break;
+    case 9:
+      break;
+    case 10:
+      break;
+
+  }
 }
 
 /**
