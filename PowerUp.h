@@ -9,7 +9,6 @@ class PowerUp : public sf::Drawable, public Collisionable
     PowerUp();
     void update();
     void respawn();
-    void update();
     void draw(sf::RenderTarget &, sf::RenderStates)const override;
     sf::FloatRect getBounds() const override;
   private:

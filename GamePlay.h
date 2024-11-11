@@ -10,7 +10,6 @@
 #include "Enemy.h"
 #include "EnemyBullet.h"
 #include "Explosion.h"
-#include "CartelPosicion.h"
 #include "EnemyB.h"
 #include "Sounds.h"
 #include "PowerUp.h"
@@ -35,9 +34,6 @@ class GamePlay: public sf::Drawable
 private:
         void inicioEnemyB();
 
-        CartelPosicion enemigo1_cartel;
-        CartelPosicion player_cartel;
-        std::vector<CartelPosicion*> bala_cartel;
         Personaje _player;
         std::vector<Bullet*> _bullets;
         std::vector<EnemyBullet*> _enemyBullets;

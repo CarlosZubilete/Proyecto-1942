@@ -24,11 +24,7 @@ void GamePlay::inicioEnemyB()
         }
     }
 
-<<<<<<< HEAD
-    if(_frames < 360 )
-=======
     if(_frames%360 == 0 )
->>>>>>> 073d115da019cf2a31b0b82c9b72df3a3ee0de76
     {
         _powerUp = new PowerUp();
         //_powerUp->respawn();
@@ -325,7 +321,7 @@ bool GamePlay::isCollision_bullets_whitEnemyB()
 
 bool GamePlay::isCollision_withPowerUp()
 {
-
+  return true;
 }
 
 void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states)const

@@ -3,7 +3,6 @@
 #include "Collisionable.h"
 #include "Avion.h"
 #include <string>
-#include "CartelPosicion.h"
 #include "Sounds.h"
 
 class Personaje: public sf::Drawable, public Collisionable, public Avion
