@@ -7,14 +7,17 @@
 class EnemyBullet: public sf::Drawable, public Collisionable
 {
 public:
-    EnemyBullet(float horizontal,float vertical, float velocidadX, float velocidadY);
+    EnemyBullet(sf::Vector2f origen, sf::Vector2f direccion, float velocidad);
     void update();
     void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
     sf::FloatRect getBounds() const override;
+    void setMove(sf::Vector2f direccion);
+    float getVelocidadBala() const;
+
 private:
     sf::Sprite _sprite;
     sf::Texture *_texture;
-    float _velocidadX;
-    float _velocidadY;
+    float _velocidad_bala;
+    sf::Vector2f _direccion;
 
 };

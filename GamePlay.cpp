@@ -92,19 +92,18 @@ void GamePlay::update()
     }
 
 
-    if (_frames%60 == 0.f)
-    {
-        sf::Vector2f direccion;
-        float direccion_relacion;
-        direccion.x = _player.getPosition().x - enemigo1.getPosition().x;
-        direccion.y = _player.getPosition().y - enemigo1.getPosition().y;
-        direccion_relacion = direccion.x / direccion.y;
-        (direccion.x < 0 ) ?  direccion.x = -3.7f : direccion.x= 3.7f;
-        (direccion.y < 0 ) ?  direccion.y = - 3.7f * std::abs(direccion_relacion) : direccion.y =  3.7f * std::abs(direccion_relacion);
-
-        _enemyBullets.push_back(new EnemyBullet( enemigo1.getBulletOrigin().x, enemigo1.getBulletOrigin().y, direccion.x, direccion.y));
-
+  if (_frames%120 == 0)
+  {
+    // Calcula dirección normalizada de EnemyBullet hacia el jugador
+    sf::Vector2f direccion = _player.getPosition() - enemigo1.getPosition();
+    float magnitud = sqrt(direccion.x * direccion.x + direccion.y * direccion.y);
+    if (magnitud != 0) {
+      direccion /= magnitud;  // Normaliza el vector
     }
+
+
+    _enemyBullets.push_back(new EnemyBullet(enemigo1.getBulletOrigin(), direccion, 3.5f));
+  } // Dispara EnemyBullet hacia el jugador
 
     /// DIBUJAMOS EL POWER UP
     if (_frames % 360 == 0.f)
