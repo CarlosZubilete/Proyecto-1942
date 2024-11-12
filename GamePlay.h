@@ -32,7 +32,7 @@ class GamePlay: public sf::Drawable
         bool isCollision_withPowerUp();
 
 private:
-        void inicioEnemyB();
+        void iniciarBalasVector();
 
         Personaje _player;
         std::vector<Bullet*> _bullets;

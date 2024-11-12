@@ -9,7 +9,7 @@ GamePlay::GamePlay() {
     _frames = 0;
 }
 
-void GamePlay::inicioEnemyB()
+void GamePlay::iniciarBalasVector()
 {
     ////////////////////////////////////////////////////////////////////////
     /// CREAMOS EL VECTOR DE ENEMIGOS: CON UN CONTADOR ...
@@ -29,7 +29,43 @@ void GamePlay::inicioEnemyB()
         _powerUp = new PowerUp();
         //_powerUp->respawn();
     }
+
+    if(_player.Shoot())
+    {
+        if (_bullets.size() < 5  &&  _timerReload <= 0)
+        {
+            /// INSTANCIAMOS UNA BALA DEL PERSONAJE.
+            _bullets.push_back(new Bullet( {_player.getBulletOrigin().x , _player.getBulletOrigin().y, }));
+            /// CADA 10MS PODEMOS DISPARAR.
+            _timerReload = 15*1;
+        }
+    }
+
+    for ( int i = 0; i < _vEnemiesB.size() ; i++)
+    {
+        if(_vEnemiesB[i]->shot())
+        {
+            _bullets_vEnemyB.push_back(new Bullet(_vEnemiesB[i]->getPosition().x -50,_vEnemiesB[i]->getPosition().y - 30,7));
+        }
+    }
+
+
+    if (_frames%120 == 0)
+    {
+        // Calcula dirección normalizada de EnemyBullet hacia el jugador
+        sf::Vector2f direccion = _player.getPosition() - enemigo1.getPosition();
+        float magnitud = sqrt(direccion.x * direccion.x + direccion.y * direccion.y);
+
+        if (magnitud != 0)
+        {
+          direccion /= magnitud;  // Normaliza el vector
+        }
+
+            _enemyBullets.push_back(new EnemyBullet(enemigo1.getBulletOrigin(), direccion, 3.5f));
+    } // Dispara EnemyBullet hacia el jugador
 }
+
+
 
 void GamePlay::cmd() {
     _player.cmd();
@@ -45,28 +81,8 @@ void GamePlay::cmd() {
 void GamePlay::update()
 {
 
+    iniciarBalasVector();
 
-    inicioEnemyB();
-
-    if(_player.Shoot())
-    {
-        if (_bullets.size() < 5  &&  _timerReload <= 0)
-        {
-            /// INSTANCIAMOS UNA BALA DEL PERSONAJE.
-          _bullets.push_back(new Bullet( {_player.getBulletOrigin().x , _player.getBulletOrigin().y, }));
-            /// CADA 10MS PODEMOS DISPARAR.
-            _timerReload = 15*1;
-        }
-    }
-
-    /// CREAMOS LAS BALAS DE VECTOR DEL ENEMIGO
-    for ( int i = 0; i < _vEnemiesB.size() ; i++)
-    {
-        if(_vEnemiesB[i]->shot())
-        {
-            _bullets_vEnemyB.push_back(new Bullet(_vEnemiesB[i]->getPosition().x -50,_vEnemiesB[i]->getPosition().y - 30,7));
-        }
-    }
 
     /// ACTUALIZAMOS LOS COMANDOS
     for ( int i = 0 ; i < _vEnemiesB.size() ;  i++)
@@ -80,30 +96,6 @@ void GamePlay::update()
         _bullets_vEnemyB[i]->update();
     }
 
-    /// ELIMINAMOS DE LA PANTALLA
-    for ( int i = 0 ;  i < _bullets_vEnemyB.size() ; i++ )
-    {
-        if(_bullets_vEnemyB[i]->getBounds().top + _bullets_vEnemyB[i]->getBounds().height > 800)
-        {
-            //std::cout<<"TAMANIO DE BALAS V-ENEMIGOS" <<_bullets_vEnemyB.size()<<std::endl;
-            delete _bullets_vEnemyB[i];
-            _bullets_vEnemyB.erase(_bullets_vEnemyB.begin()+i);
-        }
-    }
-
-
-  if (_frames%120 == 0)
-  {
-    // Calcula dirección normalizada de EnemyBullet hacia el jugador
-    sf::Vector2f direccion = _player.getPosition() - enemigo1.getPosition();
-    float magnitud = sqrt(direccion.x * direccion.x + direccion.y * direccion.y);
-    if (magnitud != 0) {
-      direccion /= magnitud;  // Normaliza el vector
-    }
-
-
-    _enemyBullets.push_back(new EnemyBullet(enemigo1.getBulletOrigin(), direccion, 3.5f));
-  } // Dispara EnemyBullet hacia el jugador
 
     /// DIBUJAMOS EL POWER UP
     if (_frames % 360 == 0.f)
@@ -112,36 +104,15 @@ void GamePlay::update()
     }
 
     /// DEPENDIENDO DE CUANTO DISPARE, VAMOS A MOVER
-    for(int i=0; i<_bullets.size(); i++)// de esta manera suben las balas disparadas
+    for(int i=0 ; i<_bullets.size() ; i++)// de esta manera suben las balas disparadas
     {
         _bullets[i]->update();
     }
     /// DEPENDIENDO DE CUANTO DISPARE, VAMOS A ELIMINAR
-
     for(int i=0; i < _enemyBullets.size(); i++) // de esta manera bajan las balas enemigas
     {
       _enemyBullets[i]->update();
     }
-
-
-    for(int i=0; i < _bullets.size(); i++)
-    {
-        if(_bullets[i]->getBounds().top + _bullets[i]->getBounds().height < 0)
-        {
-            delete _bullets[i];
-            _bullets.erase(_bullets.begin()+i, _bullets.begin()+i+1);
-        }
-    }
-
-    for(int i=0; i < _enemyBullets.size(); i++)
-    {
-        if (_enemyBullets[i]->getBounds().top +_enemyBullets[i]->getBounds().height > 800)
-        {
-            delete _enemyBullets[i];
-          _enemyBullets.erase(_enemyBullets.begin()+i);
-        }
-    }
-
 
 
     if(_isExplosionActive)
@@ -222,7 +193,6 @@ void GamePlay::update()
 }
 
 
-
 bool GamePlay::checkCollision(const Enemy& col) const
 {
     return _player.getBounds().intersects(col.getBounds());
@@ -243,6 +213,15 @@ bool GamePlay::isCollision_vBullestEnemyB_whitPersonaje()
             _bullets_vEnemyB.erase(_bullets_vEnemyB.begin()+i);
             result = true;
         }
+        else
+        {
+            if(_bullets_vEnemyB[i]->getBounds().top + _bullets_vEnemyB[i]->getBounds().height > 800)
+            {
+                std::cout<<"TAMANIO DE BALAS V-ENEMIGOS" <<_bullets_vEnemyB.size()<<std::endl;
+                delete _bullets_vEnemyB[i];
+                _bullets_vEnemyB.erase(_bullets_vEnemyB.begin()+i);
+            }
+        }
     }
 
     return result;
@@ -252,15 +231,25 @@ bool GamePlay::isCollision_vBullestEnemyB_whitPersonaje()
 bool GamePlay::isCollisionWithPersonaje() // cuando te disparan
 {
     bool result = false;
+
     for(int i=0; i<_enemyBullets.size(); i++)
-    {
+    {/// COLISION CON PLAYER
         if (_enemyBullets[i]->isCollision(_player))
         {
           delete _enemyBullets[i];
           _enemyBullets.erase(_enemyBullets.begin()+i);
             result = true;
         }
+        else
+        {/// ELIMINAMOS DE LA PANTALLA
+            if (_enemyBullets[i]->getBounds().top +_enemyBullets[i]->getBounds().height > 800)
+            {
+                delete _enemyBullets[i];
+                _enemyBullets.erase(_enemyBullets.begin()+i);
+            }
+        }
     }
+
     return result;
 }
 
@@ -283,7 +272,16 @@ bool GamePlay::isCollisionWithEnemy() // cuando destruis aviones enemigos
             enemigo1.respawn();
             result = true;
         }
+        else
+        {
+            if(_bullets[i]->getBounds().top + _bullets[i]->getBounds().height < 0)
+            {
+                delete _bullets[i];
+                _bullets.erase(_bullets.begin()+i, _bullets.begin()+i+1);
+            }
+        }
     }
+
     return result;
 }
 

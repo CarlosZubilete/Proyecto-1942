@@ -5,20 +5,18 @@ EnemyB::EnemyB()
   _texture = new sf::Texture;
   _texture->loadFromFile("assets/sprites/1942-sprites-enemy.png");
   _sprite.setTexture(*_texture);
-  _sprite.setTextureRect({426,324,31,23});
-  _velocity = {3,3};
+  _sprite.setTextureRect({425,250,34,34});
+  _velocity = {2,2};
   _sprite.setPosition(std::rand()%600,0-48-48); /// APARECE EN EL LADO NEGATIVO.
   _sprite.setScale(2,2);
   _sprite.setOrigin(_sprite.getGlobalBounds().width/2,_sprite.getGlobalBounds().height/2);
   _timeRespawn = 60*2;
   _canShoot = false;
   _frameExplosion = 0.f;
-   // _state = EnemyBState::Vivo;
 }
 
 void EnemyB::cmd()
 {
-
   _timeRespawn--;
 
   if(_timeRespawn > 0)
@@ -32,27 +30,26 @@ void EnemyB::cmd()
     _canShoot = true;
   }
 
-
   /// SI LA NUEVA POS EN X ESTA ADELANTE DE LA ACUTUAL POSICION
   if(_newPosition.x > _sprite.getPosition().x){
     _sprite.move(_velocity.x,0);
-    _state = EnemyBState::Vivo;
+    //_state = EnemyBState::Vivo;
   }
   /// SI LA NUEVA POS EN X ESTA ATRAS DE LA ACTUAL POSICION
   if(_newPosition.x <  _sprite.getPosition().x){
     _sprite.move(-_velocity.x,0);
-    _state = EnemyBState::Vivo;
+    //_state = EnemyBState::Vivo;
   }
 
   /// SI LA NUEVA POS EN Y  ES MAYOR  DE LA ACTUAL POSICION
   if(_newPosition.y > _sprite.getPosition().y){
     _sprite.move(0,_velocity.y);
-    _state = EnemyBState::Vivo;
+    //_state = EnemyBState::Vivo;
   }
   /// SI LA NUEVA POS EN Y  ES MENOR DE LA ACTUAL POSICION
   if(_newPosition.y < _sprite.getPosition().y){
     _sprite.move(0,-_velocity.y);
-    _state = EnemyBState::Vivo;
+    //_state = EnemyBState::Vivo;
   }
 
   ///CORREGIR: SI LA DIFERENCIA ABSOLUTA ES MENOR ENTRE LA POSICION ACTUAL Y LA NUEVA POSICION,
