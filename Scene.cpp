@@ -11,18 +11,20 @@ Scene::Scene(){
   //Display de vidas y puntaje
   _font1.loadFromFile("assets/fonts/MONOCOQUE_FUENTE.ttf");
   _puntos.setFont(_font1);
-  _puntos.setPosition(3, 0);
+  _puntos.setCharacterSize(18);
+  _puntos.setPosition(5, 20);
 
   _puntosMaximos.setFont(_font1);
-  _puntosMaximos.setPosition(3,80);
-  _puntosMaximos.setCharacterSize(14);
+  _puntosMaximos.setPosition(500,20);
+  _puntosMaximos.setCharacterSize(18);
 
   _vidas.setFont(_font1);
-  _vidas.setPosition(2, 40);
+  _vidas.setCharacterSize(18);
+  _vidas.setPosition(150,20);
   _font2.loadFromFile("assets/fonts/monofonto_rg.otf");
   _frames_cartel.setFont(_font2);
-  _frames_cartel.setPosition(500,0);
-  _frames_cartel.setCharacterSize(14);
+  _frames_cartel.setPosition(500,50);
+  _frames_cartel.setCharacterSize(12);
   _archivoGuardado = false;
   juegoTerminado = false;/// bandera para indicar que el juego termine.
   guardarPartida =false;
@@ -30,11 +32,15 @@ Scene::Scene(){
   _nivel=1;
 
 
-  _nivel_txt.setString("Nivel\n  "+_nivel);
+  _nivel_txt.setString("NIVEL\n    " + std::to_string(_nivel));
+  _nivel_txt.setFont(_font1);
+  _nivel_txt.setPosition(295,20);
+  _nivel_txt.setFillColor(sf::Color::White);
+  _nivel_txt.setCharacterSize(18);
 
 
   int puntosMaximos = buscarPuntosMax();
-  _puntosMaximos.setString("Ptos Maximos : " + std::to_string(puntosMaximos));
+  _puntosMaximos.setString("HIGH SCORE\n  " + std::to_string(puntosMaximos));
 
 
 
@@ -63,8 +69,8 @@ void Scene::update()
   // CUESTIONES COMUNES A TODOS LOS NIVELES:
   _gamePlay.update();
   _bgSprite.move(0,2.3f);
-  _puntos.setString("PUNTOS " + std::to_string(_gamePlay.getPuntos()));
-  _vidas.setString("VIDAS "    + std::to_string(_gamePlay.getVidas  ()));
+  _puntos.setString("SCORE\n   " + std::to_string(_gamePlay.getPuntos()));
+  _vidas.setString("LIVES\n   "    + std::to_string(_gamePlay.getVidas  ()));
   _frames_cartel.setString("Frames= " + std::to_string(_frames) + "\nTiempo= " + std::to_string(_frames/60));
   if(_bgSprite.getPosition().y > 0 )
   {
