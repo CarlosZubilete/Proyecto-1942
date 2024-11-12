@@ -46,6 +46,9 @@ void Scene::update()
   {
     respawnBackground();
   }
+
+  /// SI LLEGA AL FINAL O SI VIDAS ES MENOR A CERO
+
 }
 
 sf::Vector2f Scene::getCameraPosition()

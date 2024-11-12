@@ -67,7 +67,8 @@ void GamePlay::iniciarBalasVector()
 
 
 
-void GamePlay::cmd() {
+void GamePlay::cmd(){
+
     _player.cmd();
     enemigo1.cmd();
 

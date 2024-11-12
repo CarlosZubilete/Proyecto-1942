@@ -5,6 +5,7 @@ class Player
 {
   public:
     Player();
+    //int getIDPlayer();
     int getPuntos()const;
     void setPuntos(int puntos);
     void changePuntos(int puntos);
@@ -15,8 +16,8 @@ class Player
 
   private:
     int _puntos; /// *READ DOWN*
-    int _vida; ///
-
+    int _vida;///
+    //int _id;
 };
 
 

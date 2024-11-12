@@ -3,6 +3,7 @@
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 #include "GamePlay.h"
+#include "ArchivoPlayer.h"
 
 class Scene: public sf::Drawable
 {
@@ -15,10 +16,10 @@ class Scene: public sf::Drawable
     void respawnBackground();
     void start(int nivel);
 
-
   private:
     // Display de puntajes y vidas:
     GamePlay _gamePlay;
+    ArchivoPlayer _archivo;
     sf::Text _puntos;
     sf::Font _font1;
     sf::Font _font2;
