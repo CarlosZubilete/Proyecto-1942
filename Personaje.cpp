@@ -174,6 +174,7 @@ bool Personaje::getTeclaAnterior() const
 
 void Personaje::respawn()
 {
+  std::cout << "respauneo" << std::endl;
   _sprite.setPosition((600-96)/2+2, 700);
 }
 
@@ -185,6 +186,16 @@ void Personaje::hide()
 sf::Vector2f Personaje::getPosition() const
 {
   return _sprite.getPosition();
+}
+
+bool Personaje::getInmundidad() const
+{
+  return _inmunidad;
+}
+
+void Personaje::setInmundidad(bool valor)
+{
+  _inmunidad = valor;
 }
 
 

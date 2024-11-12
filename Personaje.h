@@ -20,6 +20,8 @@ class Personaje: public sf::Drawable, public Collisionable, public Avion
     sf::Vector2f getPosition() const override;
     void respawn();
     void hide();
+    bool getInmundidad() const;
+    void setInmundidad(bool);
 
 
 
@@ -27,5 +29,6 @@ class Personaje: public sf::Drawable, public Collisionable, public Avion
     bool _teclaAnterior = false;
     sf::Vector2f _position;
     Sounds _disparoPew;
+    bool _inmunidad;
   /// TODO: Machine states
 };
