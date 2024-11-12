@@ -253,3 +253,14 @@ int Menu::getPressedItem() {
 }
 //--------------------------------------------------------------------------------------------------
 
+
+bool Menu::getShowInsertCoin(){
+
+    return showInsertCoin;
+
+}
+
+bool Menu::getShowMenuOptions(){
+
+return showMenuOptions;
+}

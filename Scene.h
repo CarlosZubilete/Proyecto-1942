@@ -37,6 +37,7 @@ class Scene: public sf::Drawable
     bool _archivoGuardado;
     bool juegoTerminado;
     sf::Text _puntosMaximos;
+    bool guardarPartida;
 };
 
 

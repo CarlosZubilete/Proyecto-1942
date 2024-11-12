@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-Scene::Scene()
+Scene::Scene(): guardarPartida(false)
 {
 
   _bg.loadFromFile("assets/sprites/bg-maps-1942.png");
@@ -63,56 +63,63 @@ void Scene::update()
 
 int Scene::buscarPuntosMax()
 {
-  ArchivoPlayer *archivo;
-  int cantRegistros = archivo->CantidadRegistros();
-  int maxPuntos;
-  Player player;
+    ArchivoPlayer archivo;
+    int cantRegistros = archivo.CantidadRegistros();
+    int maxPuntos = 0;
+    Player player;
 
-  for ( int i = 0 ; i < cantRegistros ; i++ )
-  {
-    player = archivo->Leer(i);
-    if ( i == 0 )
+    for (int i = 0; i < cantRegistros; i++)
     {
-      maxPuntos = player.getPuntos();
+        player = archivo.Leer(i);
+        if (i == 0)
+        {
+            maxPuntos = player.getPuntos();
+        }
+        else if (player.getPuntos() > maxPuntos)
+        {
+            maxPuntos = player.getPuntos();
+        }
     }
-    else
-    {
-      if (player.getPuntos() > maxPuntos)
-      {
-        maxPuntos = player.getPuntos();
-      }
-    }
-  }
 
-  return maxPuntos;
+    return maxPuntos;
 }
 
 bool Scene::getJuegoTerminado()
 {
-  /// TERMINO EL NIVEL
-  /// SI LLEGA AL FINAL O SI VIDAS ES MENOR A CERO
 
-  if (_gamePlay.getVidas() < 0)
-  {
-    guardarArchivo();
-    return true;
-  }
-  return false;
-  //return juegoTerminado;
-}
 
-bool Scene::guardarArchivo()
-{
-  int puntos = _gamePlay.getPuntos();
-    //SE TIENE QUE HACER EN UNA FUNCION
-  int cantidadRegistros = _archivoPlayer.CantidadRegistros();
-  Player player;
-
-  _archivoPlayer.Guardar(player);
-
-  std:: cout << "ARCHIVO GUARDADO ?? :(" << std::endl;
+    if (_gamePlay.getVidas() == 0)
+    {
+        if(guardarPartida==false){
+        guardarArchivo();
+        guardarPartida=true;
+        }
+        return true;
+    }
+    return false;
 
 }
+
+bool Scene::guardarArchivo(){
+    int puntos = _gamePlay.getPuntos();
+    int cantidadRegistros = _archivoPlayer.CantidadRegistros();
+
+
+    Player player;
+    player.changePuntos(puntos);
+
+    bool guardado = _archivoPlayer.Guardar(player);
+
+    if (guardado) {
+        std::cout << "ARCHIVO GUARDADO CORRECTAMENTE :)" << std::endl;
+    } else {
+        std::cout << "ERROR: NO SE PUDO GUARDAR EL ARCHIVO :(" << std::endl;
+    }
+
+    return guardado;
+
+}
+
 
 sf::Vector2f Scene::getCameraPosition()
 {

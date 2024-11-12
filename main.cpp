@@ -89,7 +89,7 @@ int main() {
 
                 } else if (event.key.code == sf::Keyboard::Return) {
 
-                    if (mainMenu.showInsertCoin) {
+                    if (mainMenu.getShowInsertCoin()) {
                         mainMenu.handleEnterPress();
 
                     } else {
@@ -123,10 +123,12 @@ int main() {
                                 }
 
                                 // CMD
-                                if (!scene.getJuegoTerminado())
-                                {
+                                if (!scene.getJuegoTerminado()){
                                     scene.cmd();
                                     scene.update();
+
+
+
                                     /// TODO: borrar los objeros de ecena
                                 }
                                 else
@@ -135,6 +137,8 @@ int main() {
                                     //scene.dibujarGameOver();
                                     //scene.guardarPuntos();
                                     //scene.guardarArchivo();
+                                     main_theme_v1.stop();
+
                                 }
 
 
