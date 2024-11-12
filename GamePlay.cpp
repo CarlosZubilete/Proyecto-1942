@@ -166,6 +166,12 @@ void GamePlay::update()
     _juego.changePuntos(100);
   }
 
+  if(isCollision_vEnemyB_withPersonaje())
+  {
+    _juego.changeVidas();
+    _player.respawn();
+  }
+
   _powerUp->update();
   _player.update();
   enemigo1.update();
@@ -203,30 +209,48 @@ bool GamePlay::checkCollision(const Enemy& col) const
 /// SI LA BALA DEL VECTOR ENEMIGOS B COLISIONA CON EL PERSONAJE.
 bool GamePlay::isCollision_vBullestEnemyB_whitPersonaje()
 {
+  bool result = false;
+
+  for (int i = 0; i < _bullets_vEnemyB.size(); i++) {
+    if (_bullets_vEnemyB[i]->isCollision(_player)) {
+      std::cout << "COLISION , VECTOR BALAS B CON PERSONAJE " << std::endl;
+      delete _bullets_vEnemyB[i];
+      _bullets_vEnemyB.erase(_bullets_vEnemyB.begin() + i);
+      result = true;
+    } else {
+      if (_bullets_vEnemyB[i]->getBounds().top + _bullets_vEnemyB[i]->getBounds().height > 800) {
+        std::cout << "TAMANIO DE BALAS V-ENEMIGOS" << _bullets_vEnemyB.size() << std::endl;
+        delete _bullets_vEnemyB[i];
+        _bullets_vEnemyB.erase(_bullets_vEnemyB.begin() + i);
+      }
+    }
+  }
+}
+
+/// SI VECTOR ENEMIGOS B COLISIONA CON EL PERSONAJE.
+  bool GamePlay::isCollision_vEnemyB_withPersonaje()
+  {
     bool result = false;
 
-    for ( int i = 0 ; i < _bullets_vEnemyB.size() ; i++)
-    {
-        if (_bullets_vEnemyB[i]->isCollision(_player))
-        {
-            std::cout << "COLIION , VECTOR BALAS B CON PERSONAJE " << std::endl;
-            delete _bullets_vEnemyB[i];
-            _bullets_vEnemyB.erase(_bullets_vEnemyB.begin()+i);
-            result = true;
+    for (int i = 0; i < _vEnemiesB.size(); i++) {
+      if (_vEnemiesB[i]->isCollision(_player)) {
+        std::cout << "COLISION ENEMYB CON PLAYER " << std::endl;
+        delete _vEnemiesB[i];
+        _vEnemiesB.erase(_vEnemiesB.begin() + i);
+        result = true;
+      } else {
+        if (_vEnemiesB[i]->getBounds().top + _vEnemiesB[i]->getBounds().height > 800) {
+          std::cout << "CANTIDAD ENEMY B" << _vEnemiesB.size() << std::endl;
+          delete _vEnemiesB[i];
+          _vEnemiesB.erase(_vEnemiesB.begin() + i);
         }
-        else
-        {
-            if(_bullets_vEnemyB[i]->getBounds().top + _bullets_vEnemyB[i]->getBounds().height > 800)
-            {
-                std::cout<<"TAMANIO DE BALAS V-ENEMIGOS" <<_bullets_vEnemyB.size()<<std::endl;
-                delete _bullets_vEnemyB[i];
-                _bullets_vEnemyB.erase(_bullets_vEnemyB.begin()+i);
-            }
-        }
+      }
     }
 
     return result;
-}
+  }
+
+
 
 
 bool GamePlay::isCollisionWithPersonaje() // cuando te disparan
@@ -316,6 +340,8 @@ bool GamePlay::isCollision_bullets_whitEnemyB()
     return false;
 
 }
+
+
 
 bool GamePlay::isCollision_withPowerUp()
 {

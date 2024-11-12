@@ -30,6 +30,7 @@ class GamePlay: public sf::Drawable
         bool isCollision_vBullestEnemyB_whitPersonaje();
         bool isCollision_bullets_whitEnemyB();
         bool isCollision_withPowerUp();
+        bool isCollision_vEnemyB_withPersonaje();
 
 private:
         void iniciarBalasVector();
