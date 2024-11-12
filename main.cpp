@@ -44,8 +44,8 @@ int main()
   font.loadFromFile("assets/fonts/MONOCOQUE_FUENTE.ttf");
   sf::Text continuar_text;
   sf::RectangleShape continuar_text_fondo;
-  bool mostrarContinuar = false;
 
+  bool mostrarContinuar = false;
 
   // GAME LOOP
   while (window.isOpen()) {
@@ -86,15 +86,13 @@ int main()
 
 
               // GAME LOOP
-
-
               while (Play.isOpen()) {
 
                 // EVENTS /////////////////////////////////////////////////////////
-
                 sf::Event playEvent;
 
-                while (Play.pollEvent(playEvent)) {
+                while (Play.pollEvent(playEvent))
+                {
 
                   if (playEvent.type == sf::Event::Closed) {
                     main_theme_v1.stop();
@@ -128,44 +126,34 @@ int main()
                         Play.close();
                       }
                     }
-
-
                   }
-
-
-                }
+                }/// FIN DEL WHILE INTERNO . . .
 
                 // CMD ////////////////////////////////////////////////////////////
                 if (scene.getJuegoTerminado()) {
-                  main_theme_v1.stop();
+                  main_theme_v1.stop(); ///  STOP MUSICA DEL JUEGO
                   scene.setJuegoTerminado(true);
                 }
-                scene.cmd();
-
                 // UPDATE /////////////////////////////////////////////////////////
                 if (!scene.getJuegoTerminado()) {
+                  scene.cmd();
                   scene.update();
                 }
 
                 // DRAW ///////////////////////////////////////////////////////////
                 Play.clear();
-                Play.draw(scene);
 
+                Play.draw(scene)
 
                 if (mostrarContinuar) {
                   Play.draw(continuar_text_fondo);
                   Play.draw(continuar_text);
                 } // DIBUJO CARTEL CONTINUAR
-
-
                 // FLIP ///////////////////////////////////////////////////////////
                 Play.display();
-
-
                 // LIBERACION DEL JUEGO
 
-
-              }
+              } /// FIN DEL GAME LOOP
 
             } else if (x == 1) {
 

@@ -28,8 +28,6 @@ void Enemy::cmd() {
   if (_sprite.getPosition().y - getBounds().height > 800){
     respawn();
   }
-
-
 }
 
 void Enemy::update()

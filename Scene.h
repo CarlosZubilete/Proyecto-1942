@@ -43,6 +43,7 @@ class Scene: public sf::Drawable
     sf::Sprite gameOverSprite;
     int _nivel;
     sf::Text _nivel_txt;
+    bool _stopGamePlay;
 };
 
 

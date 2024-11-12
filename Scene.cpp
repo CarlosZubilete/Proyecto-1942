@@ -33,6 +33,7 @@ Scene::Scene()
   _archivoGuardado = false;
   juegoTerminado = false;/// bandera para indicar que el juego termine.
   guardarPartida = false;
+
   _frames = 0;
   _nivel = 1;
 
@@ -47,7 +48,8 @@ Scene::Scene()
   int puntosMaximos = buscarPuntosMax();
   _puntosMaximos.setString("HIGH SCORE\n  " + std::to_string(puntosMaximos));
 
-
+  _stopGamePlay = false;
+  /// TODO: Agregar a una sf::textura . sf::sprite....
   if (!gameOverTexture.loadFromFile("assets/sprites/gameOver.png")) {
 
     std::cout << "Error al cargar la imagen de game over" << std::endl;
@@ -56,6 +58,7 @@ Scene::Scene()
   gameOverSprite.setTexture(gameOverTexture);
   gameOverSprite.setPosition(225, 325);
   gameOverSprite.setScale(2, 2);
+  ///
 }
 
 void Scene::cmd()
@@ -68,51 +71,33 @@ void Scene::update()
 {
   // CUESTIONES COMUNES A TODOS LOS NIVELES:
   _gamePlay.update();
+
   _bgSprite.move(0, 2.3f);
+
   _puntos.setString("SCORE\n   " + std::to_string(_gamePlay.getPuntos()));
+
   if (_gamePlay.getVidas() < 0) { _vidas.setString("LIVES\n   0"); }
   else {
     _vidas.setString("LIVES\n   " + std::to_string(_gamePlay.getVidas()));
   }
+
   _frames_cartel.setString("Frames= " + std::to_string(_frames) + "\nTiempo= " + std::to_string(_frames / 60));
   if (_bgSprite.getPosition().y > 0) {
     respawnBackground();
   }
+
   _frames++;
 
-
+  _stopGamePlay = false;
 } // TERMINA UPDATE
-
-
-
-int Scene::buscarPuntosMax()
-{
-  ArchivoPlayer archivo;
-  int cantRegistros = archivo.CantidadRegistros();
-  int maxPuntos = 0;
-  Player player;
-
-  for (int i = 0; i < cantRegistros; i++) {
-    player = archivo.Leer(i);
-    if (i == 0) {
-      maxPuntos = player.getPuntos();
-    } else if (player.getPuntos() > maxPuntos) {
-      maxPuntos = player.getPuntos();
-    }
-  }
-
-  return maxPuntos;
-}
 
 bool Scene::getJuegoTerminado()
 {
 
-  if (_gamePlay.getVidas() < 0) // TODO: SALIDA SI TERMINA LOS NIVELES
+  if (_gamePlay.getVidas() < 0) /// SALIDA SI TERMINA LOS NIVELES
   {
-
-
-
-    // TODO: GUARDA PARTIDA
+    _stopGamePlay = true;
+    /// GUARDA PARTIDA
     if (guardarPartida == false) {
       guardarArchivo();
       guardarPartida = true;
@@ -133,7 +118,6 @@ bool Scene::guardarArchivo()
 {
   int puntos = _gamePlay.getPuntos();
   int cantidadRegistros = _archivoPlayer.CantidadRegistros();
-
 
   Player player;
   player.changePuntos(puntos);
@@ -159,17 +143,47 @@ sf::Vector2f Scene::getCameraPosition()
 void Scene::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
   target.draw(_bgSprite, states);
-  target.draw(_gamePlay, states);
+
+  /// SOLO SE EJECUTA SI EL LA BANDERA ES FALSA;
+  if (!_stopGamePlay)
+  {
+    //std::cout << "ENTRO A _stopGamePlay" << std::endl;
+    target.draw(_gamePlay, states);
+  }
+
   target.draw(_puntos, states);
+
   target.draw(_vidas, states);
+
   target.draw(_puntosMaximos, states);
+
   target.draw(_frames_cartel, states);
+
   target.draw(_nivel_txt, states);
 
   if (guardarPartida == true) {
 
     target.draw(gameOverSprite, states);
   }
+}
+
+int Scene::buscarPuntosMax()
+{
+  ArchivoPlayer archivo;
+  int cantRegistros = archivo.CantidadRegistros();
+  int maxPuntos = 0;
+  Player player;
+
+  for (int i = 0; i < cantRegistros; i++) {
+    player = archivo.Leer(i);
+    if (i == 0) {
+      maxPuntos = player.getPuntos();
+    } else if (player.getPuntos() > maxPuntos) {
+      maxPuntos = player.getPuntos();
+    }
+  }
+
+  return maxPuntos;
 }
 
 void Scene::respawnBackground()
