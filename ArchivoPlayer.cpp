@@ -45,26 +45,6 @@ int ArchivoPlayer::Buscar(int puntos){
     return -1;
 }
 
-/*
-int ArchivoPlayer::Buscar(int IDplayer){
-    FILE *pArchivo = fopen(_nombreArchivo.c_str(), "rb");
-    if(pArchivo == NULL){
-        return -1;
-    }
-    Player player;
-    int i = 0;
-    while(fread(&player, sizeof(Player), 1, pArchivo)){
-        if(player.getIDPlayer() == IDplayer){
-            fclose(pArchivo);
-            return i;
-            /// TODO: hacer gerIDPlayer
-        }
-        i++;
-    }
-    fclose(pArchivo);
-    return -1;
-}
-*/
 Player ArchivoPlayer::Leer(int posicion){
     FILE *pArchivo = fopen(_nombreArchivo.c_str(), "rb");
     Player player;
@@ -99,6 +79,27 @@ void ArchivoPlayer::Leer(int cantidadRegistros, Player *vector){
     }
     fclose(pArchivo);
 }
+
+/*
+int ArchivoPlayer::Buscar(int IDplayer){
+    FILE *pArchivo = fopen(_nombreArchivo.c_str(), "rb");
+    if(pArchivo == NULL){
+        return -1;
+    }
+    Player player;
+    int i = 0;
+    while(fread(&player, sizeof(Player), 1, pArchivo)){
+        if(player.getIDPlayer() == IDplayer){
+            fclose(pArchivo);
+            return i;
+            /// TODO: hacer gerIDPlayer
+        }
+        i++;
+    }
+    fclose(pArchivo);
+    return -1;
+}
+*/
 
 
 

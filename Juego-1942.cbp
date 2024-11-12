@@ -50,10 +50,11 @@
 			<Add library="sfml-audio" />
 			<Add directory="SFML/lib" />
 		</Linker>
+		<Unit filename="ArchivoPlayer.cpp" />
+		<Unit filename="ArchivoPlayer.h" />
 		<Unit filename="Avion.h" />
 		<Unit filename="Bullet.cpp" />
 		<Unit filename="Bullet.h" />
-		<Unit filename="CartelPosicion.cpp" />
 		<Unit filename="CartelPosicion.h" />
 		<Unit filename="Collisionable.cpp" />
 		<Unit filename="Collisionable.h" />

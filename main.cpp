@@ -123,12 +123,25 @@ int main() {
                                 }
 
                                 // CMD
-                                 scene.cmd();
+                                if (!scene.getJuegoTerminado())
+                                {
+                                    scene.cmd();
+                                    scene.update();
+                                    /// TODO: borrar los objeros de ecena
+                                }
+                                else
+                                {
+                                    /// TODO: guardar puntos , mostrar cartel, presione para continuar o salir
+                                    //scene.dibujarGameOver();
+                                    //scene.guardarPuntos();
+                                    //scene.guardarArchivo();
+                                }
 
 
                                 // UPDATE
 //                                gamePlay.update();
-                                scene.update();
+
+
 
 //                                if (gamePlay.isCollisionWithEnemy()) {
 //                                    player.changePuntos(1);
