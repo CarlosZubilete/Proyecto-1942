@@ -84,7 +84,7 @@ void GamePlay::update()
 
 
   /// DIBUJAMOS EL POWER UP
-  if (_frames % 60*10 == 0.f) {
+  if (_frames % 60 * 10 == 0.f) {
     _powerUp->respawn();
   }
 
@@ -134,7 +134,6 @@ void GamePlay::update()
   if (isCollisionWithPersonaje() ||
       (isCollision_vBullestEnemyB_whitPersonaje())) {
     _juego.changeVidas();
-    std::cout << "entro aca" << std::endl;
     _player.respawn();
   } //  COLISION PLAYER-BULLETS B
 

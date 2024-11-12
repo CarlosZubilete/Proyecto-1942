@@ -122,7 +122,6 @@ int main()
 
                     if (mostrarContinuar) {
                       if (playEvent.key.code == sf::Keyboard::Y) {
-                        std::cout << "entro " << std::endl;
                         mostrarContinuar = false;
                       } else if (playEvent.key.code == sf::Keyboard::N) {
                         main_theme_v1.stop();
