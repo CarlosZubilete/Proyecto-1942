@@ -38,6 +38,8 @@ class Scene: public sf::Drawable
     bool juegoTerminado;
     sf::Text _puntosMaximos;
     bool guardarPartida;
+    sf::Texture gameOverTexture;
+    sf::Sprite gameOverSprite;
 };
 
 

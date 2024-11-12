@@ -1,7 +1,8 @@
 #include "Scene.h"
 
-Scene::Scene(): guardarPartida(false)
-{
+#include <iostream>
+
+Scene::Scene(){
 
   _bg.loadFromFile("assets/sprites/bg-maps-1942.png");
   _bgSprite.setTexture(_bg);
@@ -23,6 +24,17 @@ Scene::Scene(): guardarPartida(false)
   _frames_cartel.setCharacterSize(14);
   _archivoGuardado = false;
   juegoTerminado = false;/// bandera para indicar que el juego termine.
+  guardarPartida =false;
+
+
+  if (!gameOverTexture.loadFromFile("assets/sprites/gameOver.png")){
+
+    std::cout<< "Error al cargar la imagen de game over"<<std::endl;
+  }
+
+  gameOverSprite.setTexture(gameOverTexture);
+  gameOverSprite.setPosition(225,325);
+  gameOverSprite.setScale(2,2);
 }
 
 void Scene::cmd()
@@ -134,6 +146,11 @@ void Scene::draw(sf::RenderTarget &target, sf::RenderStates states)const
   target.draw(_vidas,states);
   target.draw(_puntosMaximos,states);
   target.draw(_frames_cartel,states);
+
+  if(guardarPartida==true){
+
+    target.draw(gameOverSprite,states);
+  }
 }
 
 void Scene::respawnBackground()
