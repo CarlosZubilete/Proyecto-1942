@@ -8,7 +8,6 @@ GamePlay::GamePlay()
   _frameExplosion = 0.f;
   _isExplosionActive = false;
   _frames = 0;
-  _player_down = false;
 }
 
 void GamePlay::iniciarBalasVector()
@@ -136,9 +135,7 @@ void GamePlay::update()
       (isCollision_vBullestEnemyB_whitPersonaje())) {
     _juego.changeVidas();
     std::cout << "entro aca" << std::endl;
-    _player_down = true;
-    _player.hide();
-    std::cout << "_player_down = true; COLISION PLAYER- BULLETS B " << std::endl;
+    _player.respawn();
   } //  COLISION PLAYER-BULLETS B
 
   if (isCollisionWithEnemy() ||
@@ -148,9 +145,7 @@ void GamePlay::update()
 
   if (isCollision_vEnemyB_withPersonaje()) {
     _juego.changeVidas();
-    _player_down = true;
-    _player.hide();
-    std::cout << "_player_down = true; COLISION PLAYER-ENEMY B " << std::endl;
+    _player.respawn();
   } // COLISION PLAYER-ENEMYB
 
   _powerUp->update();
@@ -159,19 +154,10 @@ void GamePlay::update()
   _powerUp->update();
 
 
-//  for(Enemy *enemy: _enemies)
-//  {
-//    enemy->update();
-//  }
-
-
-
   if (checkCollision(enemigo1)) {
     _juego.changeVidas();
     enemigo1.respawn();
-    _player_down = true;
-    _player.hide();
-    std::cout << "_player_down = true; COLISION PLAYER-ENEMY A " << std::endl;
+    _player.respawn();
   } // COLISION PLAYER-ENEMY A
 
   if (_player.isCollision(*_powerUp)) {
@@ -179,14 +165,6 @@ void GamePlay::update()
     _powerUp->respawn();
   }
 
-
-  if ((_player_down) && (respawn_delay.getElapsedTime().asSeconds() > 2.f)) {
-
-    _player.respawn();
-    respawn_delay.restart();
-    _player_down = false;
-  }
-  std::cout << respawn_delay.getElapsedTime().asSeconds() << std::endl;
 
   _timerReload--;
   _frames++;

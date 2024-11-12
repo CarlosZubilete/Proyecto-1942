@@ -23,7 +23,7 @@ Scene::Scene(){
   _vidas.setPosition(150,20);
   _font2.loadFromFile("assets/fonts/monofonto_rg.otf");
   _frames_cartel.setFont(_font2);
-  _frames_cartel.setPosition(500,50);
+  _frames_cartel.setPosition(500,80);
   _frames_cartel.setCharacterSize(12);
   _archivoGuardado = false;
   juegoTerminado = false;/// bandera para indicar que el juego termine.
@@ -70,7 +70,9 @@ void Scene::update()
   _gamePlay.update();
   _bgSprite.move(0,2.3f);
   _puntos.setString("SCORE\n   " + std::to_string(_gamePlay.getPuntos()));
-  _vidas.setString("LIVES\n   "    + std::to_string(_gamePlay.getVidas  ()));
+  if (_gamePlay.getVidas() < 0) {_vidas.setString("LIVES\n   0");} else {
+    _vidas.setString("LIVES\n   "    + std::to_string(_gamePlay.getVidas  ()));
+  }
   _frames_cartel.setString("Frames= " + std::to_string(_frames) + "\nTiempo= " + std::to_string(_frames/60));
   if(_bgSprite.getPosition().y > 0 )
   {
