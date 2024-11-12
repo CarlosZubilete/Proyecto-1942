@@ -6,7 +6,6 @@ PowerUp::PowerUp(){
   _texture.loadFromFile("assets/sprites/1942-sprites-effects-sinBg.png");
   _sprite.setTexture(_texture);
   _sprite.setTextureRect({38,55,35,34}); // X,Y,widh,heigh
-  _sprite.scale(1.5,1.5);
   _sprite.setPosition(sf::Vector2f(-50,-50));
   _sprite.setOrigin(_sprite.getGlobalBounds().width/2, _sprite.getGlobalBounds().height/2);
   _texture.loadFromFile("assets/sprites/1942-sprites-projectiles.png");
@@ -16,8 +15,6 @@ PowerUp::PowerUp(){
   std::cout << lista_powerUpRandom[powerUpRandom] << std::endl;
   _sprite.setTextureRect({lista_powerUpRandom[powerUpRandom],11,16,15}); // X,Y,widh,heigh
   _sprite.scale(3,3);
-//  _sprite.setPosition({-50,-50});
-//  _sprite.setOrigin(_sprite.getGlobalBounds().width/2, _sprite.getGlobalBounds().height/2);
 }
 
 void PowerUp::update()
@@ -27,8 +24,8 @@ void PowerUp::update()
 
 void PowerUp::respawn(){
 
-  _sprite.setPosition(std::rand() % 600 + _sprite.getGlobalBounds().width,
-                      std::rand() % 150 - _sprite.getGlobalBounds().height);
+  _sprite.setPosition(std::rand() % 600 - _sprite.getGlobalBounds().width*3.1,
+                      std::rand() % 400 - _sprite.getGlobalBounds().height*3.1); // para que quede no quede debajo de la pantalla al inicio
 }
 
 sf::FloatRect PowerUp::getBounds()const{
