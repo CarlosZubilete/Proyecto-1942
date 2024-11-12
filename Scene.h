@@ -18,7 +18,9 @@ class Scene: public sf::Drawable
     void respawnBackground();
     void start(int nivel);
     bool getJuegoTerminado();
+    void setJuegoTerminado(bool);
     bool guardarArchivo();
+
   private:
     // Display de puntajes y vidas:
     GamePlay _gamePlay;

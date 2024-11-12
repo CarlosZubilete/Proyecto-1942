@@ -51,17 +51,19 @@ int main() {
   main_theme_v1.setBuffer(buffer_main_theme_v1);
   main_theme_v1.setVolume(7.f);
 
-
+    sf::Font font;
+    font.loadFromFile("assets/fonts/MONOCOQUE_FUENTE.ttf");
+  sf::Text continuar_text;
+  sf::RectangleShape continuar_text_fondo;
+  bool mostrarContinuar = false;
 
 //    Player player;
-
-//    sf::Font font;
-//    font.loadFromFile("assets/fonts/MONOCOQUE_FUENTE.ttf");
-
+///
+//
 //    sf::Text puntos;
 //    puntos.setFont(font);
 //    puntos.setPosition(3, 0);
-
+//
 //    sf::Text vidas;
 //    vidas.setFont(font);
 //    vidas.setPosition(3, 30);
@@ -73,7 +75,8 @@ int main() {
 
         while (window.pollEvent(event)) {
 
-            if (event.type == sf::Event::Closed) {
+            if ((event.type == sf::Event::Closed)  ||
+            (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) {
                 window.close();
             }
 
@@ -100,7 +103,6 @@ int main() {
 
                             sf::RenderWindow Play(sf::VideoMode(600, 800), "1942");
                             Play.setFramerateLimit(60);
-                            window.close();
                             main_theme_v2.stop();
                             main_theme_v1.play();
 
@@ -115,17 +117,54 @@ int main() {
 
                                 while (Play.pollEvent(playEvent)) {
 
-                                    if (playEvent.type == sf::Event::Closed ||
-                                        (playEvent.type == sf::Event::KeyPressed && playEvent.key.code == sf::Keyboard::Escape)) {
+                                    if (playEvent.type == sf::Event::Closed) {
+                                        main_theme_v1.stop();
                                         Play.close();
                                     }
+
+                                    if (playEvent.type == sf::Event::KeyPressed) {
+                                      if (playEvent.key.code == sf::Keyboard::Escape) {
+                                        mostrarContinuar = true;
+                                        continuar_text_fondo.setSize({300, 150});
+                                        continuar_text_fondo.setOrigin(continuar_text_fondo.getLocalBounds().width / 2,
+                                                                       continuar_text_fondo.getLocalBounds().height /
+                                                                       2);
+                                        continuar_text_fondo.setPosition(600 / 2, 800 / 2);
+                                        continuar_text_fondo.setFillColor(sf::Color(0, 0, 0, 128));
+
+                                        continuar_text.setFillColor(sf::Color::White);
+                                        continuar_text.setString("CONTINUAR  Y   N");
+                                        continuar_text.setCharacterSize(24);
+                                        continuar_text.setPosition(600 / 2, 800 / 2);
+                                        continuar_text.setFont(font);
+                                        continuar_text.setOrigin(continuar_text.getGlobalBounds().width / 2,
+                                                                 continuar_text.getGlobalBounds().height / 2);
+                                      }
+
+                                      if (mostrarContinuar)
+                                      {
+                                        if (playEvent.key.code == sf::Keyboard::Y)
+                                        {
+                                          std::cout << "entro " << std::endl;
+                                          mostrarContinuar = false;
+                                        }
+
+                                        else if (playEvent.key.code == sf::Keyboard::N)
+                                        {
+                                          main_theme_v1.stop();
+                                          Play.close();
+                                        }
+                                      }
+
+
+                                    }
+
 
                                 }
 
                                 // CMD
                                 if (!scene.getJuegoTerminado()){
                                     scene.cmd();
-                                    scene.update();
 
 
 
@@ -138,15 +177,20 @@ int main() {
                                     //scene.guardarPuntos();
                                     //scene.guardarArchivo();
                                      main_theme_v1.stop();
+                                      scene.setJuegoTerminado(true);
+
 
                                 }
 
 
                                 // UPDATE
+                                 if (!scene.getJuegoTerminado()) {
+                                   scene.update();
+                                 }
 //                                gamePlay.update();
-
-
-
+//
+//
+//
 //                                if (gamePlay.isCollisionWithEnemy()) {
 //                                    player.changePuntos(1);
 //                                }
@@ -162,12 +206,19 @@ int main() {
                                 // DRAW
                                 Play.clear();
                                 Play.draw(scene);
+                                if (mostrarContinuar)
+                                {
+                                  Play.draw(continuar_text_fondo);
+                                  Play.draw(continuar_text);
+
+                                }
 //                                Play.draw(gamePlay);
                                 //Play.draw(puntos);
                                 //Play.draw(vidas);
 
                                 // FLIP
                                 Play.display();
+
 
                                 // LIBERACION DEL JUEGO
 

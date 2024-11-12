@@ -25,6 +25,7 @@ Scene::Scene(){
   _archivoGuardado = false;
   juegoTerminado = false;/// bandera para indicar que el juego termine.
   guardarPartida =false;
+  _frames = 0;
 
 
   if (!gameOverTexture.loadFromFile("assets/sprites/gameOver.png")){
@@ -42,22 +43,20 @@ void Scene::cmd()
   _gamePlay.cmd();
 }
 
+
+
+
+
+
 void Scene::update()
 {
   _bgSprite.move(0,2.3f);
-
-  _frames = _gamePlay.getFrames();
-
-  if (_frames < 1800) {
-    _bgSprite.move(0, 2.3f);
-  }
 
   _gamePlay.update();
 
   _puntos.setString("PUNTOS " + std::to_string(_gamePlay.getPuntos()));
   _vidas.setString("VIDA "    + std::to_string(_gamePlay.getVidas  ()));
   _frames_cartel.setString("Frames= " + std::to_string(_frames) + "\nTiempo= " + std::to_string(_frames/60));
-  _frames = _gamePlay.getFrames();
 
   int puntosMaximos = buscarPuntosMax();
   _puntosMaximos.setString("Ptos Maximos : " + std::to_string(puntosMaximos));
@@ -69,8 +68,15 @@ void Scene::update()
   }
 
 
-
+  _frames++;
 }
+
+
+
+
+
+
+
 
 
 int Scene::buscarPuntosMax()
@@ -105,11 +111,16 @@ bool Scene::getJuegoTerminado()
         if(guardarPartida==false){
         guardarArchivo();
         guardarPartida=true;
+        juegoTerminado=true;
         }
         return true;
     }
     return false;
 
+}
+
+void Scene::setJuegoTerminado(bool x) {
+  juegoTerminado = x;
 }
 
 bool Scene::guardarArchivo(){
@@ -168,6 +179,8 @@ void Scene::start(int nivel)
       _bg.loadFromFile("assets/sprites/bg-maps-1942.png");
       _bgSprite.setTexture(_bg);
       _bgSprite.setPosition(0, -5051+800);
+      guardarPartida = false;
+      juegoTerminado=false;
       //Display de vidas y puntaje
     }
       break;
@@ -177,6 +190,7 @@ void Scene::start(int nivel)
       _bgSprite.setTexture(_bg);
       _bgSprite.setPosition(0, -5051+800);
       //Display de vidas y puntaje
+
     }
       break;
     case 3:
