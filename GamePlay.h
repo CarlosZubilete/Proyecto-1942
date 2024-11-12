@@ -56,5 +56,8 @@ private:
         std::vector<float*> _vec_frameExplosive; /// LOS FRAMES PARA MANDERSELO A LA FUNCION
 
         PowerUp *_powerUp;
+        sf::Clock respawn_delay;
+        bool _player_down;
+
 };
 

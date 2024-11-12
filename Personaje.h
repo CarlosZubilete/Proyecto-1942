@@ -19,6 +19,7 @@ class Personaje: public sf::Drawable, public Collisionable, public Avion
     sf::Vector2f getBulletOrigin() const;
     sf::Vector2f getPosition() const override;
     void respawn();
+    void hide();
 
 
 

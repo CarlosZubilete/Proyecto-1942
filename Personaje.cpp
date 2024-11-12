@@ -28,12 +28,12 @@ void Personaje::cmd()
 
   _velocity = {0, 0};
 
-  bool teclaMovimientoPresionada;
+  bool teclaMovimientoPresionada = false; // Inicializamos en false al principio de cada llamada
 
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
     teclaMovimientoPresionada = true;
     _velocity.x = 5;
-    _sprite.setTextureRect({177,17,32,18});
+    _sprite.setTextureRect({180,18,23,16});
   }
 
   if (!teclaMovimientoPresionada && getTeclaAnterior()) {
@@ -43,7 +43,7 @@ void Personaje::cmd()
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
     teclaMovimientoPresionada = true;
     _velocity.x = -5;
-    _sprite.setTextureRect({177,17,32,18});
+    _sprite.setTextureRect({42,18,22,16});
   }
 
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
@@ -56,6 +56,7 @@ void Personaje::cmd()
   }
 
   setTeclaAnterior(teclaMovimientoPresionada);
+
 
 
 //  /**
@@ -174,6 +175,11 @@ bool Personaje::getTeclaAnterior() const
 void Personaje::respawn()
 {
   _sprite.setPosition((600-96)/2+2, 700);
+}
+
+void Personaje::hide()
+{
+  _sprite.setPosition(-500,0);
 }
 
 sf::Vector2f Personaje::getPosition() const

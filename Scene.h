@@ -34,7 +34,6 @@ class Scene: public sf::Drawable
     int _frames;
     sf::Texture _bg;
     sf::Sprite _bgSprite;
-    int nivel;
     bool nivelTerminado;
     bool _archivoGuardado;
     bool juegoTerminado;
@@ -42,6 +41,8 @@ class Scene: public sf::Drawable
     bool guardarPartida;
     sf::Texture gameOverTexture;
     sf::Sprite gameOverSprite;
+    int _nivel;
+    sf::Text _nivel_txt;
 };
 
 

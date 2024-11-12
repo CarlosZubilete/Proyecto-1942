@@ -22,7 +22,7 @@ Menu::Menu(float width, float height) {
 
     if (!capcomTexture.loadFromFile("assets/sprites/Capcom.jfif")) {
 
-        std::cout << "No se pudo cargar la imagen del Logo Capcom" << std::std::endl;
+        std::cout << "No se pudo cargar la imagen del Logo Capcom" << std::endl;
     }
 
 
@@ -121,11 +121,6 @@ Menu::Menu(float width, float height) {
 
     //Inicializa la variable blinkState en true, indicando que el texto "Insert Coin" estar� visible al inicio.
     blinkState = true;
-
-
-
-
-
 
 }
 

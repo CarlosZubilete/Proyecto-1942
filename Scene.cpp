@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+
 Scene::Scene(){
 
   _bg.loadFromFile("assets/sprites/bg-maps-1942.png");
@@ -26,6 +27,15 @@ Scene::Scene(){
   juegoTerminado = false;/// bandera para indicar que el juego termine.
   guardarPartida =false;
   _frames = 0;
+  _nivel=1;
+
+
+  _nivel_txt.setString("Nivel\n  "+_nivel);
+
+
+  int puntosMaximos = buscarPuntosMax();
+  _puntosMaximos.setString("Ptos Maximos : " + std::to_string(puntosMaximos));
+
 
 
   if (!gameOverTexture.loadFromFile("assets/sprites/gameOver.png")){
@@ -50,32 +60,29 @@ void Scene::cmd()
 
 void Scene::update()
 {
-  _bgSprite.move(0,2.3f);
-
+  // CUESTIONES COMUNES A TODOS LOS NIVELES:
   _gamePlay.update();
-
+  _bgSprite.move(0,2.3f);
   _puntos.setString("PUNTOS " + std::to_string(_gamePlay.getPuntos()));
-  _vidas.setString("VIDA "    + std::to_string(_gamePlay.getVidas  ()));
+  _vidas.setString("VIDAS "    + std::to_string(_gamePlay.getVidas  ()));
   _frames_cartel.setString("Frames= " + std::to_string(_frames) + "\nTiempo= " + std::to_string(_frames/60));
-
-  int puntosMaximos = buscarPuntosMax();
-  _puntosMaximos.setString("Ptos Maximos : " + std::to_string(puntosMaximos));
-
-
   if(_bgSprite.getPosition().y > 0 )
   {
     respawnBackground();
   }
-
-
   _frames++;
-}
 
 
 
 
 
 
+
+
+
+
+
+} // TERMINA UPDATE
 
 
 
@@ -105,9 +112,12 @@ int Scene::buscarPuntosMax()
 bool Scene::getJuegoTerminado()
 {
 
-
-    if (_gamePlay.getVidas() == 0)
+    if (_gamePlay.getVidas() < 0) // TODO: SALIDA SI TERMINA LOS NIVELES
     {
+
+
+
+        // TODO: GUARDA PARTIDA
         if(guardarPartida==false){
         guardarArchivo();
         guardarPartida=true;
@@ -157,6 +167,7 @@ void Scene::draw(sf::RenderTarget &target, sf::RenderStates states)const
   target.draw(_vidas,states);
   target.draw(_puntosMaximos,states);
   target.draw(_frames_cartel,states);
+  target.draw(_nivel_txt, states);
 
   if(guardarPartida==true){
 
@@ -190,6 +201,7 @@ void Scene::start(int nivel)
       _bgSprite.setTexture(_bg);
       _bgSprite.setPosition(0, -5051+800);
       //Display de vidas y puntaje
+
 
     }
       break;
