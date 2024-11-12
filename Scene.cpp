@@ -29,6 +29,13 @@ void Scene::update()
 {
   _bgSprite.move(0,2.3f);
 
+  _frames = _gamePlay.getFrames();
+
+  if (_frames < 1800) {
+    _bgSprite.move(0, 2.3f);
+  }
+
+
   _gamePlay.update();
   _puntos.setString("PUNTOS " + std::to_string(_gamePlay.getPuntos()));
   _vidas.setString("VIDA "    + std::to_string(_gamePlay.getVidas  ()));
