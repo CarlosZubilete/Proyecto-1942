@@ -20,10 +20,6 @@ void GamePlay::iniciarBalasVector()
     }
   }
 
-  if (_frames % 360 == 0) {
-    _powerUp = new PowerUp();
-    //_powerUp->respawn();
-  }
 
   if (_player.Shoot()) {
     if (_bullets.size() < 5 && _timerReload <= 0) {
@@ -72,6 +68,8 @@ void GamePlay::update()
   iniciarBalasVector();
 
 
+
+
   /// ACTUALIZAMOS LOS COMANDOS
   for (int i = 0; i < _vEnemiesB.size(); i++) {
     _vEnemiesB[i]->update();
@@ -83,10 +81,19 @@ void GamePlay::update()
   }
 
 
-  /// DIBUJAMOS EL POWER UP
-  if (_frames % 60 * 10 == 0.f) {
+  if (_frames % (60*14) == 0.f) {
+    _powerUp = new PowerUp();
     _powerUp->respawn();
   }
+
+
+  /// DIBUJAMOS EL POWER UP
+//  if (_frames % 60 * 12 == 0.f) {
+//    _powerUp->respawn();
+//  }
+
+
+
 
   /// DEPENDIENDO DE CUANTO DISPARE, VAMOS A MOVER
   for (int i = 0; i < _bullets.size(); i++)// de esta manera suben las balas disparadas
@@ -150,7 +157,6 @@ void GamePlay::update()
   _powerUp->update();
   _player.update();
   enemigo1.update();
-  _powerUp->update();
 
 
   if (checkCollision(enemigo1)) {
@@ -161,7 +167,8 @@ void GamePlay::update()
 
   if (_player.isCollision(*_powerUp)) {
     _juego.addVidas();
-    _powerUp->respawn();
+    _powerUp->hidePowerUp();
+    std::cout << "entra aca o no? " << std::endl;
   }
 
 
