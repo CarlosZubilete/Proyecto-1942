@@ -46,7 +46,7 @@ int main()
   sf::RectangleShape continuar_text_fondo;
 
   bool mostrarContinuar = false;
-
+  bool isKeyY = false;
   // GAME LOOP
   while (window.isOpen()) {
 
@@ -81,7 +81,7 @@ int main()
 
               sf::RenderWindow Play(sf::VideoMode(600, 800), "1942");
               Play.setFramerateLimit(60);
-              main_theme_v2.stop();
+              main_theme_v2.stop(); /// STOP MUSCIA MENU
               main_theme_v1.play();
 
 
@@ -101,6 +101,7 @@ int main()
 
                   if (playEvent.type == sf::Event::KeyPressed) {
                     if (playEvent.key.code == sf::Keyboard::Escape) {
+                        /// TODO: Tenemos que pauar la pantalla.
                       mostrarContinuar = true;
                       continuar_text_fondo.setSize({300, 150});
                       continuar_text_fondo.setOrigin(continuar_text_fondo.getLocalBounds().width / 2,
@@ -121,6 +122,7 @@ int main()
                     if (mostrarContinuar) {
                       if (playEvent.key.code == sf::Keyboard::Y) {
                         mostrarContinuar = false;
+                        isKeyY = true;
                       } else if (playEvent.key.code == sf::Keyboard::N) {
                         main_theme_v1.stop();
                         Play.close();
@@ -134,16 +136,26 @@ int main()
                   main_theme_v1.stop(); ///  STOP MUSICA DEL JUEGO
                   scene.setJuegoTerminado(true);
                 }
+
                 // UPDATE /////////////////////////////////////////////////////////
+
+                if (isKeyY)
+                {
+                  scene.RestarLastPoint();
+                  scene.setJuegoTerminado(true);
+                  main_theme_v1.play();
+                  isKeyY = false;
+                }
+
                 if (!scene.getJuegoTerminado()) {
                   scene.cmd();
                   scene.update();
+                  //main_theme_v1.play();
                 }
-
                 // DRAW ///////////////////////////////////////////////////////////
                 Play.clear();
 
-                Play.draw(scene)
+                Play.draw(scene);
 
                 if (mostrarContinuar) {
                   Play.draw(continuar_text_fondo);

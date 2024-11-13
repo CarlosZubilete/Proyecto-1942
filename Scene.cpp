@@ -89,6 +89,7 @@ void Scene::update()
   _frames++;
 
   _stopGamePlay = false;
+  guardarPartida = false;
 } // TERMINA UPDATE
 
 bool Scene::getJuegoTerminado()
@@ -134,10 +135,14 @@ bool Scene::guardarArchivo()
 
 }
 
-
 sf::Vector2f Scene::getCameraPosition()
 {
   return _bgSprite.getPosition();
+}
+
+void Scene::RestarLastPoint()
+{
+  _gamePlay.restartVidas();
 }
 
 void Scene::draw(sf::RenderTarget &target, sf::RenderStates states) const

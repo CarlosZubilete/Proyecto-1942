@@ -46,6 +46,7 @@ public:
 
     bool isCollision_vEnemyB_withPersonaje();
 
+    void restartVidas();
 private:
     void iniciarBalasVector();
 

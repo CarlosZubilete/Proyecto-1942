@@ -348,6 +348,14 @@ int GamePlay::getVidas() const
   return _juego.getVida();
 }
 
+void GamePlay::restartVidas()
+{
+  for ( int i = 0 ; i<3 ; i++)
+  {
+    _juego.addVidas();
+  }
+}
+
 int GamePlay::getFrames() const
 {
   return _frames;

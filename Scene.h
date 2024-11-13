@@ -20,6 +20,7 @@ class Scene: public sf::Drawable
     bool getJuegoTerminado();
     void setJuegoTerminado(bool);
     bool guardarArchivo();
+    void RestarLastPoint();
 
   private:
     // Display de puntajes y vidas:
