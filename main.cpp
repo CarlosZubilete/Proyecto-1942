@@ -23,7 +23,7 @@ int main()
   sf::View view(sf::FloatRect(0.f, 0.f, 600.f, 800.f));
   window.setView(view);
 
-  Scene scene;
+
 
   sf::SoundBuffer buffer_main_theme_v2;
   buffer_main_theme_v2.loadFromFile("assets/sounds/themes/02_main_theme_v2_stereo.mp3");
@@ -79,11 +79,15 @@ int main()
 
             if (x == 0) {
 
+               Scene scene;
+
               sf::RenderWindow Play(sf::VideoMode(600, 800), "1942");
               Play.setFramerateLimit(60);
               main_theme_v2.stop(); /// STOP MUSCIA MENU
               main_theme_v1.play();
 
+
+                mostrarContinuar = false;
 
               // GAME LOOP
               while (Play.isOpen()) {
@@ -126,6 +130,9 @@ int main()
                       } else if (playEvent.key.code == sf::Keyboard::N) {
                         main_theme_v1.stop();
                         Play.close();
+                        isKeyY = false;
+                        mostrarContinuar = false;
+
                       }
                     }
                   }

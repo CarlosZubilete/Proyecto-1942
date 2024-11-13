@@ -95,7 +95,7 @@ void Scene::update()
 bool Scene::getJuegoTerminado()
 {
 
-  if (_gamePlay.getVidas() < 0) /// SALIDA SI TERMINA LOS NIVELES
+  if (_gamePlay.getVidas() == 0) /// SALIDA SI TERMINA LOS NIVELES
   {
     _stopGamePlay = true;
     /// GUARDA PARTIDA
