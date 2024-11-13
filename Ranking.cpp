@@ -1,7 +1,7 @@
 #include <iostream>
-#include "Ranking.h"
 #include <stdio.h>
 #include <cstring>
+#include "Ranking.h"
 
 Ranking::Ranking()
 {
@@ -16,28 +16,20 @@ Ranking Ranking::buscaPosicion(int)
 }
 
 
-void Ranking::cargar(sf::Text puntos, sf::Text dia, sf::Text mes, sf::Text anio, sf::Text nombre)
+void Ranking::cargar(int puntos, Fecha fecha, sf::Text nombre)
 {
   setPuntos(puntos);
-  setFecha(dia, mes, anio);
+  setFecha(fecha);
   setNombre(nombre);
 }
 
 void Ranking::mostrar()
 {
-  sf::Text dia,mes,anio,puntos,nombre;
+  std::cout << std::to_string(getPuntos()) << "   ";
+  std::cout << std::to_string(getFecha().getDia()) << "-" << std::to_string(getFecha().getMes()) << "-" << std::to_string(getFecha().getAnio()) << "   ";
+  std::string nom_str = getNombre().getString();
+  std::cout << nom_str << std::endl;
 
-  std::string dia_str = std::to_string(_pFecha.getDia());
-  dia.setString(dia_str);
-
-  std::string mes_str = std::to_string(_pFecha.getMes());
-  mes.setString(mes_str);
-
-  std::string anio_str = std::to_string(_pFecha.getAnio());
-  anio.setString(anio_str);
-
-  puntos.setString(std::to_string(_puntos));
-  nombre.setString(_nombre);
 }
 
 sf::Text Ranking::getNombre()
@@ -48,9 +40,20 @@ sf::Text Ranking::getNombre()
   return nombre;
 }
 
+void Ranking::setNombre(sf::Text nombre)
+{
+  std::string nombre_str = nombre.getString();
+  strcpy(_nombre, nombre_str.c_str() );
+}
+
 int Ranking::getPuntos()
 {
   return _puntos;
+}
+
+void Ranking::setPuntos(int puntos)
+{
+  _puntos = puntos;
 }
 
 Fecha Ranking::getFecha()
@@ -58,22 +61,7 @@ Fecha Ranking::getFecha()
   return {_pFecha.getDia(),_pFecha.getMes(),_pFecha.getAnio()};
 }
 
-void Ranking::setNombre(sf::Text nombre)
+void Ranking::setFecha(Fecha fecha)
 {
-  std::string nombre_str = nombre.getString();
-  strcpy(_nombre, nombre_str.c_str() );
-}
-
-void Ranking::setFecha(sf::Text dia, sf::Text mes, sf::Text anio)
-{
-  std::string dia_str = dia.getString();
-  std::string mes_str = mes.getString();
-  std::string anio_str = anio.getString();
-  _pFecha = {stoi(dia_str), stoi(mes_str), stoi(anio_str)};
-}
-
-void Ranking::setPuntos(sf::Text puntos)
-{
-  std::string puntos_str = puntos.getString();
-  _puntos = std::stoi(puntos_str);
+  _pFecha = fecha;
 }

@@ -32,3 +32,4 @@ class Player
         -> Por cada bala recibida, desminuiremos vidas.
         -> Si hagarramos los powerUp...
 */
+ 
