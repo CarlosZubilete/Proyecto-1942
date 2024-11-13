@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Menu.h"
 #include "Creditos.h"
+#include "Boss.h"
 
 int main()
 {

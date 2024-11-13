@@ -8,6 +8,7 @@ GamePlay::GamePlay()
   _frameExplosion = 0.f;
   _isExplosionActive = false;
   _frames = 0;
+  _isExplosionActiveBoss= false;
 }
 
 void GamePlay::iniciarBalasVector()
@@ -56,6 +57,9 @@ void GamePlay::cmd()
 
   _player.cmd();
   enemigo1.cmd();
+  _boss.cmd();
+
+
 
   for (int i = 0; i < _vEnemiesB.size(); i++) {
     _vEnemiesB[i]->cmd();
@@ -116,6 +120,16 @@ void GamePlay::update()
     }
   }
 
+
+  if (_isExplosionActiveBoss) {
+    _explosion.bigExplosion(_frameExplosion);
+
+    if (_frameExplosion >= 8.f) {
+      _isExplosionActiveBoss = false;
+      _frameExplosion = 0.0f;
+    }
+  }
+
   /// RECORREMOS LAS EXPLOSIONES DINAMICAS
   for (int i = 0; i < _vec_isExplosiveActive.size(); i++) {
     if (*_vec_isExplosiveActive[i] == true) {
@@ -157,6 +171,13 @@ void GamePlay::update()
   _powerUp->update();
   _player.update();
   enemigo1.update();
+  _boss.update();
+
+
+  if(isCollisionWithBoss()||
+      (isCollision_bullets_whitEnemyB())) {
+    _juego.changePuntos(100);
+  } // DESTRUYO ENEMIGOS
 
 
   if (checkCollision(enemigo1)) {
@@ -164,6 +185,8 @@ void GamePlay::update()
     enemigo1.respawn();
     _player.respawn();
   } // COLISION PLAYER-ENEMY A
+
+
 
   if (_player.isCollision(*_powerUp)) {
     _juego.addVidas();
@@ -271,6 +294,36 @@ bool GamePlay::isCollisionWithEnemy() // cuando destruis aviones enemigos
   return result;
 }
 
+
+
+
+bool GamePlay::isCollisionWithBoss(){
+
+  bool result = false;
+  for (int i = 0; i < _bullets.size(); i++) {
+    if (_bullets[i]->isCollision(_boss)) {
+      _sound.playExplosionSmall();
+      _juego.changePuntos(1000);
+      delete _bullets[i];
+      _bullets.erase(_bullets.begin() + i);
+
+      _explosion = Explosion(_boss.getPosition().x, _boss.getPosition().y);
+      _isExplosionActiveBoss = true;  // ACTIVA LA ANIMACION
+      _frameExplosion = 0.0f;     // ESTAMOS EN EL PRIMER FRAME
+
+      _boss.respawn();
+      result = true;
+    } else {
+      if (_bullets[i]->getBounds().top + _bullets[i]->getBounds().height < 0) {
+        delete _bullets[i];
+        _bullets.erase(_bullets.begin() + i, _bullets.begin() + i + 1);
+      }
+    }
+  }
+  return result;
+}
+
+
 bool GamePlay::isCollision_bullets_whitEnemyB()
 {
 
@@ -335,6 +388,7 @@ void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states) const
   target.draw(_player, states);
   target.draw(_explosion, states);
   target.draw(enemigo1, states);
+  target.draw(_boss,states);
 
 }
 

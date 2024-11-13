@@ -1,5 +1,4 @@
 #pragma once
-
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio/Sound.hpp>
@@ -14,6 +13,7 @@
 #include "EnemyB.h"
 #include "Sounds.h"
 #include "PowerUp.h"
+#include "Boss.h"
 
 class GamePlay : public sf::Drawable
 {
@@ -46,6 +46,8 @@ public:
 
     bool isCollision_vEnemyB_withPersonaje();
 
+    bool isCollisionWithBoss();
+
     void restartVidas();
 private:
     void iniciarBalasVector();
@@ -54,6 +56,7 @@ private:
     std::vector<Bullet *> _bullets;
     std::vector<EnemyBullet *> _enemyBullets;
     Enemy enemigo1;
+    Boss _boss;
     std::vector<Enemy *> _enemies;
     int _timerReload;
     Player _juego;
@@ -73,6 +76,7 @@ private:
     PowerUp *_powerUp;
     sf::Clock respawn_delay;
     bool _player_down;
+    bool _isExplosionActiveBoss;
 
 };
 

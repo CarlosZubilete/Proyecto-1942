@@ -20,6 +20,15 @@ void Explosion::smallExplosion(float &frame)
   _sprite.setTextureRect({38*(int)(frame/1.5),110,33,32});
 }
 
+void Explosion::bigExplosion(float &frame){
+
+_sprite.setScale(3,3);
+ _sprite.setTextureRect({38*(int)(frame/1.5),110,33,32});
+frame+=0.2;
+
+
+}
+
 /*
 void Explosion::smallExplosion()
 {

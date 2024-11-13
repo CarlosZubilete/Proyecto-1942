@@ -53,6 +53,8 @@
 		<Unit filename="ArchivoPlayer.cpp" />
 		<Unit filename="ArchivoPlayer.h" />
 		<Unit filename="Avion.h" />
+		<Unit filename="Boss.cpp" />
+		<Unit filename="Boss.h" />
 		<Unit filename="Bullet.cpp" />
 		<Unit filename="Bullet.h" />
 		<Unit filename="CartelPosicion.h" />
