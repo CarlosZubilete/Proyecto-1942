@@ -30,8 +30,8 @@ int main()
   sf::Sound main_theme_v2;
   main_theme_v2.setBuffer(buffer_main_theme_v2);
   main_theme_v2.setVolume(7.f);
-  main_theme_v2.play();
-
+  //main_theme_v2.play();
+  bool playMusicaMenuReproduciendo = false;
 
   sf::SoundBuffer buffer_main_theme_v1;
   buffer_main_theme_v1.loadFromFile("assets/sounds/themes/01_main_theme_v1_stereo.mp3");
@@ -59,8 +59,14 @@ int main()
         window.close();
       }
 
+      if (event.type == sf::Event::KeyReleased){
 
-      if (event.type == sf::Event::KeyReleased) {
+        if (!playMusicaMenuReproduciendo)
+        {
+          main_theme_v2.play();
+          main_theme_v1.stop(); /// OPCION JUGAR
+          playMusicaMenuReproduciendo = true;
+        }
 
         if (event.key.code == sf::Keyboard::Up) {
           mainMenu.moveUp();
@@ -79,15 +85,16 @@ int main()
 
             if (x == 0) {
 
-               Scene scene;
+              Scene scene;
 
               sf::RenderWindow Play(sf::VideoMode(600, 800), "1942");
               Play.setFramerateLimit(60);
               main_theme_v2.stop(); /// STOP MUSCIA MENU
+              playMusicaMenuReproduciendo = false;
               main_theme_v1.play();
 
 
-                mostrarContinuar = false;
+              mostrarContinuar = false;
 
               // GAME LOOP
               while (Play.isOpen()) {
@@ -107,7 +114,7 @@ int main()
                     if (playEvent.key.code == sf::Keyboard::Escape) {
                         /// TODO: Tenemos que pauar la pantalla.
                       mostrarContinuar = true;
-                      continuar_text_fondo.setSize({300, 150});
+                      continuar_text_fondo.setSize({400,150});
                       continuar_text_fondo.setOrigin(continuar_text_fondo.getLocalBounds().width / 2,
                                                      continuar_text_fondo.getLocalBounds().height /
                                                      2);
@@ -115,7 +122,7 @@ int main()
                       continuar_text_fondo.setFillColor(sf::Color(0, 0, 0, 128));
 
                       continuar_text.setFillColor(sf::Color::White);
-                      continuar_text.setString("CONTINUAR  Y   N");
+                      continuar_text.setString("CONTINUAR Y -- MENU N");
                       continuar_text.setCharacterSize(24);
                       continuar_text.setPosition(600 / 2, 800 / 2);
                       continuar_text.setFont(font);
