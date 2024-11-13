@@ -103,6 +103,7 @@ bool Scene::getJuegoTerminado()
       guardarArchivo();
       guardarPartida = true;
       juegoTerminado = true;
+      guardarUltimaJugada(_gamePlay.getPuntos());
 
     }
     return true;
@@ -238,6 +239,20 @@ void Scene::start(int nivel)
 
   }
 }
+
+void Scene::guardarUltimaJugada(int puntos)
+{
+  Ranking reg;
+  auto now = std::time(nullptr); // Obtiene el tiempo actual
+  std::tm* localTime = std::localtime(&now);  // Convierte el tiempo en un formato de cadena legible
+  Fecha hoy{localTime->tm_mday, localTime->tm_mon,  localTime->tm_year+1900};
+  sf::Text nombre;
+  nombre.setString("Mariano");
+  reg.cargar(puntos,hoy,nombre);
+  RankingArchivo ra("ranking.dat");
+  ra.grabarRegistroRanking(reg);
+}
+
 
 /**
   TRANSFORMACION , AL BOUDS ,

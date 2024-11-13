@@ -2,10 +2,15 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
+#include <iostream> /// La vieja y confiable
+#include <ctime>
 #include "GamePlay.h"
 #include "ArchivoPlayer.h"
 #include "Player.h" /// Lo usuamos solo para guardar el archivoPlayer.
-#include <iostream> /// La vieja y confiable
+#include "RankingArchivo.h"
+#include "MenuRanking.h"
+#include "Ranking.h"
+#include "Fecha.h"
 
 class Scene: public sf::Drawable
 {
@@ -21,6 +26,7 @@ class Scene: public sf::Drawable
     void setJuegoTerminado(bool);
     bool guardarArchivo();
     void RestarLastPoint();
+    void guardarUltimaJugada(int puntos);
 
   private:
     // Display de puntajes y vidas:
