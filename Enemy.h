@@ -3,7 +3,8 @@
 #include "Collisionable.h"
 #include "Avion.h"
 #include <string>
-#include "CartelPosicion.h"
+#include <cmath>
+//#include "CartelPosicion.h"
 
 class Enemy: public sf::Drawable, public Collisionable, public Avion
 {

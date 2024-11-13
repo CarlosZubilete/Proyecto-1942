@@ -25,11 +25,11 @@ public:
     void update();
 
 
+    bool getShowInsertCoin();
+    bool getShowMenuOptions();
 
 
 
-    bool showInsertCoin; // Bandera para mostrar "Insert Coin"
-    bool showMenuOptions;
 private:
 
     int selectedItemIndex;
@@ -63,6 +63,9 @@ private:
 
     //DETERMINA SI EL TEXTO INSERT COIN ESTA VISIBLE O INVISIBLE
     bool blinkState;
+
+    bool showInsertCoin;
+    bool showMenuOptions;
 
 
 

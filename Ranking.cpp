@@ -1,4 +1,9 @@
 #include <iostream>
+<<<<<<< HEAD
+=======
+#include <stdio.h>
+#include <cstring>
+>>>>>>> main
 #include "Ranking.h"
 #include <stdio.h>
 #include <cstring>
@@ -16,15 +21,23 @@ Ranking Ranking::buscaPosicion(int)
 }
 
 
+<<<<<<< HEAD
 void Ranking::cargar(sf::Text puntos, sf::Text dia, sf::Text mes, sf::Text anio, sf::Text nombre)
 {
   setPuntos(puntos);
   setFecha(dia, mes, anio);
+=======
+void Ranking::cargar(int puntos, Fecha fecha, sf::Text nombre)
+{
+  setPuntos(puntos);
+  setFecha(fecha);
+>>>>>>> main
   setNombre(nombre);
 }
 
 void Ranking::mostrar()
 {
+<<<<<<< HEAD
   sf::Text dia,mes,anio,puntos,nombre;
 
   std::string dia_str = std::to_string(_pFecha.getDia());
@@ -38,6 +51,13 @@ void Ranking::mostrar()
 
   puntos.setString(std::to_string(_puntos));
   nombre.setString(_nombre);
+=======
+  std::cout << std::to_string(getPuntos()) << "   ";
+  std::cout << std::to_string(getFecha().getDia()) << "-" << std::to_string(getFecha().getMes()) << "-" << std::to_string(getFecha().getAnio()) << "   ";
+  std::string nom_str = getNombre().getString();
+  std::cout << nom_str << std::endl;
+
+>>>>>>> main
 }
 
 sf::Text Ranking::getNombre()
@@ -48,16 +68,34 @@ sf::Text Ranking::getNombre()
   return nombre;
 }
 
+<<<<<<< HEAD
+=======
+void Ranking::setNombre(sf::Text nombre)
+{
+  std::string nombre_str = nombre.getString();
+  strcpy(_nombre, nombre_str.c_str() );
+}
+
+>>>>>>> main
 int Ranking::getPuntos()
 {
   return _puntos;
 }
 
+<<<<<<< HEAD
+=======
+void Ranking::setPuntos(int puntos)
+{
+  _puntos = puntos;
+}
+
+>>>>>>> main
 Fecha Ranking::getFecha()
 {
   return {_pFecha.getDia(),_pFecha.getMes(),_pFecha.getAnio()};
 }
 
+<<<<<<< HEAD
 void Ranking::setNombre(sf::Text nombre)
 {
   std::string nombre_str = nombre.getString();
@@ -76,4 +114,9 @@ void Ranking::setPuntos(sf::Text puntos)
 {
   std::string puntos_str = puntos.getString();
   _puntos = std::stoi(puntos_str);
+=======
+void Ranking::setFecha(Fecha fecha)
+{
+  _pFecha = fecha;
+>>>>>>> main
 }

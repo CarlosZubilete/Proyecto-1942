@@ -15,6 +15,7 @@ void RankingArchivo::setPRanking(FILE * pRanking)
 
 bool RankingArchivo::leerRegistrosRanking()
 {
+<<<<<<< HEAD
 //  Ranking reg;
 //  setPRanking(fopen(_url,"rb"));
 //  if(_pRanking==nullptr)
@@ -34,6 +35,27 @@ bool RankingArchivo::leerRegistrosRanking()
 //  }
 //  pausar();
 //  fclose(_pRanking);
+=======
+  Ranking reg;
+  setPRanking(fopen(_url,"rb"));
+  if(_pRanking==nullptr)
+  {
+    std::cerr << "Error al abrir el archivo para leer" << std::endl;
+    return false;
+  } else
+  {
+    std::cout << "--- DATOS LEIDOS CORRECTAMENTE... ---" << std::endl;
+  }
+  limpiar();
+
+  while(fread(&reg,sizeof(Ranking),1,_pRanking)==1)
+  {
+    reg.mostrar();
+    std::cout << "----------------o---------------" << std::endl;
+  }
+  pausar();
+  fclose(_pRanking);
+>>>>>>> main
   return true;
 }
 

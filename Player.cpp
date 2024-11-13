@@ -1,5 +1,6 @@
 #include "Player.h"
 
+
 Player::Player()
 {
   _puntos = 0;
@@ -24,7 +25,7 @@ Player::Player()
 //
 void Player::changePuntos(int puntos)
 {
-    _puntos += puntos;
+  _puntos += puntos;
 }
 
 
@@ -33,12 +34,17 @@ void Player::changeVidas()
   _vida--;
 }
 
-int Player::getVida()const
+void Player::addVidas()
+{
+  _vida++;
+}
+
+int Player::getVida() const
 {
   return _vida;
 }
 
-int Player::getPuntos()const
+int Player::getPuntos() const
 {
   return _puntos;
 }

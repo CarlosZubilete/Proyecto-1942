@@ -1,28 +1,28 @@
 #include "Menu.h"
 #include <iostream>
 
-using namespace std;
+
 
 Menu::Menu(float width, float height) {
 
     if (!font.loadFromFile("assets/fonts/fuente.ttf")) {
 
-        cout << "No se pudo cargar la fuente" <<endl;
+        std::cout << "No se pudo cargar la fuente" <<std::endl;
     }
 
     if (!logoTexture.loadFromFile("assets/sprites/logo.png")) {
 
-        cout << "No se pudo cargar el Logo del Juego" <<endl;
+        std::cout << "No se pudo cargar el Logo del Juego" <<std::endl;
     }
 
     if (!planeTexture.loadFromFile("assets/sprites/Personaje.png")) {
 
-        cout << "No se pudo cargar la imagen del avion" << endl;
+        std::cout << "No se pudo cargar la imagen del avion" << std::endl;
     }
 
     if (!capcomTexture.loadFromFile("assets/sprites/Capcom.jfif")) {
 
-        cout << "No se pudo cargar la imagen del Logo Capcom" << endl;
+        std::cout << "No se pudo cargar la imagen del Logo Capcom" << std::endl;
     }
 
 
@@ -31,7 +31,7 @@ Menu::Menu(float width, float height) {
     //-------------------------------------------------------------------------
 
     planeSprite.setTexture(planeTexture);
-    planeSprite.setScale(0.70f,0.70f);  // CAMBIAR TAMAÑO DEL AVION
+    planeSprite.setScale(0.70f,0.70f);  // CAMBIAR TAMAï¿½O DEL AVION
     planeSprite.setPosition(100, 350);  // POSICION INICIAL DEL AVION
 
 
@@ -44,7 +44,7 @@ Menu::Menu(float width, float height) {
     logoSprite.setTexture(logoTexture);
     logoSprite.setPosition(95, 195); // POSICION DONDE VA EL LOGO
 
-    // CAMBIAR TAMAÑO DEL LOGO
+    // CAMBIAR TAMAï¿½O DEL LOGO
     logoSprite.setScale(2.0f, 2.0f);
 
     //---------------------------------------------------
@@ -88,7 +88,7 @@ Menu::Menu(float width, float height) {
     menu[0].setFont(font);  // TIPO DE FUENTE
     menu[0].setFillColor(sf::Color::Green);  // COLOR DE LA LETRA
     menu[0].setString("Jugar");  // TEXTO
-    menu[0].setCharacterSize(32);  // TAMAÑO DE LA LETRA
+    menu[0].setCharacterSize(32);  // TAMAï¿½O DE LA LETRA
     menu[0].setPosition(225, 350);  // POSICION DEL TEXTO
 
 
@@ -119,13 +119,8 @@ Menu::Menu(float width, float height) {
     //Reinicia el reloj blinkClock al valor de 0. Este reloj se usa para contar el tiempo transcurrido, y su reinicio permite empezar a medir desde el inicio
     blinkClock.restart();
 
-    //Inicializa la variable blinkState en true, indicando que el texto "Insert Coin" estará visible al inicio.
+    //Inicializa la variable blinkState en true, indicando que el texto "Insert Coin" estarï¿½ visible al inicio.
     blinkState = true;
-
-
-
-
-
 
 }
 
@@ -140,18 +135,18 @@ void Menu::draw(sf::RenderTarget &target , sf::RenderStates states)const{
 
     target.draw(capcomSprite,states); //DIBUJA EL LOGO DE CAPCOM
 
-    //blinkState controla el parpadeo del texto "Insert Coin". Si está en true, dibuja insertCoin en la ventana, haciendo que el texto "Insert Coin" parpadee.
+    //blinkState controla el parpadeo del texto "Insert Coin". Si estï¿½ en true, dibuja insertCoin en la ventana, haciendo que el texto "Insert Coin" parpadee.
     if (showInsertCoin) {
         if (blinkState) {
             target.draw(insertCoin,states);
         }
     }
-    //Verifica si showMenuOptions está en true
+    //Verifica si showMenuOptions estï¿½ en true
     if (showMenuOptions) {
         for (int i = 0; i < 3; i++) {
-            target.draw(menu[i],states);      //Si es así, recorre el arreglo menu y dibuja cada elemento de las opciones del menú
+            target.draw(menu[i],states);      //Si es asï¿½, recorre el arreglo menu y dibuja cada elemento de las opciones del menï¿½
         }
-        target.draw(planeSprite,states); // dibuja el sprite planeSprite, que representa la imagen del avión
+        target.draw(planeSprite,states); // dibuja el sprite planeSprite, que representa la imagen del aviï¿½n
     }
 }
 
@@ -160,7 +155,7 @@ void Menu::draw(sf::RenderTarget &target , sf::RenderStates states)const{
 //-------------------------------------------------------------------
 void Menu::update() {
 
-    if (blinkClock.getElapsedTime().asSeconds() > 0.5f) {   //registra el tiempo transcurrido desde la última vez que se reinició con blinkClock.restart()
+    if (blinkClock.getElapsedTime().asSeconds() > 0.5f) {   //registra el tiempo transcurrido desde la ï¿½ltima vez que se reiniciï¿½ con blinkClock.restart()
 
         //Alterna el valor de blinkState entre true y false. Esto permite que el texto parpadee
         blinkState = !blinkState;
@@ -176,7 +171,7 @@ void Menu::update() {
 //--------------------------------------------------------------------------------------------------
 void Menu::moveUp() {
 
-    //Primero, verifica si showMenuOptions es true, es decir, si las opciones del menú están visibles.
+    //Primero, verifica si showMenuOptions es true, es decir, si las opciones del menï¿½ estï¿½n visibles.
     if (showMenuOptions) {
 
         //RESTABLECE EL COLOR DE LA OPCION ACTUAL ANTES DE CAMBIAR LA SELECCION
@@ -203,7 +198,7 @@ void Menu::moveUp() {
 //--------------------------------------------------------------------------------------------------
 void Menu::moveDown() {
 
-    //Primero, verifica si showMenuOptions es true, es decir, si las opciones del menú están visibles.
+    //Primero, verifica si showMenuOptions es true, es decir, si las opciones del menï¿½ estï¿½n visibles.
     if (showMenuOptions) {
 
        //RESTABLECE EL COLOR DE LA OPCION ACTUAL ANTES DE CAMBIAR LA SELECCION
@@ -232,14 +227,14 @@ void Menu::handleEnterPress() {
         showInsertCoin = false;
         showMenuOptions = true;
     } else if (showMenuOptions) {
-        // Maneja la selección del menú
+        // Maneja la selecciï¿½n del menï¿½
         int x = getPressedItem();
         if (x == 0) {
-            // Lógica para iniciar el juego
+            // Lï¿½gica para iniciar el juego
         } else if (x == 1) {
-            // Lógica para mostrar créditos
+            // Lï¿½gica para mostrar crï¿½ditos
         } else if (x == 2) {
-            // Lógica para salir
+            // Lï¿½gica para salir
         }
     }
 }
@@ -253,3 +248,14 @@ int Menu::getPressedItem() {
 }
 //--------------------------------------------------------------------------------------------------
 
+
+bool Menu::getShowInsertCoin(){
+
+    return showInsertCoin;
+
+}
+
+bool Menu::getShowMenuOptions(){
+
+return showMenuOptions;
+}

@@ -3,6 +3,9 @@
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 #include "GamePlay.h"
+#include "ArchivoPlayer.h"
+#include "Player.h" /// Lo usuamos solo para guardar el archivoPlayer.
+#include <iostream> /// La vieja y confiable
 
 class Scene: public sf::Drawable
 {
@@ -13,11 +16,16 @@ class Scene: public sf::Drawable
     void draw(sf::RenderTarget &target, sf::RenderStates states)const override;
     void cmd();
     void respawnBackground();
-
+    void start(int nivel);
+    bool getJuegoTerminado();
+    void setJuegoTerminado(bool);
+    bool guardarArchivo();
 
   private:
     // Display de puntajes y vidas:
     GamePlay _gamePlay;
+    int buscarPuntosMax();
+    ArchivoPlayer _archivoPlayer;
     sf::Text _puntos;
     sf::Font _font1;
     sf::Font _font2;
@@ -26,6 +34,16 @@ class Scene: public sf::Drawable
     int _frames;
     sf::Texture _bg;
     sf::Sprite _bgSprite;
+    bool nivelTerminado;
+    bool _archivoGuardado;
+    bool juegoTerminado;
+    sf::Text _puntosMaximos;
+    bool guardarPartida;
+    sf::Texture gameOverTexture;
+    sf::Sprite gameOverSprite;
+    int _nivel;
+    sf::Text _nivel_txt;
+    bool _stopGamePlay;
 };
 
 
