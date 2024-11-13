@@ -11,7 +11,8 @@ public:
     Ranking buscaPosicion(int);
     ~RankingArchivo();
     void setPRanking(FILE*);
-
+    Ranking *obtenerRegistrosRanking(int);
+    int CantidadRegistros();
 private:
     FILE * _pRanking;
     const char* _url;

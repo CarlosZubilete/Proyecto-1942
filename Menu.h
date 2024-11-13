@@ -38,7 +38,7 @@ private:
     sf::Font font;
 
     //CANTIDAD DE OPCIONES DEL MENU
-    sf::Text menu[3];
+    sf::Text menu[5];
 
     //TEXTO INSERT COIN
     sf::Text insertCoin;
@@ -70,7 +70,3 @@ private:
 
 
 };
-
-
-
-

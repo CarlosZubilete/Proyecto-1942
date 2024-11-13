@@ -103,6 +103,7 @@ bool Scene::getJuegoTerminado()
       guardarArchivo();
       guardarPartida = true;
       juegoTerminado = true;
+
     }
     return true;
   }
