@@ -21,7 +21,7 @@
 
 int main() {
 
-  ConfiguracionArchivo ca("configuracion.dat");
+  ConfiguracionArchivo ca("assets/config/configuracion.dat");
   Configuracion * reg = ca.obtenerConfiguracion();
   std::cout << reg->getSoundEffects() << std::endl;
   std::cout << reg->getMusic() << std::endl;

@@ -4,7 +4,7 @@
 MenuRanking::MenuRanking()
 {
 
-  RankingArchivo ra("ranking.dat");
+  RankingArchivo ra("assets/config/ranking.dat");
 
   _cantidadRegistros = ra.CantidadRegistros();
   Ranking *reg = ra.obtenerRegistrosRanking(_cantidadRegistros);
