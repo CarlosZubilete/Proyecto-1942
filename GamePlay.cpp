@@ -11,6 +11,7 @@ GamePlay::GamePlay()
   _isExplosionActiveBoss = false;
   _banderaApareceBoss = false;
   _bandera_startBossBullest = false;
+  _banderaAtacanAlBoss = false;
 }
 
 void GamePlay::iniciarBalasVector()
@@ -88,6 +89,7 @@ void GamePlay::cmd()
     if (_banderaApareceBoss)
     {
     /// EL JEFE PUEDE DISPARAR Y HAY MENOS DE DOS BALAS
+    /*/// TODO : ES EL QUE VA..
       if (_bullets_Boss.size() <= 9 && (_boss.canShot()))
       {
         _bandera_startBossBullest =  true;
@@ -99,7 +101,21 @@ void GamePlay::cmd()
           _bullets_Boss.push_back(new BossBullets(_boss.getPosition().x,  _boss.getPosition().y, angulo, 5.0f));
         }
       }
+      */
+      /// PRUEBA PARA LOS FRAMES DEL ENEMIGO...
+      if (_bullets_Boss.size() <= 3 && (_boss.canShot()))
+      {
+        _bandera_startBossBullest =  true;
+
+        float grados[] = {60,90,120}; /// ANGULO EN LO QUE VA A DISPARAR.
+
+        for (float angulo : grados)
+        {
+          _bullets_Boss.push_back(new BossBullets(_boss.getPosition().x,  _boss.getPosition().y, angulo, 5.0f));
+        }
+      }
     }
+
   }
 }
 
@@ -143,13 +159,10 @@ void GamePlay::update()
     }
   }
 
-
   if (_frames % (60*14) == 0.f) {
     _powerUp = new PowerUp();
     _powerUp->respawn();
   }
-
-
 
   if (_isExplosionActive){
     _explosion.smallExplosion(_frameExplosion);
@@ -168,6 +181,8 @@ void GamePlay::update()
       _isExplosionActiveBoss = false;
       _frameExplosionBoss = 0.0f;
     }
+
+
   }
 
   /// RECORREMOS LAS EXPLOSIONES DINAMICAS
@@ -186,7 +201,6 @@ void GamePlay::update()
 
         delete _vExplosiones[i];
         _vExplosiones.erase(_vExplosiones.begin() + i);
-
       }
     }
   }
@@ -217,11 +231,20 @@ void GamePlay::update()
   }
 
 
-
   if(isCollision_WithBoss()||
       (isCollision_bullets_whitEnemyB())) {
       _juego.changePuntos(100);
   } // DESTRUYO ENEMIGOS
+
+  if (_banderaAtacanAlBoss)
+  {
+    _boss.damaged(_frameAtackanAlBoss);
+    if (_frameAtackanAlBoss >= 10.f)
+    {
+      _banderaAtacanAlBoss =false;
+      _frameAtackanAlBoss = 0;
+    }
+  }
 
 
   if (checkCollision(enemigo1)) {
@@ -246,30 +269,6 @@ void GamePlay::update()
   _timerReload--;
   _frames++;
 
-
-  /// ELIMINAMOS LAS BALAS DEL JEFE
-  /*
-  for ( int i = 0 ; i < _bullets_Boss.size() ; i++ )
-  {
-    std::cout << "ELIMINANDO BALAS JEFE ....  " << std::endl;
-    if (_bullets_Boss[i]->getBounds().top + _bullets_vEnemyB[i]->getBounds().height > 800)
-    {
-
-      delete _bullets_Boss[i];
-      _bullets_Boss.erase(_bullets_Boss.begin()+i);
-      std::cout << "ELIMINANDO BALAS SIZE()...." << _bullets_Boss.size() << std::endl;
-    }
-  }
-
-  for (int i = 0; i < _bullets_Boss.size(); ) {
-    if (_bullets_Boss[i]->getBounds().top + _bullets_Boss[i]->getBounds().height > 800) {
-        delete _bullets_Boss[i];
-        _bullets_Boss.erase(_bullets_Boss.begin() + i);
-    } else {
-        ++i;
-    }
-  }
-  */
 
 }
 
@@ -410,6 +409,9 @@ bool GamePlay::isCollision_WithBoss(){
       _explosion = Explosion(_boss.getPosition().x, _boss.getPosition().y);
       _isExplosionActiveBoss = true;  // ACTIVA LA ANIMACION
       _frameExplosionBoss = 0.0f;     // ESTAMOS EN EL PRIMER FRAME
+
+      _banderaAtacanAlBoss = true;
+      _frameAtackanAlBoss = .0f;
 
       //_boss.respawn();
       result = true;

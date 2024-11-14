@@ -15,7 +15,6 @@ BossBullets::BossBullets(int horizontal , int vertical , float velocidad)
   _velocidad_bala = velocidad;
 }
 */
-
 BossBullets::BossBullets(int eje_x, int eje_y , float angulo, float velocidad)
 {
   _texture = new sf::Texture;
@@ -28,6 +27,7 @@ BossBullets::BossBullets(int eje_x, int eje_y , float angulo, float velocidad)
   /// CALCULAMOS LA DIRECCION
   _dx = cos(angulo * (M_PI / 180.0f))*velocidad;
   _dy = sin(angulo * (M_PI / 180.0f))*velocidad;
+
 
 }
 

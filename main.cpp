@@ -157,25 +157,13 @@ int main() {
 
 
                       } else if (playEvent.key.code == sf::Keyboard::N) {
-<<<<<<< HEAD
-/*<<<<<<< HEAD
-=======
 
->>>>>>> 95660466d0fc0e229c614ce1b559fd022beda4ad
                         main_theme_v1.stop();
                         if( reg->getMusic())main_theme_v2.play();
                         Play.close();
-<<<<<<< HEAD
-=======*/
-                        mostrarContinuar = false;
-
-//>>>>>>> a1a7f0622252c9cccfc529b4170d7d04c79a3d12
-=======
-
                         mostrarContinuar = false;
                         isKeyY = false;
 
->>>>>>> 95660466d0fc0e229c614ce1b559fd022beda4ad
                       }
                     }
                   }

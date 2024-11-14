@@ -6,7 +6,8 @@ Boss::Boss(){
   _texture = new sf::Texture;
   _texture->loadFromFile("assets/sprites/1942-sprites-enemy.png");
   _sprite.setTexture(*_texture);
-  _sprite.setTextureRect({68,468,65,57});
+  _sprite.setTextureRect({68,468,65,53});
+  //_sprite.setTextureRect({1,468,65,57});
   _sprite.setScale(4,4);
   _sprite.setPosition(150,800+50);
   //_sprite.setOrigin({_sprite.getGlobalBounds().width/2,_sprite.getGlobalBounds().height});
@@ -35,19 +36,22 @@ void Boss::cmd() {
 
 }
 
+
 void Boss::respawn(){
-
   _sprite.setPosition(150,800+50);
-
 }
 
-//void Boss::damaged(&frame)
-void Boss::damaged()
+
+void Boss::damaged(float &frame)
 {
-  /*
   frame+=0.2;
-  _sprite.setTextureRect({68*(int)(frame/1.5),110,65,57})
-  */
+  //_sprite.setTextureRect({68*(int)(frame/1.25),468,65,57});
+  _sprite.setTextureRect({68+67*(int)(frame/1.43),468,65,53});
+
+  if( frame > 9)
+  {
+    _sprite.setTextureRect({68,468,65,53});
+  }
 }
 
 void Boss::update()

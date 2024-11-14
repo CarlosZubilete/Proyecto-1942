@@ -18,7 +18,8 @@ public:
     sf::Vector2f getPosition() const override;
     ///void respawn();
     bool canShot();
-    void damaged();
+    void damaged(float &frame);
+
 
 private:
 

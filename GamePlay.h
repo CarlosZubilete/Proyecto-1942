@@ -64,6 +64,8 @@ private:
     ///JEFE:
     Boss _boss;
     bool _banderaApareceBoss;
+    bool _banderaAtacanAlBoss;
+    float _frameAtackanAlBoss;
     float _frameExplosionBoss;
     bool _bandera_startBossBullest;
     std::vector<BossBullets *> _bullets_Boss;// BALASJEFE
