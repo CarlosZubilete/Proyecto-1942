@@ -41,7 +41,7 @@ int main() {
   sf::View view(sf::FloatRect(0.f, 0.f, 600.f, 800.f));
   window.setView(view);
 
-  Scene scene;
+
 
   // Main theme 2
   sf::SoundBuffer buffer_main_theme_v2;
@@ -72,6 +72,7 @@ int main() {
   sf::RectangleShape continuar_text_fondo;
 
   bool mostrarContinuar = false;
+  bool isKeyY = false;
 
   // GAME LOOP
   while (window.isOpen()) {
@@ -104,11 +105,14 @@ int main() {
             int x = mainMenu.getPressedItem();
 //
             if (x == 0) {
+                Scene scene;
+
 //
               sf::RenderWindow Play(sf::VideoMode(600, 800), "1942");
               Play.setFramerateLimit(60);
               main_theme_v2.stop();
               if( reg->getMusic()) main_theme_v1.play();
+              mostrarContinuar = false;
 
               // GAME LOOP
               while (Play.isOpen()) {
@@ -146,17 +150,20 @@ int main() {
 
                     if (mostrarContinuar) {
                       if (playEvent.key.code == sf::Keyboard::Y) {
-                        main_theme_v1.stop();
-                        if( reg->getMusic()) main_theme_v2.play();
-                        Play.close();
+                         main_theme_v1.play();
+                         mostrarContinuar = false;
+                         isKeyY = true;
+                         main_theme_v2.stop();
+
 
                       } else if (playEvent.key.code == sf::Keyboard::N) {
 
                         main_theme_v1.stop();
-                        main_theme_v2.play();
+                        if( reg->getMusic())main_theme_v2.play();
                         Play.close();
 
                         mostrarContinuar = false;
+                        isKeyY = false;
 
                       }
                     }
@@ -167,8 +174,19 @@ int main() {
                 if (scene.getJuegoTerminado()) {
                   ///  STOP MUSICA DEL JUEGO
                   scene.setJuegoTerminado(true);
+                  main_theme_v1.stop();
                 }
                 // UPDATE /////////////////////////////////////////////////////////
+
+                if(isKeyY){
+
+                    scene.RestarLastPoint();
+                    scene.setJuegoTerminado(true);
+                    isKeyY=false;
+                    if( reg->getMusic()) main_theme_v1.play();
+
+                }
+
                 if (!scene.getJuegoTerminado()) {
                   scene.cmd();
                   scene.update();
