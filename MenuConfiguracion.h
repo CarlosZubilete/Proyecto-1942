@@ -31,6 +31,8 @@ public:
     bool getShowInsertCoin();
     bool getShowMenuOptions();
 
+    void setConfiguracion(Configuracion* reg);
+
 
 
 
@@ -71,5 +73,13 @@ private:
     bool showInsertCoin;
     bool showMenuOptions;
 
+    bool _soundfx;
+    bool _music;
 
+    Configuracion* _configuracion;
+
+    sf::CircleShape _circulo[2];
+
+    int selectedOption;
+    sf::Clock enterClock;
 };

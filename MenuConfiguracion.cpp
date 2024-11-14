@@ -5,6 +5,11 @@
 MenuConfiguracion::MenuConfiguracion()
 {
 
+//  _configuracion = nullptr;
+
+  _music = false;
+  _soundfx = false;
+
 
   if (!font.loadFromFile("assets/fonts/fuente.ttf")) {
 
@@ -93,6 +98,12 @@ MenuConfiguracion::MenuConfiguracion()
   menu[0].setPosition(165, 350);  // POSICION DEL TEXTO
 
 
+  _soundfx = true;
+  _circulo[0].setRadius(10);
+  _circulo[0].setPosition(500.f, 350.f);
+  if (_soundfx) { _circulo[0].setFillColor(sf::Color::Green); }
+  else { _circulo[0].setFillColor(sf::Color::Red); }
+
 
   //----------------------------------------------------
   //MUSIC
@@ -102,6 +113,11 @@ MenuConfiguracion::MenuConfiguracion()
   menu[1].setCharacterSize(27);
   menu[1].setPosition(195, 400);
 
+  _soundfx = true;
+  _circulo[1].setRadius(10);
+  _circulo[1].setPosition(500.f, 400.f);
+  if (_music) { _circulo[1].setFillColor(sf::Color::Green); }
+  else { _circulo[1].setFillColor(sf::Color::Red); }
 
   //----------------------------------------------------
 
@@ -156,6 +172,8 @@ void MenuConfiguracion::draw(sf::RenderTarget &target, sf::RenderStates states) 
 //    target.draw(item, states);      //Si es as�, recorre el arreglo menu y dibuja cada elemento de las opciones del men�
 //  for (const auto& onoffs: _onoff) target.draw(onoffs, states);
 
+  target.draw(_circulo[0], states);
+  target.draw(_circulo[1], states);
 
 
 }
@@ -174,6 +192,27 @@ void MenuConfiguracion::update()
 
     //Reinicia el reloj blinkClock para que comience a contar nuevamente desde cero
     blinkClock.restart();
+  }
+
+  if (enterClock.getElapsedTime().asSeconds() > 0.1f) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+      if (selectedItemIndex == 0) {  // Sound FX
+        _soundfx = !_soundfx;
+        if (_soundfx) {
+          _circulo[0].setFillColor(sf::Color::Green); // Verde si está activado
+        } else {
+          _circulo[0].setFillColor(sf::Color::Red); // Rojo si está desactivado
+        }
+      } else if (selectedItemIndex == 1) {  // Music
+        _music = !_music;
+        if (_music) {
+          _circulo[1].setFillColor(sf::Color::Green); // Verde si está activado
+        } else {
+          _circulo[1].setFillColor(sf::Color::Red); // Rojo si está desactivado
+        }
+      }
+      enterClock.restart();  // Reinicia el temporizador
+    }
   }
 
 
@@ -274,4 +313,21 @@ bool MenuConfiguracion::getShowMenuOptions()
 {
 
   return showMenuOptions;
+}
+
+void MenuConfiguracion::setConfiguracion(Configuracion* reg) {
+  _configuracion = reg;
+  _soundfx = _configuracion->getSoundEffects();
+  _music = _configuracion->getMusic();
+  // Update the circle colors based on current settings
+  if (_soundfx) {
+    _circulo[0].setFillColor(sf::Color::Green);
+  } else {
+    _circulo[0].setFillColor(sf::Color::Red);
+  }
+  if (_music) {
+    _circulo[1].setFillColor(sf::Color::Green);
+  } else {
+    _circulo[1].setFillColor(sf::Color::Red);
+  }
 }

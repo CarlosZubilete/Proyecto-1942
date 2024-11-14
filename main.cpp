@@ -26,6 +26,8 @@ int main() {
   std::cout << reg->getSoundEffects() << std::endl;
   std::cout << reg->getMusic() << std::endl;
 
+  MenuConfiguracion menuConfiguracion;
+  menuConfiguracion.setConfiguracion(reg);
 
   std::srand((unsigned) std::time(0));
 
@@ -212,7 +214,6 @@ int main() {
             {
 
               sf::RenderWindow windowConfiguracion(sf::VideoMode(600,800), "Configuracion");
-              MenuConfiguracion menuConfiguracion;
               windowConfiguracion.setFramerateLimit(60);
               while(windowConfiguracion.isOpen())
               {
