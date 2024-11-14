@@ -98,7 +98,7 @@ void EnemyB::setStateMuerto()
 
 void EnemyB::respawn()
 {
-  if( _soundfx) _sound.playExplosionSmall();
+
     //_explosion = new Explosion(_sprite.getPosition().x, _sprite.getPosition().y);
     //_explosion->smallExplosion(_frameExplosion);
 
@@ -126,12 +126,7 @@ void EnemyB::draw(sf::RenderTarget &target , sf::RenderStates states)const
   target.draw(_sprite,states);
 }
 
-void EnemyB::setConfiguracion(Configuracion* reg)
-{
-  _configuracion = reg;
-  _soundfx = _configuracion->getSoundEffects();
 
-}
 
 
 /*

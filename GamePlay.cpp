@@ -487,7 +487,9 @@ bool GamePlay::isCollision_bullets_whitEnemyB()
         _vec_isExplosiveActive.push_back(new bool(true));
         _vec_frameExplosive.push_back(new float(0.0f));
 
-        _vEnemiesB[j]->respawn();/// TODO: SE TIENE QUE ELIMINAR.
+        _vEnemiesB[j]->respawn();
+        if( _soundfx) _sound.playExplosionSmall();
+        /// TODO: SE TIENE QUE ELIMINAR.
 
         return true;
 
