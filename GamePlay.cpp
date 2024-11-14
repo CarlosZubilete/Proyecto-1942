@@ -573,6 +573,11 @@ bool GamePlay::getNivelTermiando()const
   return _nivelTerminado;
 }
 
+void GamePlay::setSoundFX(bool &value)
+{
+_soundfx = value;
+}
+
 //int GamePlay::getPuntos(Player _juego) const
 //{
 //  return _juego.getPuntos();
