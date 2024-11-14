@@ -101,7 +101,6 @@ int main() {
               main_theme_v2.stop();
               main_theme_v1.play();
 
-
               // GAME LOOP
               while (Play.isOpen()) {
 
@@ -112,8 +111,9 @@ int main() {
                 {
 
                   if (playEvent.type == sf::Event::Closed) {
-                    main_theme_v1.stop();
                     Play.close();
+                    main_theme_v1.stop();
+
                   }
 
                   if (playEvent.type == sf::Event::KeyPressed) {
@@ -141,6 +141,7 @@ int main() {
 
                       } else if (playEvent.key.code == sf::Keyboard::N) {
                         main_theme_v1.stop();
+                        main_theme_v2.play();
                         Play.close();
                       }
                     }

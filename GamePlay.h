@@ -14,6 +14,7 @@
 #include "Sounds.h"
 #include "PowerUp.h"
 #include "Boss.h"
+#include "BossBullets.h"
 
 class GamePlay : public sf::Drawable
 {
@@ -46,17 +47,28 @@ public:
 
     bool isCollision_vEnemyB_withPersonaje();
 
-    bool isCollisionWithBoss();
+    bool isCollision_WithBoss();
+    bool isCollision_bulletsBoss_withPersonaje();
+    //bool isCollisionWithBoss();
 
     void restartVidas();
+
 private:
+
     void iniciarBalasVector();
 
     Personaje _player;
     std::vector<Bullet *> _bullets;
     std::vector<EnemyBullet *> _enemyBullets;
     Enemy enemigo1;
+    ///JEFE:
     Boss _boss;
+    bool _banderaApareceBoss;
+    float _frameExplosionBoss;
+    bool _bandera_startBossBullest;
+    std::vector<BossBullets *> _bullets_Boss;// BALASJEFE
+
+
     std::vector<Enemy *> _enemies;
     int _timerReload;
     Player _juego;

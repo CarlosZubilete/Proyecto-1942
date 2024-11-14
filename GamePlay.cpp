@@ -8,7 +8,9 @@ GamePlay::GamePlay()
   _frameExplosion = 0.f;
   _isExplosionActive = false;
   _frames = 0;
-  _isExplosionActiveBoss= false;
+  _isExplosionActiveBoss = false;
+  _banderaApareceBoss = false;
+  _bandera_startBossBullest = false;
 }
 
 void GamePlay::iniciarBalasVector()
@@ -31,38 +33,73 @@ void GamePlay::iniciarBalasVector()
     }
   }
 
-  for (int i = 0; i < _vEnemiesB.size(); i++) {
-    if (_vEnemiesB[i]->shot()) {
-      _bullets_vEnemyB.push_back(
-              new Bullet(_vEnemiesB[i]->getPosition().x - 50, _vEnemiesB[i]->getPosition().y - 30, 7));
+  if (!_bandera_startBossBullest)
+  {
+    for (int i = 0; i < _vEnemiesB.size(); i++) {
+      if (_vEnemiesB[i]->shot()) {
+        _bullets_vEnemyB.push_back(new Bullet(_vEnemiesB[i]->getPosition().x - 50, _vEnemiesB[i]->getPosition().y - 30, 7));
+      }
     }
+
+    if (_frames % 120 == 0) {
+      // Calcula dirección normalizada de EnemyBullet hacia el jugador
+      sf::Vector2f direccion = _player.getPosition() - enemigo1.getPosition();
+      float magnitud = sqrt(direccion.x * direccion.x + direccion.y * direccion.y);
+
+      if (magnitud != 0) {
+        direccion /= magnitud;  // Normaliza el vector
+      }
+
+      _enemyBullets.push_back(new EnemyBullet(enemigo1.getBulletOrigin(), direccion, 3.5f));
+    } // Dispara EnemyBullet hacia el jugador
   }
 
+  /// SI SON 3 SEG O MAS , APARECE EL BOSS nasheii
+  if (_frames >= 60*3)
+  {
+    _banderaApareceBoss = true;
+  }
 
-  if (_frames % 120 == 0) {
-    // Calcula dirección normalizada de EnemyBullet hacia el jugador
-    sf::Vector2f direccion = _player.getPosition() - enemigo1.getPosition();
-    float magnitud = sqrt(direccion.x * direccion.x + direccion.y * direccion.y);
-
-    if (magnitud != 0) {
-      direccion /= magnitud;  // Normaliza el vector
-    }
-
-    _enemyBullets.push_back(new EnemyBullet(enemigo1.getBulletOrigin(), direccion, 3.5f));
-  } // Dispara EnemyBullet hacia el jugador
 }
+
 
 void GamePlay::cmd()
 {
 
+  if (_banderaApareceBoss)
+  {
+    _boss.cmd();
+  }
+
   _player.cmd();
-  enemigo1.cmd();
-  _boss.cmd();
 
+  if (!_bandera_startBossBullest)
+  {
+    enemigo1.cmd();
 
+    for (int i = 0; i < _vEnemiesB.size(); i++) {
+      _vEnemiesB[i]->cmd();
+    }
+  }
 
-  for (int i = 0; i < _vEnemiesB.size(); i++) {
-    _vEnemiesB[i]->cmd();
+  /// EL JEFE LLEGO A SU POSICION
+  if (_frames >= 8*60)
+  {
+    if (_banderaApareceBoss)
+    {
+    /// EL JEFE PUEDE DISPARAR Y HAY MENOS DE DOS BALAS
+      if (_bullets_Boss.size() <= 9 && (_boss.canShot()))
+      {
+        _bandera_startBossBullest =  true;
+
+        float grados[] = {30,45,60,75,90,105,120,135,150}; /// ANGULO EN LO QUE VA A DISPARAR.
+
+        for (float angulo : grados)
+        {
+          _bullets_Boss.push_back(new BossBullets(_boss.getPosition().x,  _boss.getPosition().y, angulo, 5.0f));
+        }
+      }
+    }
   }
 }
 
@@ -71,17 +108,39 @@ void GamePlay::update()
 
   iniciarBalasVector();
 
-
-
-
-  /// ACTUALIZAMOS LOS COMANDOS
-  for (int i = 0; i < _vEnemiesB.size(); i++) {
-    _vEnemiesB[i]->update();
+  if (_banderaApareceBoss)
+  {
+    _boss.update();
   }
 
   /// DIBUJAMOS LAS BALAS DEL ENEMIGO
-  for (int i = 0; i < _bullets_vEnemyB.size(); i++) {
-    _bullets_vEnemyB[i]->update();
+  for (int i = 0; i < _bullets_Boss.size(); i++) {
+    _bullets_Boss[i]->update();
+  }
+
+  /// ACTUALIZAMOS LOS COMANDOS
+  /// DEPENDIENDO DE CUANTO DISPARE, VAMOS A MOVER
+  for (int i = 0; i < _bullets.size(); i++)// de esta manera suben las balas disparadas
+  {
+    _bullets[i]->update();
+  }
+
+  if (!_bandera_startBossBullest)
+  {
+    for (int i = 0; i < _vEnemiesB.size(); i++) {
+      _vEnemiesB[i]->update();
+    }
+
+    /// DIBUJAMOS LAS BALAS DEL ENEMIGO
+    for (int i = 0; i < _bullets_vEnemyB.size(); i++) {
+      _bullets_vEnemyB[i]->update();
+    }
+
+    /// DEPENDIENDO DE CUANTO DISPARE, VAMOS A ELIMINAR
+    for (int i = 0; i < _enemyBullets.size(); i++) // de esta manera bajan las balas enemigas
+    {
+      _enemyBullets[i]->update();
+    }
   }
 
 
@@ -91,27 +150,8 @@ void GamePlay::update()
   }
 
 
-  /// DIBUJAMOS EL POWER UP
-//  if (_frames % 60 * 12 == 0.f) {
-//    _powerUp->respawn();
-//  }
 
-
-
-
-  /// DEPENDIENDO DE CUANTO DISPARE, VAMOS A MOVER
-  for (int i = 0; i < _bullets.size(); i++)// de esta manera suben las balas disparadas
-  {
-    _bullets[i]->update();
-  }
-  /// DEPENDIENDO DE CUANTO DISPARE, VAMOS A ELIMINAR
-  for (int i = 0; i < _enemyBullets.size(); i++) // de esta manera bajan las balas enemigas
-  {
-    _enemyBullets[i]->update();
-  }
-
-
-  if (_isExplosionActive) {
+  if (_isExplosionActive){
     _explosion.smallExplosion(_frameExplosion);
 
     if (_frameExplosion >= 8.f) {
@@ -122,11 +162,11 @@ void GamePlay::update()
 
 
   if (_isExplosionActiveBoss) {
-    _explosion.bigExplosion(_frameExplosion);
+    _explosion.bigExplosion(_frameExplosionBoss);
 
-    if (_frameExplosion >= 8.f) {
+    if (_frameExplosionBoss >= 8.f) {
       _isExplosionActiveBoss = false;
-      _frameExplosion = 0.0f;
+      _frameExplosionBoss = 0.0f;
     }
   }
 
@@ -170,13 +210,17 @@ void GamePlay::update()
 
   _powerUp->update();
   _player.update();
-  enemigo1.update();
-  _boss.update();
+
+  if(!_bandera_startBossBullest)
+  {
+    enemigo1.update();
+  }
 
 
-  if(isCollisionWithBoss()||
+
+  if(isCollision_WithBoss()||
       (isCollision_bullets_whitEnemyB())) {
-    _juego.changePuntos(100);
+      _juego.changePuntos(100);
   } // DESTRUYO ENEMIGOS
 
 
@@ -186,17 +230,47 @@ void GamePlay::update()
     _player.respawn();
   } // COLISION PLAYER-ENEMY A
 
-
-
   if (_player.isCollision(*_powerUp)) {
     _juego.addVidas();
     _powerUp->hidePowerUp();
-    std::cout << "entra aca o no? " << std::endl;
+    //std::cout << "entra aca o no? " << std::endl;
   }
 
 
+  /// BALAS DEL ENEMIGO CON EL PERSONAJE
+  if (isCollision_bulletsBoss_withPersonaje())
+  {
+    _juego.changeVidas();
+  }
+
   _timerReload--;
   _frames++;
+
+
+  /// ELIMINAMOS LAS BALAS DEL JEFE
+  /*
+  for ( int i = 0 ; i < _bullets_Boss.size() ; i++ )
+  {
+    std::cout << "ELIMINANDO BALAS JEFE ....  " << std::endl;
+    if (_bullets_Boss[i]->getBounds().top + _bullets_vEnemyB[i]->getBounds().height > 800)
+    {
+
+      delete _bullets_Boss[i];
+      _bullets_Boss.erase(_bullets_Boss.begin()+i);
+      std::cout << "ELIMINANDO BALAS SIZE()...." << _bullets_Boss.size() << std::endl;
+    }
+  }
+
+  for (int i = 0; i < _bullets_Boss.size(); ) {
+    if (_bullets_Boss[i]->getBounds().top + _bullets_Boss[i]->getBounds().height > 800) {
+        delete _bullets_Boss[i];
+        _bullets_Boss.erase(_bullets_Boss.begin() + i);
+    } else {
+        ++i;
+    }
+  }
+  */
+
 }
 
 /// SI PLAYER COLISIONA ENEMIGO A
@@ -205,6 +279,33 @@ bool GamePlay::checkCollision(const Enemy &col) const
   return _player.getBounds().intersects(col.getBounds());
 }
 
+bool GamePlay::isCollision_bulletsBoss_withPersonaje()
+{
+
+  bool result = false;
+
+  for ( int i = 0 ; i < _bullets_Boss.size() ;i++)
+  {
+    if (_bullets_Boss[i]->isCollision(_player))
+    {
+      delete _bullets_Boss[i];
+      _bullets_Boss.erase(_bullets_Boss.begin() + i);
+      std::cout << "COLLISION -> BALAS BOSS WHIT PERSONAJE" << std::endl;
+      result = true;
+    }
+    else
+    {
+      if (_bullets_Boss[i]->getBounds().top + _bullets_Boss[i]->getBounds().height > 800)
+      {
+        delete _bullets_Boss[i];
+        _bullets_Boss.erase(_bullets_Boss.begin() + i);
+      std::cout << "DELETE -> BALAS BOSS SALIERON DE LA PANTALLA" << std::endl;
+      }
+    }
+  }
+
+  return result;
+}
 
 /// SI LA BALA DEL VECTOR ENEMIGOS B COLISIONA CON EL PERSONAJE.
 bool GamePlay::isCollision_vBullestEnemyB_whitPersonaje()
@@ -295,9 +396,8 @@ bool GamePlay::isCollisionWithEnemy() // cuando destruis aviones enemigos
 }
 
 
+bool GamePlay::isCollision_WithBoss(){
 
-
-bool GamePlay::isCollisionWithBoss(){
 
   bool result = false;
   for (int i = 0; i < _bullets.size(); i++) {
@@ -309,9 +409,9 @@ bool GamePlay::isCollisionWithBoss(){
 
       _explosion = Explosion(_boss.getPosition().x, _boss.getPosition().y);
       _isExplosionActiveBoss = true;  // ACTIVA LA ANIMACION
-      _frameExplosion = 0.0f;     // ESTAMOS EN EL PRIMER FRAME
+      _frameExplosionBoss = 0.0f;     // ESTAMOS EN EL PRIMER FRAME
 
-      _boss.respawn();
+      //_boss.respawn();
       result = true;
     } else {
       if (_bullets[i]->getBounds().top + _bullets[i]->getBounds().height < 0) {
@@ -321,12 +421,11 @@ bool GamePlay::isCollisionWithBoss(){
     }
   }
   return result;
-}
 
+}
 
 bool GamePlay::isCollision_bullets_whitEnemyB()
 {
-
   /// RECORRO LAS BALAS QUE DISPARO EL PERSONAJE
   for (int i = 0; i < _bullets.size(); i++) {
     /// RECORREMOS TODOS LOS ENEMIGOS B EN PANTALLA
@@ -352,7 +451,6 @@ bool GamePlay::isCollision_bullets_whitEnemyB()
 
 }
 
-
 bool GamePlay::isCollision_withPowerUp()
 {
   return true;
@@ -360,36 +458,47 @@ bool GamePlay::isCollision_withPowerUp()
 
 void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+  if(_banderaApareceBoss)
+  {
+    target.draw(_boss,states);
+  }
+
   target.draw(*_powerUp, states);
+
 
   for (int i = 0; i < _bullets.size(); i++) {
     target.draw(*_bullets[i], states);
-//        target.draw(*bala_cartel[i], states);
   }
-
-  for (int i = 0; i < _enemyBullets.size(); i++) {
-    target.draw(*_enemyBullets[i], states);
-  }
-
-
-  for (int i = 0; i < _vEnemiesB.size(); i++) {
-    target.draw(*_vEnemiesB[i], states);
-  }
-
-  for (int i = 0; i < _bullets_vEnemyB.size(); i++) {
-    target.draw(*_bullets_vEnemyB[i], states);
-  }
-
 
   for (int i = 0; i < _vExplosiones.size(); i++) {
     target.draw(*_vExplosiones[i], states);
   }
 
+  if (!_bandera_startBossBullest)
+  {
+    target.draw(enemigo1, states);
+
+    for (int i = 0; i < _enemyBullets.size(); i++) {
+      target.draw(*_enemyBullets[i], states);
+    }
+
+    for (int i = 0; i < _vEnemiesB.size(); i++) {
+      target.draw(*_vEnemiesB[i], states);
+    }
+
+    for (int i = 0; i < _bullets_vEnemyB.size(); i++) {
+      target.draw(*_bullets_vEnemyB[i], states);
+    }
+
+  }
+
+  for ( int i = 0 ; i<_bullets_Boss.size() ; i++)
+  {
+    target.draw(*_bullets_Boss[i],states);
+  }
+
   target.draw(_player, states);
   target.draw(_explosion, states);
-  target.draw(enemigo1, states);
-  target.draw(_boss,states);
-
 }
 
 int GamePlay::getPuntos() const
