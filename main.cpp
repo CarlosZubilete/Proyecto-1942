@@ -134,7 +134,7 @@ int main() {
                       continuar_text_fondo.setFillColor(sf::Color(0, 0, 0, 128));
 
                       continuar_text.setFillColor(sf::Color::White);
-                      continuar_text.setString("CONTINUAR  Y   N");
+                      continuar_text.setString("SALIR  Y   N");
                       continuar_text.setCharacterSize(24);
                       continuar_text.setPosition(600 / 2, 800 / 2);
                       continuar_text.setFont(font);
@@ -144,11 +144,12 @@ int main() {
 
                     if (mostrarContinuar) {
                       if (playEvent.key.code == sf::Keyboard::Y) {
-                        mostrarContinuar = false;
+                        main_theme_v1.stop();
+                        main_theme_v2.play();
+                        Play.close();
 
                       } else if (playEvent.key.code == sf::Keyboard::N) {
-                        main_theme_v1.stop();
-                        Play.close();
+                        mostrarContinuar = false;
                       }
                     }
                   }
@@ -156,7 +157,7 @@ int main() {
 
                 // CMD ////////////////////////////////////////////////////////////
                 if (scene.getJuegoTerminado()) {
-                  main_theme_v1.stop(); ///  STOP MUSICA DEL JUEGO
+                  ///  STOP MUSICA DEL JUEGO
                   scene.setJuegoTerminado(true);
                 }
                 // UPDATE /////////////////////////////////////////////////////////
@@ -226,13 +227,58 @@ int main() {
                     windowConfiguracion.close();
                   }
 
+                  if (configuracionEvent.type == sf::Event::KeyReleased) {
+                    if (configuracionEvent.key.code == sf::Keyboard::Up) {
+                      menuConfiguracion.moveUp();
+                    } else if (configuracionEvent.key.code == sf::Keyboard::Down) {
+                      menuConfiguracion.moveDown();
+                    } else if (configuracionEvent.key.code == sf::Keyboard::Return) {
+                      if (menuConfiguracion.getShowInsertCoin()) {
+                        menuConfiguracion.handleEnterPress();
+                      } else {
+                        int x = menuConfiguracion.getPressedItem();
+                        if (x == 0)
+                        {
+                            reg->setSoundEffects(!reg->getSoundEffects()); // pongo el contrario de la configuracion
+                            reg->cargarConfiguracion(reg->getSoundEffects(),reg->getMusic()); // preparo el reg
+                            ca.grabarConfiguracion(*reg); // grabo el reg
+
+                        } else if (x == 1)
+                        {
+                          reg->setMusic(!reg->getMusic()); // pongo el contrario de la configuracion
+                          reg->cargarConfiguracion(reg->getSoundEffects(),reg->getMusic()); // preparo el reg
+                          ca.grabarConfiguracion(*reg); // grabo el reg
+                          if (reg->getMusic()) {
+                            main_theme_v2.play();
+                          } else {
+                            main_theme_v2.stop();
+                          }
+
+                        }
+                        else if (x == 2)
+                        {
+                          // TODO: salir
+                          windowConfiguracion.close();
+                        }
+
+
+
+                      }
+
+                    }
+                  }
+
+
+
+
+
                 }
                 // CMD
                 // UPDATE
-//                menuConfiguracion.update();
+                menuConfiguracion.update();
                 // DRAW
                 windowConfiguracion.clear();
-//                windowConfiguracion.draw(menuConfiguracion);
+                windowConfiguracion.draw(menuConfiguracion);
                 windowConfiguracion.display();
                 // FLIP
               }
@@ -278,8 +324,9 @@ int main() {
     window.draw(mainMenu);
     window.display();
 //
-//
   }
+
+  delete []reg;
 
   return 0;
 }

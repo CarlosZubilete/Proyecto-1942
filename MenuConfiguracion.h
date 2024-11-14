@@ -3,19 +3,14 @@
 #include "ConfiguracionArchivo.h"
 #include "Configuracion.h"
 
-class MenuConfiguracion
+class MenuConfiguracion: public sf::Drawable
 {
 public:
     //CONSTRUCTOR DE LA CLASE MENU
     MenuConfiguracion();
 
-    //ACTUALIZA EL ESTADO DE CIERTOS ELEMENTOS
-    void update();
-
     //DIBUJA EN LA VENTANA DE LA APLICACION LOS ELEMENTOS DEL MENU
-    void draw(sf::RenderTarget &target , sf::RenderStates states) const ;
-
-
+    void draw(sf::RenderTarget &target , sf::RenderStates states) const override;
 
     //CAMBIA LA SELECCION DEL MENU HACIA ARRIBA
     void moveUp();
@@ -29,8 +24,15 @@ public:
     //RETORNA EL INDICE DE LA OPCION SELECCIONADA ACTUALMENTE EN EL MENU
     int getPressedItem();
 
+    //ACTUALIZA EL ESTADO DE CIERTOS ELEMENTOS
+    void update();
 
+
+    bool getShowInsertCoin();
     bool getShowMenuOptions();
+
+
+
 
 private:
 
@@ -40,7 +42,10 @@ private:
     sf::Font font;
 
     //CANTIDAD DE OPCIONES DEL MENU
-    sf::Text menu[5];
+    sf::Text menu[3];
+
+    //TEXTO INSERT COIN
+    sf::Text insertCoin;
 
     //LOGO 1942
     sf::Texture logoTexture;
@@ -63,7 +68,14 @@ private:
     //DETERMINA SI EL TEXTO INSERT COIN ESTA VISIBLE O INVISIBLE
     bool blinkState;
 
+    bool showInsertCoin;
     bool showMenuOptions;
+
+    bool _soundfx;
+    bool _music;
+
+
+
 
 
 };

@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-class Menu:public sf::Drawable {
+class Menu: public sf::Drawable {
 public:
     //CONSTRUCTOR DE LA CLASE MENU
     Menu(float width, float height);
