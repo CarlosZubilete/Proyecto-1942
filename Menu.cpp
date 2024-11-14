@@ -195,7 +195,7 @@ void Menu::moveUp() {
 
     //VERIFICA SI ESTA EN EL PRIMER ELEMENTO, SI ES ASI, VA AL ULTIMO
     if (selectedItemIndex - 1 < 0) {
-      selectedItemIndex = 2; // CAMBIA EL INDICE AL ULTIMO ELEMENTO
+      selectedItemIndex = 4; // CAMBIA EL INDICE AL ULTIMO ELEMENTO
     } else {
       selectedItemIndex--; //MUEVE LA SELECCION HACIA ARRIBA
 
