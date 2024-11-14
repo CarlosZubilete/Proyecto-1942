@@ -15,7 +15,9 @@ GamePlay::GamePlay()
   _ctoCollisiones_withBoss = 0;
   _bandera_BossMuerto = false;
   _nivelTerminado = false;
-
+  ConfiguracionArchivo ca;
+  _configuracion = *ca.obtenerConfiguracion();
+  _soundfx = _configuracion.getSoundEffects();
 }
 
 void GamePlay::iniciarBalasVector()
