@@ -126,6 +126,12 @@ void EnemyB::draw(sf::RenderTarget &target , sf::RenderStates states)const
   target.draw(_sprite,states);
 }
 
+void EnemyB::setConfiguracion(Configuracion* reg)
+{
+  _configuracion = reg;
+  _soundfx = _configuracion->getSoundEffects();
+
+}
 
 
 /*

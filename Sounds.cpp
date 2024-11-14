@@ -14,17 +14,11 @@ Sounds::Sounds()
 
 void Sounds::playExplosionSmall()
 {
-  if (_soundfx) _sound.play();
+    _sound.play();
 }
 
 
 void Sounds::playDisparoPew()
 {
-  if (_soundfx) _soundPew.play();
-}
-
-void Sounds::setConfiguracion(Configuracion* reg)
-{
-  _configuracion = reg;
-  _soundfx = _configuracion->getSoundEffects();
+    _soundPew.play();
 }

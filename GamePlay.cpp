@@ -15,6 +15,7 @@ GamePlay::GamePlay()
   _ctoCollisiones_withBoss = 0;
   _bandera_BossMuerto = false;
   _nivelTerminado = false;
+
 }
 
 void GamePlay::iniciarBalasVector()

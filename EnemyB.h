@@ -28,6 +28,7 @@ class EnemyB: public sf::Drawable, public Collisionable, public Avion
         void respawn();
         void explosion();
         void setStateMuerto();
+        void setConfiguracion(Configuracion* reg); // configura el sonido si suena o no (tanto desde al inicio (main.cpp) como de la configuracion (clase Configuracion)
     private:
         sf::Vector2f _newPosition;
         bool _canShoot;
@@ -41,6 +42,8 @@ class EnemyB: public sf::Drawable, public Collisionable, public Avion
         //sf::Vector2f _moveHacia;
         //float _angle;
         //int _horizonte;
+        Configuracion* _configuracion;
+        bool _soundfx;
 
 };
 

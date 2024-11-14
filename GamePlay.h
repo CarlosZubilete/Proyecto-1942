@@ -52,6 +52,8 @@ public:
     //bool isCollisionWithBoss();
     void restartVidas();
     bool getNivelTermiando()const;
+    void setConfiguracion(Configuracion* reg);
+    bool getConfiguration();
 
 private:
 

@@ -6,6 +6,7 @@
 class ConfiguracionArchivo
 {
 public:
+    ConfiguracionArchivo();
     ConfiguracionArchivo(const char* url);
     void setPConfiguracion(FILE * pRanking);
     bool grabarConfiguracion(Configuracion &reg);
