@@ -50,11 +50,12 @@ public:
     bool isCollision_WithBoss();
     bool isCollision_bulletsBoss_withPersonaje();
     //bool isCollisionWithBoss();
-
     void restartVidas();
+    bool getNivelTermiando()const;
 
 private:
 
+    bool _nivelTerminado;
     void iniciarBalasVector();
 
     Personaje _player;

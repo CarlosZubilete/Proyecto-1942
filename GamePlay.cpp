@@ -14,17 +14,20 @@ GamePlay::GamePlay()
   _banderaAtacanAlBoss = false;
   _ctoCollisiones_withBoss = 0;
   _bandera_BossMuerto = false;
+  _nivelTerminado = false;
 }
 
 void GamePlay::iniciarBalasVector()
 {
   ////////////////////////////////////////////////////////////////////////
   /// CREAMOS EL VECTOR DE ENEMIGOS: CON UN CONTADOR ...
+
   if (_frames % 120 == 0) {
     if (_vEnemiesB.size() < 2) {
       _vEnemiesB.push_back(new EnemyB());
     }
   }
+
 
 
   if (_player.Shoot()) {
@@ -229,13 +232,6 @@ void GamePlay::update()
     enemigo1.update();
   }
 
-  /*
-  if(isCollision_WithBoss()||
-      (isCollision_bullets_whitEnemyB())) {
-      _juego.changePuntos(100);
-  } // DESTRUYO ENEMIGOS
-  */
-
   if(isCollision_bullets_whitEnemyB())
   {
       _juego.changePuntos(100);
@@ -250,10 +246,10 @@ void GamePlay::update()
 
       if(_boss.getVidas() <=0)
       {
-        //int vidasJefe = _boss.getVidas();
+
         std::cout << "VIDAS" << _boss.getVidas() << std::endl;
         _bandera_BossMuerto = true;
-        _frame_MuerteBoss = .0f;
+        //_frame_MuerteBoss = .0f;
       }
   }
 
@@ -296,12 +292,12 @@ void GamePlay::update()
       std::cout << " FRAMES MUERTE BOSS " << _frame_MuerteBoss << std::endl;
       _frame_MuerteBoss = 0;
       _bandera_BossMuerto = false;
+      _nivelTerminado = true;
     }
   }
 
   _timerReload--;
   _frames++;
-
 
 }
 
@@ -493,47 +489,49 @@ bool GamePlay::isCollision_withPowerUp()
 
 void GamePlay::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  if(_banderaApareceBoss)
-  {
-    target.draw(_boss,states);
-  }
 
-  target.draw(*_powerUp, states);
-
-
-  for (int i = 0; i < _bullets.size(); i++) {
-    target.draw(*_bullets[i], states);
-  }
-
-  for (int i = 0; i < _vExplosiones.size(); i++) {
-    target.draw(*_vExplosiones[i], states);
-  }
-
-  if (!_bandera_startBossBullest)
-  {
-    target.draw(enemigo1, states);
-
-    for (int i = 0; i < _enemyBullets.size(); i++) {
-      target.draw(*_enemyBullets[i], states);
+    if(_banderaApareceBoss)
+    {
+      target.draw(_boss,states);
     }
 
-    for (int i = 0; i < _vEnemiesB.size(); i++) {
-      target.draw(*_vEnemiesB[i], states);
+    target.draw(*_powerUp, states);
+
+
+    for (int i = 0; i < _bullets.size(); i++) {
+      target.draw(*_bullets[i], states);
     }
 
-    for (int i = 0; i < _bullets_vEnemyB.size(); i++) {
-      target.draw(*_bullets_vEnemyB[i], states);
+    for (int i = 0; i < _vExplosiones.size(); i++) {
+      target.draw(*_vExplosiones[i], states);
     }
 
-  }
+    if (!_bandera_startBossBullest)
+    {
+      target.draw(enemigo1, states);
 
-  for ( int i = 0 ; i<_bullets_Boss.size() ; i++)
-  {
-    target.draw(*_bullets_Boss[i],states);
-  }
+      for (int i = 0; i < _enemyBullets.size(); i++) {
+        target.draw(*_enemyBullets[i], states);
+      }
 
-  target.draw(_player, states);
-  target.draw(_explosion, states);
+      for (int i = 0; i < _vEnemiesB.size(); i++) {
+        target.draw(*_vEnemiesB[i], states);
+      }
+
+      for (int i = 0; i < _bullets_vEnemyB.size(); i++) {
+        target.draw(*_bullets_vEnemyB[i], states);
+      }
+
+    }
+
+    for ( int i = 0 ; i<_bullets_Boss.size() ; i++)
+    {
+      target.draw(*_bullets_Boss[i],states);
+    }
+
+    target.draw(_player, states);
+    target.draw(_explosion, states);
+
 }
 
 int GamePlay::getPuntos() const
@@ -559,6 +557,11 @@ int GamePlay::getFrames() const
   return _frames;
 }
 
+
+bool GamePlay::getNivelTermiando()const
+{
+  return _nivelTerminado;
+}
 
 //int GamePlay::getPuntos(Player _juego) const
 //{

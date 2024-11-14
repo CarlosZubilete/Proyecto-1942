@@ -23,6 +23,7 @@ public:
     int getVidas()const;
     void lessVidas();
     void dibujarMuerte(float &frame);
+
 private:
 
     sf::Vector2f _velocity;

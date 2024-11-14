@@ -70,20 +70,23 @@ void Scene::cmd()
 void Scene::update()
 {
   // CUESTIONES COMUNES A TODOS LOS NIVELES:
-  _gamePlay.update();
+  if (!_gamePlay.getNivelTermiando())
+  {
+    _gamePlay.update();
 
-  _bgSprite.move(0, 2.3f);
+    _bgSprite.move(0, 2.3f);
 
-  _puntos.setString("SCORE\n   " + std::to_string(_gamePlay.getPuntos()));
+    _puntos.setString("SCORE\n   " + std::to_string(_gamePlay.getPuntos()));
 
-  if (_gamePlay.getVidas() < 0) { _vidas.setString("LIVES\n   0"); }
-  else {
-    _vidas.setString("LIVES\n   " + std::to_string(_gamePlay.getVidas()));
-  }
+    if (_gamePlay.getVidas() < 0) { _vidas.setString("LIVES\n   0"); }
+    else {
+      _vidas.setString("LIVES\n   " + std::to_string(_gamePlay.getVidas()));
+    }
 
-  _frames_cartel.setString("Frames= " + std::to_string(_frames) + "\nTiempo= " + std::to_string(_frames / 60));
-  if (_bgSprite.getPosition().y > 0) {
-    respawnBackground();
+    _frames_cartel.setString("Frames= " + std::to_string(_frames) + "\nTiempo= " + std::to_string(_frames / 60));
+    if (_bgSprite.getPosition().y > 0) {
+      respawnBackground();
+    }
   }
 
   _frames++;
@@ -92,10 +95,13 @@ void Scene::update()
   guardarPartida = false;
 } // TERMINA UPDATE
 
+
+
 bool Scene::getJuegoTerminado()
 {
 
-  if (_gamePlay.getVidas() == 0) /// SALIDA SI TERMINA LOS NIVELES
+  if (_gamePlay.getVidas() == 0
+      || (_gamePlay.getNivelTermiando()) ) /// SALIDA SI TERMINA LOS NIVELES
   {
     _stopGamePlay = true;
     /// GUARDA PARTIDA
