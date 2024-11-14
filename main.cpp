@@ -253,7 +253,6 @@ int main() {
                             ca.grabarConfiguracion(*_configuracion); // grabo el reg
                             menuConfiguracion.setConfiguracion(_configuracion);
                             pew.playDisparoPew();
-                          _gameplayConfiguracion.setConfiguracion(_configuracion);
 
 
 

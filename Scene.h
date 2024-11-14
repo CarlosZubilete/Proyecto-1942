@@ -51,7 +51,6 @@ class Scene: public sf::Drawable
     int _nivel;
     sf::Text _nivel_txt;
     bool _stopGamePlay;
-    GamePlay& _gameplay;
 };
 
 

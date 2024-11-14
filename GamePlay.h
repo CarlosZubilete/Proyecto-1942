@@ -15,6 +15,7 @@
 #include "PowerUp.h"
 #include "Boss.h"
 #include "BossBullets.h"
+#include "Configuracion.h"
 
 class GamePlay : public sf::Drawable
 {
