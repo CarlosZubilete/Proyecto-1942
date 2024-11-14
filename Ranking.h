@@ -9,7 +9,6 @@ class Ranking
 public:
     Ranking();
     void cargar(int puntos, Fecha fecha, sf::Text nombre);
-    Ranking *ordenarPorPuntos(Ranking*);
     void mostrar();
     sf::Text getNombre();
     Fecha getFecha();
