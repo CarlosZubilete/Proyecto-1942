@@ -28,6 +28,8 @@ int main() {
 
   MenuConfiguracion menuConfiguracion;
   menuConfiguracion.setConfiguracion(reg);
+  Sounds sounds;
+  sounds.setConfiguracion(reg);
 
   std::srand((unsigned) std::time(0));
 
