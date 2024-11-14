@@ -21,11 +21,13 @@
 
 int main() {
 
-  ConfiguracionArchivo ca("configuracion.dat");
+  ConfiguracionArchivo ca("assets/config/configuracion.dat");
   Configuracion * reg = ca.obtenerConfiguracion();
-  std::cout << reg->getSoundEffects() << std::endl;
-  std::cout << reg->getMusic() << std::endl;
 
+  MenuConfiguracion menuConfiguracion;
+  menuConfiguracion.setConfiguracion(reg);
+  Sounds sounds;
+  sounds.setConfiguracion(reg);
 
   std::srand((unsigned) std::time(0));
 
@@ -39,7 +41,7 @@ int main() {
   sf::View view(sf::FloatRect(0.f, 0.f, 600.f, 800.f));
   window.setView(view);
 
-  Scene scene;
+
 
   // Main theme 2
   sf::SoundBuffer buffer_main_theme_v2;
@@ -70,6 +72,7 @@ int main() {
   sf::RectangleShape continuar_text_fondo;
 
   bool mostrarContinuar = false;
+  bool isKeyY = false;
 
   // GAME LOOP
   while (window.isOpen()) {
@@ -102,11 +105,14 @@ int main() {
             int x = mainMenu.getPressedItem();
 //
             if (x == 0) {
+                Scene scene;
+
 //
               sf::RenderWindow Play(sf::VideoMode(600, 800), "1942");
               Play.setFramerateLimit(60);
               main_theme_v2.stop();
               if( reg->getMusic()) main_theme_v1.play();
+              mostrarContinuar = false;
 
               // GAME LOOP
               while (Play.isOpen()) {
@@ -144,19 +150,32 @@ int main() {
 
                     if (mostrarContinuar) {
                       if (playEvent.key.code == sf::Keyboard::Y) {
-                        main_theme_v1.stop();
-                        main_theme_v2.play();
-                        Play.close();
+                         main_theme_v1.play();
+                         mostrarContinuar = false;
+                         isKeyY = true;
+                         main_theme_v2.stop();
+
 
                       } else if (playEvent.key.code == sf::Keyboard::N) {
+<<<<<<< HEAD
 /*<<<<<<< HEAD
+=======
+
+>>>>>>> 95660466d0fc0e229c614ce1b559fd022beda4ad
                         main_theme_v1.stop();
-                        main_theme_v2.play();
+                        if( reg->getMusic())main_theme_v2.play();
                         Play.close();
+<<<<<<< HEAD
 =======*/
                         mostrarContinuar = false;
 
 //>>>>>>> a1a7f0622252c9cccfc529b4170d7d04c79a3d12
+=======
+
+                        mostrarContinuar = false;
+                        isKeyY = false;
+
+>>>>>>> 95660466d0fc0e229c614ce1b559fd022beda4ad
                       }
                     }
                   }
@@ -166,8 +185,19 @@ int main() {
                 if (scene.getJuegoTerminado()) {
                   ///  STOP MUSICA DEL JUEGO
                   scene.setJuegoTerminado(true);
+                  main_theme_v1.stop();
                 }
                 // UPDATE /////////////////////////////////////////////////////////
+
+                if(isKeyY){
+
+                    scene.RestarLastPoint();
+                    scene.setJuegoTerminado(true);
+                    isKeyY=false;
+                    if( reg->getMusic()) main_theme_v1.play();
+
+                }
+
                 if (!scene.getJuegoTerminado()) {
                   scene.cmd();
                   scene.update();
@@ -219,7 +249,6 @@ int main() {
             {
 
               sf::RenderWindow windowConfiguracion(sf::VideoMode(600,800), "Configuracion");
-              MenuConfiguracion menuConfiguracion;
               windowConfiguracion.setFramerateLimit(60);
               while(windowConfiguracion.isOpen())
               {
@@ -249,6 +278,7 @@ int main() {
                             reg->setSoundEffects(!reg->getSoundEffects()); // pongo el contrario de la configuracion
                             reg->cargarConfiguracion(reg->getSoundEffects(),reg->getMusic()); // preparo el reg
                             ca.grabarConfiguracion(*reg); // grabo el reg
+                            sounds.playDisparoPew();
 
                         } else if (x == 1)
                         {
