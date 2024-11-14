@@ -149,13 +149,13 @@ int main() {
                         Play.close();
 
                       } else if (playEvent.key.code == sf::Keyboard::N) {
-<<<<<<< HEAD
+
                         main_theme_v1.stop();
                         main_theme_v2.play();
                         Play.close();
-=======
+
                         mostrarContinuar = false;
->>>>>>> a1a7f0622252c9cccfc529b4170d7d04c79a3d12
+
                       }
                     }
                   }
