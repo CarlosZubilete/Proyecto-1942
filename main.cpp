@@ -21,10 +21,13 @@
 
 int main() {
 
-  ConfiguracionArchivo ca("configuracion.dat");
-  Configuracion * reg = ca.obtenerConfiguracion();
-  std::cout << reg->getSoundEffects() << std::endl;
-  std::cout << reg->getMusic() << std::endl;
+  ConfiguracionArchivo ca;
+  Configuracion *_configuracion = ca.obtenerConfiguracion();
+
+  MenuConfiguracion menuConfiguracion;
+  Sounds pew;
+
+
 
 
   std::srand((unsigned) std::time(0));
@@ -39,7 +42,7 @@ int main() {
   sf::View view(sf::FloatRect(0.f, 0.f, 600.f, 800.f));
   window.setView(view);
 
-  Scene scene;
+
 
   // Main theme 2
   sf::SoundBuffer buffer_main_theme_v2;
@@ -47,7 +50,7 @@ int main() {
   sf::Sound main_theme_v2;
   main_theme_v2.setBuffer(buffer_main_theme_v2);
   main_theme_v2.setVolume(7.f);
-  if( reg->getMusic()) main_theme_v2.play();
+  if( _configuracion->getMusic()) main_theme_v2.play();
 
   // Main theme 1
   sf::SoundBuffer buffer_main_theme_v1;
@@ -71,6 +74,7 @@ int main() {
   sf::RectangleShape continuar_text_fondo;
 
   bool mostrarContinuar = false;
+
 
   // GAME LOOP
   while (window.isOpen()) {
@@ -102,13 +106,17 @@ int main() {
 //
             int x = mainMenu.getPressedItem();
 //
-            if (x == 0) {
+            if (x == 0) // JUEGO ARRANCA SCENE+GAMEPLAY
+            {
+
+              Scene scene;
+
 //
               sf::RenderWindow Play(sf::VideoMode(600, 800), "1942");
               Play.setFramerateLimit(60);
               main_theme_v2.stop();
-              if( reg->getMusic()) main_theme_v1.play();
-
+              if( _configuracion->getMusic()) main_theme_v1.play();
+              mostrarContinuar = false;
 
               // GAME LOOP
               while (Play.isOpen()) {
@@ -136,7 +144,7 @@ int main() {
                       continuar_text_fondo.setFillColor(sf::Color(0, 0, 0, 128));
 
                       continuar_text.setFillColor(sf::Color::White);
-                      continuar_text.setString("SALIR  Y   N");
+                      continuar_text.setString("CONTINUAR N");
                       continuar_text.setCharacterSize(24);
                       continuar_text.setPosition(600 / 2, 800 / 2);
                       continuar_text.setFont(font);
@@ -145,13 +153,14 @@ int main() {
                     }
 
                     if (mostrarContinuar) {
-                      if (playEvent.key.code == sf::Keyboard::Y) {
-                        main_theme_v1.stop();
-                        main_theme_v2.play();
-                        Play.close();
+                      if (playEvent.key.code == sf::Keyboard::N) {
 
-                      } else if (playEvent.key.code == sf::Keyboard::N) {
+                        main_theme_v1.stop();
+                        if( _configuracion->getMusic())main_theme_v2.play();
+                        Play.close();
                         mostrarContinuar = false;
+
+
                       }
                     }
                   }
@@ -161,8 +170,10 @@ int main() {
                 if (scene.getJuegoTerminado()) {
                   ///  STOP MUSICA DEL JUEGO
                   scene.setJuegoTerminado(true);
+                  main_theme_v1.stop();
                 }
                 // UPDATE /////////////////////////////////////////////////////////
+
                 if (!scene.getJuegoTerminado()) {
                   scene.cmd();
                   scene.update();
@@ -183,38 +194,11 @@ int main() {
 
               } /// FIN DEL GAME LOOP
 //
-            } else if (x == 3) {
-//
-              sf::RenderWindow CREDITOS(sf::VideoMode(600, 820), "CREDITOS");
-              Creditos creditosObj;
-
-              while (CREDITOS.isOpen()) {
-
-                sf::Event optionsEvent;
-
-                while (CREDITOS.pollEvent(optionsEvent)) {
-
-                  if (optionsEvent.type == sf::Event::Closed ||
-                      (optionsEvent.type == sf::Event::KeyPressed && optionsEvent.key.code == sf::Keyboard::Escape)) {
-                    CREDITOS.close();
-                  }
-                }
-
-                creditosObj.update();
-
-                CREDITOS.clear();
-                CREDITOS.draw(creditosObj);
-                CREDITOS.display();
-              }
-
-            } else if (x == 4) {
-              window.close();
-
-            } else if (x == 1) // CONFIGURACION
+            }
+            else if (x == 1) // CONFIGURACION
             {
 
               sf::RenderWindow windowConfiguracion(sf::VideoMode(600,800), "Configuracion");
-              MenuConfiguracion menuConfiguracion;
               windowConfiguracion.setFramerateLimit(60);
               while(windowConfiguracion.isOpen())
               {
@@ -225,7 +209,7 @@ int main() {
                   if (configuracionEvent.type == sf::Event::Closed ||
                       (configuracionEvent.type == sf::Event::KeyPressed && configuracionEvent.key.code == sf::Keyboard::Escape))
                   {
-                    if( reg->getMusic()) main_theme_v2.play();
+                    if( _configuracion->getMusic()) main_theme_v2.play();
                     windowConfiguracion.close();
                   }
 
@@ -241,16 +225,24 @@ int main() {
                         int x = menuConfiguracion.getPressedItem();
                         if (x == 0)
                         {
-                            reg->setSoundEffects(!reg->getSoundEffects()); // pongo el contrario de la configuracion
-                            reg->cargarConfiguracion(reg->getSoundEffects(),reg->getMusic()); // preparo el reg
-                            ca.grabarConfiguracion(*reg); // grabo el reg
+                          _configuracion->setSoundEffects(!_configuracion->getSoundEffects()); // pongo el contrario de la configuracion
+                          _configuracion->cargarConfiguracion(_configuracion->getSoundEffects(),_configuracion->getMusic()); // preparo el reg
+                          ca.grabarConfiguracion(*_configuracion); // grabo el reg
+                          menuConfiguracion.setConfiguracion(_configuracion);
+                          pew.playDisparoPew();
+
+
+
 
                         } else if (x == 1)
                         {
-                          reg->setMusic(!reg->getMusic()); // pongo el contrario de la configuracion
-                          reg->cargarConfiguracion(reg->getSoundEffects(),reg->getMusic()); // preparo el reg
-                          ca.grabarConfiguracion(*reg); // grabo el reg
-                          if (reg->getMusic()) {
+                          _configuracion->setMusic(!_configuracion->getMusic()); // pongo el contrario de la configuracion
+                          _configuracion->cargarConfiguracion(_configuracion->getSoundEffects(),_configuracion->getMusic()); // preparo el reg
+                          ca.grabarConfiguracion(*_configuracion); // grabo el reg
+
+
+
+                          if (_configuracion->getMusic()) {
                             main_theme_v2.play();
                           } else {
                             main_theme_v2.stop();
@@ -285,10 +277,11 @@ int main() {
                 // FLIP
               }
 
-            } else if (x == 2) // RANKING
+            }
+            else if (x == 2) // RANKING
             {
               main_theme_v2.stop();
-              if( reg->getMusic()) nostalgia.play();
+              if( _configuracion->getMusic()) nostalgia.play();
               sf::RenderWindow windowRanking(sf::VideoMode(600, 800), "Ranking");
               MenuRanking menuRanking;
               windowRanking.setFramerateLimit(60);
@@ -302,7 +295,7 @@ int main() {
                   if (menuRankingEvent.type == sf::Event::Closed ||
                       (menuRankingEvent.type == sf::Event::KeyPressed && menuRankingEvent.key.code == sf::Keyboard::Escape)) {
                     nostalgia.stop();
-                    if( reg->getMusic()) main_theme_v2.play();
+                    if( _configuracion->getMusic()) main_theme_v2.play();
                     windowRanking.close();
                   }
                 }
@@ -316,6 +309,39 @@ int main() {
                 windowRanking.display();
               }
             }
+            else if (x == 3) // CREDITOS
+            {
+//
+              sf::RenderWindow CREDITOS(sf::VideoMode(600, 800), "CREDITOS");
+              Creditos creditosObj;
+
+              while (CREDITOS.isOpen()) {
+
+                sf::Event optionsEvent;
+
+                while (CREDITOS.pollEvent(optionsEvent)) {
+
+                  if (optionsEvent.type == sf::Event::Closed ||
+                      (optionsEvent.type == sf::Event::KeyPressed && optionsEvent.key.code == sf::Keyboard::Escape)) {
+                    CREDITOS.close();
+                  }
+                }
+
+                creditosObj.update();
+
+                CREDITOS.clear();
+                CREDITOS.draw(creditosObj);
+                CREDITOS.display();
+              }
+
+            }
+            else if (x == 4) // CIERRA
+            {
+              window.close();
+
+            }
+
+
           }
         }
       }
@@ -328,7 +354,7 @@ int main() {
 //
   }
 
-  delete []reg;
+  delete [] _configuracion;
 
   return 0;
 }

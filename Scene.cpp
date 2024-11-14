@@ -73,6 +73,8 @@ Scene::Scene()
   stagecompleted.setBuffer(buffer_stagecompleted);
   stagecompleted.setVolume(10.f);
 
+  music_on =true;
+
 }
 
 void Scene::cmd()
@@ -83,6 +85,7 @@ void Scene::cmd()
 
 void Scene::update()
 {
+
 
   // NIVEL 1
   if (this->_nivel == 1)
@@ -111,6 +114,15 @@ void Scene::update()
 
   _frames++;
 
+  if(getJuegoTerminado())
+  {
+    if(music_on)
+    {
+      musicaEndPlay(stagecompleted);
+      music_on=false;
+    }
+  }
+
   _stopGamePlay = false;
   guardarPartida = false;
 } // TERMINA UPDATE
@@ -123,12 +135,11 @@ bool Scene::getJuegoTerminado()
   if (_gamePlay.getVidas() == 0
       || (_gamePlay.getNivelTermiando()) ) /// SALIDA SI TERMINA LOS NIVELES
   {
-    std::cout << "BANDERA _music=" << "_music" << std::endl;
 
     if ( _music)
     {
 
-      this->musicaEndPlay(stagecompleted);
+
     }
     _stopGamePlay = true;
 
@@ -293,12 +304,12 @@ void Scene::guardarUltimaJugada(int puntos)
   ra.grabarRegistroRanking(reg);
 }
 
-void Scene::musicaEndPlay(sf::Sound stagecompleted) const
+void Scene::musicaEndPlay(sf::Sound &stagecompleted) const
 {
   stagecompleted.play();
 }
 
-void Scene::musicaEndStop(sf::Sound stagecompleted) const
+void Scene::musicaEndStop(sf::Sound &stagecompleted) const
 {
   stagecompleted.stop();
 }

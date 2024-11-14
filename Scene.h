@@ -29,8 +29,8 @@ class Scene: public sf::Drawable
     void RestarLastPoint();
     void guardarUltimaJugada(int puntos);
     int buscarPuntosMaxRanking();
-    void musicaEndPlay(sf::Sound) const;
-    void musicaEndStop(sf::Sound) const;
+    void musicaEndPlay(sf::Sound&) const;
+    void musicaEndStop(sf::Sound&) const;
 
   private:
     // Display de puntajes y vidas:
@@ -58,6 +58,7 @@ class Scene: public sf::Drawable
     bool _music;
     sf::SoundBuffer buffer_stagecompleted;
     sf::Sound stagecompleted;
+    bool music_on;
 };
 
 
