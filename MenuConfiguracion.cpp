@@ -2,15 +2,13 @@
 #include <iostream>
 
 
-
-
-
-MenuConfiguracion::MenuConfiguracion() {
+MenuConfiguracion::MenuConfiguracion()
+{
 
 
   if (!font.loadFromFile("assets/fonts/fuente.ttf")) {
 
-    std::cout << "No se pudo cargar la fuente" <<std::endl;
+    std::cout << "No se pudo cargar la fuente" << std::endl;
   }
 
 //  if (!logoTexture.loadFromFile("assets/sprites/logo.png")) {
@@ -34,7 +32,7 @@ MenuConfiguracion::MenuConfiguracion() {
   //-------------------------------------------------------------------------
 
   planeSprite.setTexture(planeTexture);
-  planeSprite.setScale(0.70f,0.70f);  // CAMBIAR TAMA�O DEL AVION
+  planeSprite.setScale(0.70f, 0.70f);  // CAMBIAR TAMA�O DEL AVION
   planeSprite.setPosition(40, 350);  // POSICION INICIAL DEL AVION
 
 
@@ -92,7 +90,7 @@ MenuConfiguracion::MenuConfiguracion() {
   menu[0].setFillColor(sf::Color::Green);  // COLOR DE LA LETRA
   menu[0].setString("SOUND FX");  // TEXTO
   menu[0].setCharacterSize(27);  // TAMA�O DE LA LETRA
-  menu[0].setPosition(166, 350);  // POSICION DEL TEXTO
+  menu[0].setPosition(165, 350);  // POSICION DEL TEXTO
 
 
 
@@ -102,7 +100,7 @@ MenuConfiguracion::MenuConfiguracion() {
   menu[1].setFillColor(sf::Color::White);
   menu[1].setString("MUSICA");
   menu[1].setCharacterSize(27);
-  menu[1].setPosition(190, 400);
+  menu[1].setPosition(195, 400);
 
 
   //----------------------------------------------------
@@ -114,7 +112,7 @@ MenuConfiguracion::MenuConfiguracion() {
   menu[2].setFillColor(sf::Color::White);
   menu[2].setString("SALIR");
   menu[2].setCharacterSize(27);
-  menu[2].setPosition(200, 450);
+  menu[2].setPosition(195, 450);
 
   //----------------------------------------------------
 
@@ -132,7 +130,8 @@ MenuConfiguracion::MenuConfiguracion() {
 // METODO QUE DIBUJA TODOS LOS ELEMENTOS DEL VISUALES DEL MENU
 //-------------------------------------------------------------
 
-void MenuConfiguracion::draw(sf::RenderTarget &target , sf::RenderStates states)const{
+void MenuConfiguracion::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
 
 //  target.draw(logoSprite,states); //DIBUJA EL LOGO 1942
 //
@@ -148,8 +147,13 @@ void MenuConfiguracion::draw(sf::RenderTarget &target , sf::RenderStates states)
 //  }
   //Verifica si showMenuOptions est� en true
 //  if (showMenuOptions) {
-    target.draw(planeSprite, states); // dibuja el sprite planeSprite, que representa la imagen del avi�n
-  for (const auto& item: menu) target.draw(item, states);      //Si es as�, recorre el arreglo menu y dibuja cada elemento de las opciones del men�
+  target.draw(planeSprite, states); // dibuja el sprite planeSprite, que representa la imagen del avi�n
+//  for (const auto &item: menu)
+    for (int i = 0 ; i<3; i++)
+    {
+      target.draw(menu[i], states);
+    }
+//    target.draw(item, states);      //Si es as�, recorre el arreglo menu y dibuja cada elemento de las opciones del men�
 //  for (const auto& onoffs: _onoff) target.draw(onoffs, states);
 
 
@@ -159,9 +163,11 @@ void MenuConfiguracion::draw(sf::RenderTarget &target , sf::RenderStates states)
 
 //METODO QUE ACTUALIZA
 //-------------------------------------------------------------------
-void MenuConfiguracion::update() {
+void MenuConfiguracion::update()
+{
 
-  if (blinkClock.getElapsedTime().asSeconds() > 0.5f) {   //registra el tiempo transcurrido desde la �ltima vez que se reinici� con blinkClock.restart()
+  if (blinkClock.getElapsedTime().asSeconds() >
+      0.5f) {   //registra el tiempo transcurrido desde la �ltima vez que se reinici� con blinkClock.restart()
 
     //Alterna el valor de blinkState entre true y false. Esto permite que el texto parpadee
     blinkState = !blinkState;
@@ -171,18 +177,17 @@ void MenuConfiguracion::update() {
   }
 
 
-
-
 }
 //-------------------------------------------------------------------
 
 
 //METODO PARA MOVER PARA ARRIBA EN EL MENU Y ACTUALIZAR EL COLOR Y EL AVION QUE INDICAN LA SELECCION
 //--------------------------------------------------------------------------------------------------
-void MenuConfiguracion::moveUp() {
+void MenuConfiguracion::moveUp()
+{
 
   //Primero, verifica si showMenuOptions es true, es decir, si las opciones del men� est�n visibles.
-  if (showMenuOptions) {
+//  if (showMenuOptions) {
 
     //RESTABLECE EL COLOR DE LA OPCION ACTUAL ANTES DE CAMBIAR LA SELECCION
     menu[selectedItemIndex].setFillColor(sf::Color::White);
@@ -200,16 +205,17 @@ void MenuConfiguracion::moveUp() {
     //MUEVE EL AVION A LA NUEVA OPCION SELECCIONADA
     planeSprite.setPosition(40, menu[selectedItemIndex].getPosition().y);
   }
-}
+//}
 //------------------------------------------------------------------------------------------------
 
 
 //METODO PARA MOVER PARA ABAJO EN EL MENU Y ACTUALIZAR EL COLOR Y EL AVION QUE INDICAN LA SELECCION
 //--------------------------------------------------------------------------------------------------
-void MenuConfiguracion::moveDown() {
+void MenuConfiguracion::moveDown()
+{
 
   //Primero, verifica si showMenuOptions es true, es decir, si las opciones del men� est�n visibles.
-  if (showMenuOptions) {
+//  if (showMenuOptions) {
 
     //RESTABLECE EL COLOR DE LA OPCION ACTUAL ANTES DE CAMBIAR LA SELECCION
     menu[selectedItemIndex].setFillColor(sf::Color::White);
@@ -226,42 +232,46 @@ void MenuConfiguracion::moveDown() {
 
     //MUEVE EL AVION A LA NUEVA OPCION SELECCIONADA
     planeSprite.setPosition(40, menu[selectedItemIndex].getPosition().y);
-  }
+//  }
 }
 //--------------------------------------------------------------------------------------------------
 
 
 //--------------------------------------------------------------------------------------------------
-void MenuConfiguracion::handleEnterPress() {
+void MenuConfiguracion::handleEnterPress()
+{
 //  if (showInsertCoin) {
 //    showInsertCoin = false;
-    showMenuOptions = true;
+  showMenuOptions = true;
 //  } else if (showMenuOptions) {
-    // Maneja la selecci�n del men�
-    int x = getPressedItem();
-    if (x == 0) {}
-    else if (x == 1) {}
-     else if (x == 2) {}
-  }
+  // Maneja la selecci�n del men�
+  int x = getPressedItem();
+  if (x == 0) {}
+  else if (x == 1) {}
+  else if (x == 2) {}
+}
 
 //--------------------------------------------------------------------------------------------------
 
 
 
 //--------------------------------------------------------------------------------------------------
-int MenuConfiguracion::getPressedItem() {
+int MenuConfiguracion::getPressedItem()
+{
   return selectedItemIndex;
 }
 //--------------------------------------------------------------------------------------------------
 
 
-bool MenuConfiguracion::getShowInsertCoin(){
+bool MenuConfiguracion::getShowInsertCoin()
+{
 
   return showInsertCoin;
 
 }
 
-bool MenuConfiguracion::getShowMenuOptions(){
+bool MenuConfiguracion::getShowMenuOptions()
+{
 
   return showMenuOptions;
 }

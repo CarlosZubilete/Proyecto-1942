@@ -71,11 +71,5 @@ private:
     bool showInsertCoin;
     bool showMenuOptions;
 
-    bool _soundfx;
-    bool _music;
-
-
-
-
 
 };

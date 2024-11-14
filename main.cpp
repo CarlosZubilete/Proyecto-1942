@@ -21,7 +21,7 @@
 
 int main() {
 
-  ConfiguracionArchivo ca("configuracion.dat");
+  ConfiguracionArchivo ca("assets/config/configuracion.dat");
   Configuracion * reg = ca.obtenerConfiguracion();
   std::cout << reg->getSoundEffects() << std::endl;
   std::cout << reg->getMusic() << std::endl;
@@ -145,7 +145,7 @@ int main() {
                     if (mostrarContinuar) {
                       if (playEvent.key.code == sf::Keyboard::Y) {
                         main_theme_v1.stop();
-                        main_theme_v2.play();
+                        if( reg->getMusic()) main_theme_v2.play();
                         Play.close();
 
                       } else if (playEvent.key.code == sf::Keyboard::N) {

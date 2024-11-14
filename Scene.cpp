@@ -249,7 +249,7 @@ void Scene::guardarUltimaJugada(int puntos)
   sf::Text nombre;
   nombre.setString("Mariano");
   reg.cargar(puntos,hoy,nombre);
-  RankingArchivo ra("ranking.dat");
+  RankingArchivo ra("assets/config/ranking.dat");
   ra.grabarRegistroRanking(reg);
 }
 
