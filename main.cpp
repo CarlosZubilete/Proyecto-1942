@@ -144,7 +144,7 @@ int main() {
                       continuar_text_fondo.setFillColor(sf::Color(0, 0, 0, 128));
 
                       continuar_text.setFillColor(sf::Color::White);
-                      continuar_text.setString("CONTINUAR N");
+                      continuar_text.setString("SALIR  Y  N");
                       continuar_text.setCharacterSize(24);
                       continuar_text.setPosition(600 / 2, 800 / 2);
                       continuar_text.setFont(font);
@@ -154,6 +154,11 @@ int main() {
 
                     if (mostrarContinuar) {
                       if (playEvent.key.code == sf::Keyboard::N) {
+                        continuar_text.setPosition(-1000,0);
+                        continuar_text_fondo.setPosition(-1000,0);
+                      }
+
+                      else if (playEvent.key.code == sf::Keyboard::Y) {
 
                         main_theme_v1.stop();
                         if( _configuracion->getMusic())main_theme_v2.play();

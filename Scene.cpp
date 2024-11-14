@@ -120,6 +120,7 @@ void Scene::update()
     {
       musicaEndPlay(stagecompleted);
       music_on=false;
+
     }
   }
 
