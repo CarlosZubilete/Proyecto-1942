@@ -27,6 +27,7 @@ class Scene: public sf::Drawable
     bool guardarArchivo();
     void RestarLastPoint();
     void guardarUltimaJugada(int puntos);
+    int buscarPuntosMaxRanking();
 
   private:
     // Display de puntajes y vidas:

@@ -3,6 +3,12 @@
 #include <iostream>
 #include "ConfiguracionArchivo.h"
 
+ConfiguracionArchivo::ConfiguracionArchivo()
+{
+  _pConfiguracion = nullptr;
+  _url = "assets/config/configuracion.dat";
+}
+
 ConfiguracionArchivo::ConfiguracionArchivo(const char* url)
 {
   _pConfiguracion = nullptr;

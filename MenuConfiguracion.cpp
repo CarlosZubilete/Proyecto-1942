@@ -5,11 +5,6 @@
 MenuConfiguracion::MenuConfiguracion()
 {
 
-//  _configuracion = nullptr;
-
-  _music = false;
-  _soundfx = false;
-
 
   if (!font.loadFromFile("assets/fonts/fuente.ttf")) {
 
@@ -93,12 +88,11 @@ MenuConfiguracion::MenuConfiguracion()
   //SOUNDFX
   menu[0].setFont(font);  // TIPO DE FUENTE
   menu[0].setFillColor(sf::Color::Green);  // COLOR DE LA LETRA
-  menu[0].setString("SOUND FX");  // TEXTO
+  menu[0].setString("SOUNDFX");  // TEXTO
   menu[0].setCharacterSize(27);  // TAMA�O DE LA LETRA
-  menu[0].setPosition(165, 350);  // POSICION DEL TEXTO
+  menu[0].setPosition(170, 350);  // POSICION DEL TEXTO
 
 
-  _soundfx = true;
   _circulo[0].setRadius(10);
   _circulo[0].setPosition(500.f, 350.f);
   if (_soundfx) { _circulo[0].setFillColor(sf::Color::Green); }
@@ -113,7 +107,6 @@ MenuConfiguracion::MenuConfiguracion()
   menu[1].setCharacterSize(27);
   menu[1].setPosition(195, 400);
 
-  _soundfx = true;
   _circulo[1].setRadius(10);
   _circulo[1].setPosition(500.f, 400.f);
   if (_music) { _circulo[1].setFillColor(sf::Color::Green); }
@@ -126,7 +119,7 @@ MenuConfiguracion::MenuConfiguracion()
   //SALIR
   menu[2].setFont(font);
   menu[2].setFillColor(sf::Color::White);
-  menu[2].setString("SALIR");
+  menu[2].setString("VOLVER");
   menu[2].setCharacterSize(27);
   menu[2].setPosition(195, 450);
 
@@ -194,24 +187,31 @@ void MenuConfiguracion::update()
     blinkClock.restart();
   }
 
-  if (enterClock.getElapsedTime().asSeconds() > 0.1f) {
+  bool enterPressed = false; // Variable para controlar si Enter fue presionado
+
+  if (enterClock.getElapsedTime().asSeconds() > 0.6f) { // Puedes ajustar el tiempo a tu preferencia
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-      if (selectedItemIndex == 0) {  // Sound FX
-        _soundfx = !_soundfx;
-        if (_soundfx) {
-          _circulo[0].setFillColor(sf::Color::Green); // Verde si está activado
-        } else {
-          _circulo[0].setFillColor(sf::Color::Red); // Rojo si está desactivado
+      if (!enterPressed) { // Solo actúa si la tecla no estaba presionada previamente
+        if (selectedItemIndex == 0) {  // Sound FX
+          _soundfx = !_soundfx;
+          if (_soundfx) {
+            _circulo[0].setFillColor(sf::Color::Green); // Verde si está activado
+          } else {
+            _circulo[0].setFillColor(sf::Color::Red); // Rojo si está desactivado
+          }
+        } else if (selectedItemIndex == 1) {  // Music
+          _music = !_music;
+          if (_music) {
+            _circulo[1].setFillColor(sf::Color::Green); // Verde si está activado
+          } else {
+            _circulo[1].setFillColor(sf::Color::Red); // Rojo si está desactivado
+          }
         }
-      } else if (selectedItemIndex == 1) {  // Music
-        _music = !_music;
-        if (_music) {
-          _circulo[1].setFillColor(sf::Color::Green); // Verde si está activado
-        } else {
-          _circulo[1].setFillColor(sf::Color::Red); // Rojo si está desactivado
-        }
+        enterPressed = true; // Marca que la tecla ha sido presionada
+        enterClock.restart();  // Reinicia el temporizador
       }
-      enterClock.restart();  // Reinicia el temporizador
+    } else {
+      enterPressed = false; // Resetea cuando la tecla es levantada
     }
   }
 
@@ -316,9 +316,8 @@ bool MenuConfiguracion::getShowMenuOptions()
 }
 
 void MenuConfiguracion::setConfiguracion(Configuracion* reg) {
-  _configuracion = reg;
-  _soundfx = _configuracion->getSoundEffects();
-  _music = _configuracion->getMusic();
+  _soundfx = reg->getSoundEffects();
+  _music = reg->getMusic();
   // Update the circle colors based on current settings
   if (_soundfx) {
     _circulo[0].setFillColor(sf::Color::Green);

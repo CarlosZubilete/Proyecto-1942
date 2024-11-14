@@ -30,11 +30,7 @@ public:
 
     bool getShowInsertCoin();
     bool getShowMenuOptions();
-
     void setConfiguracion(Configuracion* reg);
-
-
-
 
 private:
 
@@ -77,6 +73,7 @@ private:
     bool _music;
 
     Configuracion* _configuracion;
+    ConfiguracionArchivo ca;
 
     sf::CircleShape _circulo[2];
 

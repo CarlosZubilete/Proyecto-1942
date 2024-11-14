@@ -15,6 +15,8 @@
 #include "PowerUp.h"
 #include "Boss.h"
 #include "BossBullets.h"
+#include "Configuracion.h"
+#include "ConfiguracionArchivo.h"
 
 class GamePlay : public sf::Drawable
 {
@@ -52,6 +54,7 @@ public:
     //bool isCollisionWithBoss();
     void restartVidas();
     bool getNivelTermiando()const;
+
 
 private:
 
@@ -95,6 +98,8 @@ private:
     sf::Clock respawn_delay;
     bool _player_down;
     bool _isExplosionActiveBoss;
+    bool _soundfx;
+    Configuracion _configuracion;
 
 };
 

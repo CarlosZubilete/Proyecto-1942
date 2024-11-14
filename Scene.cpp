@@ -5,7 +5,6 @@
 
 Scene::Scene()
 {
-
   _bg.loadFromFile("assets/sprites/bg-maps-1942.png");
   _bgSprite.setTexture(_bg);
   _bgSprite.setPosition(0, -5051 + 800);
@@ -45,7 +44,7 @@ Scene::Scene()
   _nivel_txt.setCharacterSize(24);
 
 
-  int puntosMaximos = buscarPuntosMax();
+  int puntosMaximos = buscarPuntosMaxRanking();
   _puntosMaximos.setString("HIGH SCORE\n  " + std::to_string(puntosMaximos));
 
   _stopGamePlay = false;
@@ -59,6 +58,10 @@ Scene::Scene()
   gameOverSprite.setPosition(225, 325);
   gameOverSprite.setScale(2, 2);
   ///
+
+  // comienza en nivel 1
+
+  this->start(1);
 }
 
 void Scene::cmd()
@@ -69,6 +72,12 @@ void Scene::cmd()
 
 void Scene::update()
 {
+
+  // NIVEL 1
+  if (this->_nivel == 1)
+  {
+
+  }
   // CUESTIONES COMUNES A TODOS LOS NIVELES:
   if (!_gamePlay.getNivelTermiando())
   {
@@ -199,6 +208,12 @@ int Scene::buscarPuntosMax()
   return maxPuntos;
 }
 
+int Scene::buscarPuntosMaxRanking()
+{
+  MenuRanking menuRanking;
+  return menuRanking.obtenerRankingMasAlto();;
+}
+
 void Scene::respawnBackground()
 {
   /// TODO: EN CASO DE VOLVER A JUGAR
@@ -258,6 +273,8 @@ void Scene::guardarUltimaJugada(int puntos)
   RankingArchivo ra("assets/config/ranking.dat");
   ra.grabarRegistroRanking(reg);
 }
+
+
 
 
 /**

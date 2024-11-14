@@ -15,6 +15,15 @@ GamePlay::GamePlay()
   _ctoCollisiones_withBoss = 0;
   _bandera_BossMuerto = false;
   _nivelTerminado = false;
+
+  ConfiguracionArchivo ca;
+  Configuracion conf = *ca.obtenerConfiguracion();
+
+
+  _soundfx = conf.getSoundEffects();
+
+  std::cout << "BANDERA=" << _soundfx << std::endl;
+
 }
 
 void GamePlay::iniciarBalasVector()
@@ -33,10 +42,14 @@ void GamePlay::iniciarBalasVector()
   if (_player.Shoot()) {
     if (_bullets.size() < 5 && _timerReload <= 0) {
       /// INSTANCIAMOS UNA BALA DEL PERSONAJE.
-      _bullets.push_back(new Bullet({_player.getBulletOrigin().x, _player.getBulletOrigin().y,}));
-      /// CADA 10MS PODEMOS DISPARAR.
-      _timerReload = 15 * 1;
+
+      if(_soundfx) _sound.playDisparoPew();
     }
+    _bullets.push_back(new Bullet({_player.getBulletOrigin().x, _player.getBulletOrigin().y,}));
+    /// CADA 10MS PODEMOS DISPARAR.
+
+    _timerReload = 15 * 1;
+
   }
 
   if (!_bandera_startBossBullest)
@@ -59,6 +72,7 @@ void GamePlay::iniciarBalasVector()
       _enemyBullets.push_back(new EnemyBullet(enemigo1.getBulletOrigin(), direccion, 3.5f));
     } // Dispara EnemyBullet hacia el jugador
   }
+
 
   /// SI SON 3 SEG O MAS , APARECE EL BOSS nasheii
   if (_frames >= 60*20)
@@ -125,6 +139,7 @@ void GamePlay::cmd()
 
 void GamePlay::update()
 {
+
 
   iniciarBalasVector();
 
@@ -402,7 +417,8 @@ bool GamePlay::isCollisionWithEnemy() // cuando destruis aviones enemigos
   bool result = false;
   for (int i = 0; i < _bullets.size(); i++) {
     if (_bullets[i]->isCollision(enemigo1)) {
-      _sound.playExplosionSmall();
+        if(_soundfx)
+        _sound.playExplosionSmall();
       _juego.changePuntos(100);
       delete _bullets[i];
       _bullets.erase(_bullets.begin() + i);
@@ -430,7 +446,8 @@ bool GamePlay::isCollision_WithBoss(){
   bool result = false;
   for (int i = 0; i < _bullets.size(); i++) {
     if (_bullets[i]->isCollision(_boss)) {
-      _sound.playExplosionSmall();
+        if(_soundfx)
+        _sound.playExplosionSmall();
       _juego.changePuntos(1000);
       delete _bullets[i];
       _bullets.erase(_bullets.begin() + i);
@@ -470,7 +487,9 @@ bool GamePlay::isCollision_bullets_whitEnemyB()
         _vec_isExplosiveActive.push_back(new bool(true));
         _vec_frameExplosive.push_back(new float(0.0f));
 
-        _vEnemiesB[j]->respawn();/// TODO: SE TIENE QUE ELIMINAR.
+        _vEnemiesB[j]->respawn();
+        if( _soundfx) _sound.playExplosionSmall();
+        /// TODO: SE TIENE QUE ELIMINAR.
 
         return true;
 
@@ -562,6 +581,8 @@ bool GamePlay::getNivelTermiando()const
 {
   return _nivelTerminado;
 }
+
+
 
 //int GamePlay::getPuntos(Player _juego) const
 //{

@@ -126,7 +126,7 @@ bool Personaje::Shoot()
 {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
     if (!_shoot) {
-      _disparoPew.playDisparoPew();
+//      _disparoPew.playDisparoPew();
       _shoot = true;
       return true;
     }
