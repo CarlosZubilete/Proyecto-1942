@@ -63,6 +63,7 @@ int main() {
   nostalgia.setBuffer(buffer_nostalgia);
   nostalgia.setVolume(7.f);
 
+
   // CARTEL CONTINUAR EN EL JUEGO
   sf::Font font;
   font.loadFromFile("assets/fonts/MONOCOQUE_FUENTE.ttf");

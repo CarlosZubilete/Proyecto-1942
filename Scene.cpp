@@ -59,9 +59,20 @@ Scene::Scene()
   gameOverSprite.setScale(2, 2);
   ///
 
-  // comienza en nivel 1
+  ConfiguracionArchivo ca;
+  Configuracion conf = *ca.obtenerConfiguracion();
 
+
+ _music = conf.getMusic();
+
+  // comienza en nivel 1
   this->start(1);
+
+
+  buffer_stagecompleted.loadFromFile("assets/sounds/themes/03_stage_clear_stereo.mp3");
+  stagecompleted.setBuffer(buffer_stagecompleted);
+  stagecompleted.setVolume(10.f);
+
 }
 
 void Scene::cmd()
@@ -76,7 +87,7 @@ void Scene::update()
   // NIVEL 1
   if (this->_nivel == 1)
   {
-
+    //TODO: ABRIR EN NIVELES
   }
   // CUESTIONES COMUNES A TODOS LOS NIVELES:
   if (!_gamePlay.getNivelTermiando())
@@ -112,7 +123,15 @@ bool Scene::getJuegoTerminado()
   if (_gamePlay.getVidas() == 0
       || (_gamePlay.getNivelTermiando()) ) /// SALIDA SI TERMINA LOS NIVELES
   {
+    std::cout << "BANDERA _music=" << "_music" << std::endl;
+
+    if ( _music)
+    {
+
+      this->musicaEndPlay(stagecompleted);
+    }
     _stopGamePlay = true;
+
     /// GUARDA PARTIDA
     if (guardarPartida == false) {
       guardarArchivo();
@@ -268,13 +287,21 @@ void Scene::guardarUltimaJugada(int puntos)
   std::tm* localTime = std::localtime(&now);  // Convierte el tiempo en un formato de cadena legible
   Fecha hoy{localTime->tm_mday, localTime->tm_mon,  localTime->tm_year+1900};
   sf::Text nombre;
-  nombre.setString("Mariano");
+  nombre.setString("Brian");
   reg.cargar(puntos,hoy,nombre);
   RankingArchivo ra("assets/config/ranking.dat");
   ra.grabarRegistroRanking(reg);
 }
 
+void Scene::musicaEndPlay(sf::Sound stagecompleted) const
+{
+  stagecompleted.play();
+}
 
+void Scene::musicaEndStop(sf::Sound stagecompleted) const
+{
+  stagecompleted.stop();
+}
 
 
 /**

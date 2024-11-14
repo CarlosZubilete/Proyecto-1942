@@ -22,8 +22,6 @@ GamePlay::GamePlay()
 
   _soundfx = conf.getSoundEffects();
 
-  std::cout << "BANDERA=" << _soundfx << std::endl;
-
 }
 
 void GamePlay::iniciarBalasVector()

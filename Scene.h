@@ -12,6 +12,7 @@
 #include "Ranking.h"
 #include "Fecha.h"
 
+
 class Scene: public sf::Drawable
 {
   public:
@@ -28,6 +29,8 @@ class Scene: public sf::Drawable
     void RestarLastPoint();
     void guardarUltimaJugada(int puntos);
     int buscarPuntosMaxRanking();
+    void musicaEndPlay(sf::Sound) const;
+    void musicaEndStop(sf::Sound) const;
 
   private:
     // Display de puntajes y vidas:
@@ -52,6 +55,9 @@ class Scene: public sf::Drawable
     int _nivel;
     sf::Text _nivel_txt;
     bool _stopGamePlay;
+    bool _music;
+    sf::SoundBuffer buffer_stagecompleted;
+    sf::Sound stagecompleted;
 };
 
 
