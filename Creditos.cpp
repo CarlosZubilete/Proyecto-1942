@@ -47,7 +47,7 @@ void Creditos::update() {
     for (int i = 0; i < 5; ++i) {  // 3 es el número de textos en el arreglo
         texts[i].move(0, velocidad * (1.0f / 60.0f));// representa un ajuste temporal para simular el movimiento en 60 cuadros por segundo
 
-        if (texts[i].getPosition().y > 820) {  // Si el texto sale de la pantalla
+        if (texts[i].getPosition().y > 800) {  // Si el texto sale de la pantalla
 
             texts[i].setPosition(100.0f, -texts[i].getGlobalBounds().height);  // Reinicia la posición arriba
         }
