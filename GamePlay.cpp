@@ -15,9 +15,15 @@ GamePlay::GamePlay()
   _ctoCollisiones_withBoss = 0;
   _bandera_BossMuerto = false;
   _nivelTerminado = false;
+
   ConfiguracionArchivo ca;
-  _configuracion = *ca.obtenerConfiguracion();
-  _soundfx = _configuracion.getSoundEffects();
+  Configuracion conf = *ca.obtenerConfiguracion();
+
+
+  _soundfx = conf.getSoundEffects();
+
+  std::cout << "BANDERA=" << _soundfx << std::endl;
+
 }
 
 void GamePlay::iniciarBalasVector()
@@ -133,6 +139,7 @@ void GamePlay::cmd()
 
 void GamePlay::update()
 {
+
 
   iniciarBalasVector();
 
@@ -573,10 +580,7 @@ bool GamePlay::getNivelTermiando()const
   return _nivelTerminado;
 }
 
-void GamePlay::setSoundFX(bool &value)
-{
-_soundfx = value;
-}
+
 
 //int GamePlay::getPuntos(Player _juego) const
 //{

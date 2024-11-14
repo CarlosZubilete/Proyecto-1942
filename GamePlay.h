@@ -54,7 +54,7 @@ public:
     //bool isCollisionWithBoss();
     void restartVidas();
     bool getNivelTermiando()const;
-    void setSoundFX(bool&);
+
 
 private:
 

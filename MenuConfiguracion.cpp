@@ -189,7 +189,7 @@ void MenuConfiguracion::update()
 
   bool enterPressed = false; // Variable para controlar si Enter fue presionado
 
-  if (enterClock.getElapsedTime().asSeconds() > 0.4f) { // Puedes ajustar el tiempo a tu preferencia
+  if (enterClock.getElapsedTime().asSeconds() > 0.6f) { // Puedes ajustar el tiempo a tu preferencia
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
       if (!enterPressed) { // Solo actúa si la tecla no estaba presionada previamente
         if (selectedItemIndex == 0) {  // Sound FX

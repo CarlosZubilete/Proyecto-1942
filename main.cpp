@@ -27,7 +27,7 @@ int main() {
   MenuConfiguracion menuConfiguracion;
   Sounds pew;
 
-  GamePlay _gameplayConfiguracion;
+
 
 
   std::srand((unsigned) std::time(0));
@@ -105,8 +105,10 @@ int main() {
 //
             int x = mainMenu.getPressedItem();
 //
-            if (x == 0) {
-                Scene scene;
+            if (x == 0) // JUEGO ARRANCA SCENE+GAMEPLAY
+            {
+
+              Scene scene;
 
 //
               sf::RenderWindow Play(sf::VideoMode(600, 800), "1942");
@@ -150,7 +152,7 @@ int main() {
                     }
 
                     if (mostrarContinuar) {
-                     if (playEvent.key.code == sf::Keyboard::N) {
+                      if (playEvent.key.code == sf::Keyboard::N) {
 
                         main_theme_v1.stop();
                         if( _configuracion->getMusic())main_theme_v2.play();
@@ -191,34 +193,8 @@ int main() {
 
               } /// FIN DEL GAME LOOP
 //
-            } else if (x == 3) {
-//
-              sf::RenderWindow CREDITOS(sf::VideoMode(600, 800), "CREDITOS");
-              Creditos creditosObj;
-
-              while (CREDITOS.isOpen()) {
-
-                sf::Event optionsEvent;
-
-                while (CREDITOS.pollEvent(optionsEvent)) {
-
-                  if (optionsEvent.type == sf::Event::Closed ||
-                      (optionsEvent.type == sf::Event::KeyPressed && optionsEvent.key.code == sf::Keyboard::Escape)) {
-                    CREDITOS.close();
-                  }
-                }
-
-                creditosObj.update();
-
-                CREDITOS.clear();
-                CREDITOS.draw(creditosObj);
-                CREDITOS.display();
-              }
-
-            } else if (x == 4) {
-              window.close();
-
-            } else if (x == 1) // CONFIGURACION
+            }
+            else if (x == 1) // CONFIGURACION
             {
 
               sf::RenderWindow windowConfiguracion(sf::VideoMode(600,800), "Configuracion");
@@ -248,11 +224,11 @@ int main() {
                         int x = menuConfiguracion.getPressedItem();
                         if (x == 0)
                         {
-                            _configuracion->setSoundEffects(!_configuracion->getSoundEffects()); // pongo el contrario de la configuracion
+                          _configuracion->setSoundEffects(!_configuracion->getSoundEffects()); // pongo el contrario de la configuracion
                           _configuracion->cargarConfiguracion(_configuracion->getSoundEffects(),_configuracion->getMusic()); // preparo el reg
-                            ca.grabarConfiguracion(*_configuracion); // grabo el reg
-                            menuConfiguracion.setConfiguracion(_configuracion);
-                            pew.playDisparoPew();
+                          ca.grabarConfiguracion(*_configuracion); // grabo el reg
+                          menuConfiguracion.setConfiguracion(_configuracion);
+                          pew.playDisparoPew();
 
 
 
@@ -300,7 +276,8 @@ int main() {
                 // FLIP
               }
 
-            } else if (x == 2) // RANKING
+            }
+            else if (x == 2) // RANKING
             {
               main_theme_v2.stop();
               if( _configuracion->getMusic()) nostalgia.play();
@@ -331,6 +308,39 @@ int main() {
                 windowRanking.display();
               }
             }
+            else if (x == 3) // CREDITOS
+            {
+//
+              sf::RenderWindow CREDITOS(sf::VideoMode(600, 800), "CREDITOS");
+              Creditos creditosObj;
+
+              while (CREDITOS.isOpen()) {
+
+                sf::Event optionsEvent;
+
+                while (CREDITOS.pollEvent(optionsEvent)) {
+
+                  if (optionsEvent.type == sf::Event::Closed ||
+                      (optionsEvent.type == sf::Event::KeyPressed && optionsEvent.key.code == sf::Keyboard::Escape)) {
+                    CREDITOS.close();
+                  }
+                }
+
+                creditosObj.update();
+
+                CREDITOS.clear();
+                CREDITOS.draw(creditosObj);
+                CREDITOS.display();
+              }
+
+            }
+            else if (x == 4) // CIERRA
+            {
+              window.close();
+
+            }
+
+
           }
         }
       }

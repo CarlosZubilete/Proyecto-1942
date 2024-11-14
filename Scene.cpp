@@ -5,7 +5,6 @@
 
 Scene::Scene()
 {
-
   _bg.loadFromFile("assets/sprites/bg-maps-1942.png");
   _bgSprite.setTexture(_bg);
   _bgSprite.setPosition(0, -5051 + 800);
@@ -258,6 +257,8 @@ void Scene::guardarUltimaJugada(int puntos)
   RankingArchivo ra("assets/config/ranking.dat");
   ra.grabarRegistroRanking(reg);
 }
+
+
 
 
 /**
