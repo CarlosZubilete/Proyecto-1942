@@ -42,9 +42,6 @@ MenuRanking::MenuRanking()
   texto_front.setFillColor(sf::Color::White);
   texto_front.move(1,1);
 
-
-
-
 }
 
 void MenuRanking::update()

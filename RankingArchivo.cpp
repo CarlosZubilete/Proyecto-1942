@@ -40,7 +40,6 @@ bool RankingArchivo::leerRegistrosRanking()
 
 bool RankingArchivo::grabarRegistroRanking(Ranking &reg)
 {
-
     _pRanking = fopen(_url,"ab");
     if (_pRanking == nullptr)
     {
