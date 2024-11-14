@@ -99,5 +99,7 @@ private:
     bool _player_down;
     bool _isExplosionActiveBoss;
     bool _soundfx;
+    Configuracion _configuracion;
+
 };
 
