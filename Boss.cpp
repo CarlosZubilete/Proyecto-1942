@@ -16,7 +16,7 @@ Boss::Boss(){
   _llegeAlaPosicion = false;
   _canShot = true;
   _timeReload = 60*3;
-  _vidas = 10 ; /// MODO PRUEBA
+  _vidas = 50 ; /// MODO PRUEBA
   _acumuladorDisminuidorDeFrame = 0;
 }
 
@@ -64,10 +64,32 @@ void Boss::update()
      _sprite.move(_velocity.x,_velocity.y);
   }
   */
+  _sprite.move(_velocity);
   //if ( 800 -  _sprite.getPosition().y )
+  /*
   if (   _sprite.getPosition().y - getBounds().height > -50){
      _sprite.move(_velocity.x,_velocity.y);
   }
+  */
+
+   /// RESTRICCIONES DE PANTALLA: TENEMOS QUE PREGUNTAR EN DONDE ESTA LA POSICION DEL PERSONAJE.
+
+  if (_sprite.getGlobalBounds().top < 0){
+    _sprite.setPosition(_sprite.getPosition().x, _sprite.getOrigin().y);
+  }
+  /*
+  if (_sprite.getGlobalBounds().left < 0){
+    _sprite.setPosition(_sprite.getOrigin().x, _sprite.getPosition().y);
+  }
+
+  if(_sprite.getGlobalBounds().left + _sprite.getGlobalBounds().width > 800){
+    _sprite.setPosition(800 - (_sprite.getGlobalBounds().width - _sprite.getOrigin().x ) , _sprite.getPosition().y);
+  }
+
+  if(_sprite.getGlobalBounds().top + _sprite.getGlobalBounds().height > 600){
+    _sprite.setPosition(_sprite.getPosition().x, 600 + ( _sprite.getGlobalBounds().height - _sprite.getOrigin().y));
+  }
+  */
 }
 
 void Boss::dibujarMuerte(float &frame)

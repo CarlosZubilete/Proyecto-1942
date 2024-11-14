@@ -23,7 +23,7 @@ void GamePlay::iniciarBalasVector()
   /// CREAMOS EL VECTOR DE ENEMIGOS: CON UN CONTADOR ...
 
   if (_frames % 120 == 0) {
-    if (_vEnemiesB.size() < 2) {
+    if (_vEnemiesB.size() < 3) {
       _vEnemiesB.push_back(new EnemyB());
     }
   }
@@ -61,7 +61,7 @@ void GamePlay::iniciarBalasVector()
   }
 
   /// SI SON 3 SEG O MAS , APARECE EL BOSS nasheii
-  if (_frames >= 60*3)
+  if (_frames >= 60*20)
   {
     _banderaApareceBoss = true;
   }
@@ -89,12 +89,11 @@ void GamePlay::cmd()
   }
 
   /// EL JEFE LLEGO A SU POSICION
-  if (_frames >= 8*60)
+  if (_frames >= 28*60)
   {
     if (_banderaApareceBoss)
     {
     /// EL JEFE PUEDE DISPARAR Y HAY MENOS DE DOS BALAS
-    /*/// TODO : ES EL QUE VA..
       if (_bullets_Boss.size() <= 9 && (_boss.canShot()))
       {
         _bandera_startBossBullest =  true;
@@ -103,10 +102,10 @@ void GamePlay::cmd()
 
         for (float angulo : grados)
         {
-          _bullets_Boss.push_back(new BossBullets(_boss.getPosition().x,  _boss.getPosition().y, angulo, 5.0f));
+          _bullets_Boss.push_back(new BossBullets(_boss.getPosition().x+115,  _boss.getPosition().y+170, angulo, 5.0f));
         }
       }
-      */
+    /*/// TODO : ES EL QUE VA..
       /// PRUEBA PARA LOS FRAMES DEL ENEMIGO...
       if (_bullets_Boss.size() <= 3 && (_boss.canShot()))
       {
@@ -116,9 +115,10 @@ void GamePlay::cmd()
 
         for (float angulo : grados)
         {
-          _bullets_Boss.push_back(new BossBullets(_boss.getPosition().x,  _boss.getPosition().y, angulo, 5.0f));
+          _bullets_Boss.push_back(new BossBullets(_boss.getPosition().x + 115 ,  _boss.getPosition().y + 170, angulo, 5.0f));
         }
       }
+      */
     }
   }
 }
