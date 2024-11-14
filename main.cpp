@@ -267,6 +267,7 @@ int main() {
                             reg->setSoundEffects(!reg->getSoundEffects()); // pongo el contrario de la configuracion
                             reg->cargarConfiguracion(reg->getSoundEffects(),reg->getMusic()); // preparo el reg
                             ca.grabarConfiguracion(*reg); // grabo el reg
+                            sounds.playDisparoPew();
 
                         } else if (x == 1)
                         {
