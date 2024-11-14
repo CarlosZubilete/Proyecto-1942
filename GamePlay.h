@@ -97,6 +97,6 @@ private:
     sf::Clock respawn_delay;
     bool _player_down;
     bool _isExplosionActiveBoss;
-
+    bool _soundfx;
 };
 

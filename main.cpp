@@ -21,8 +21,6 @@
 
 int main() {
 
-  ConfiguracionArchivo ca("assets/config/configuracion.dat");
-  Configuracion * reg = ca.obtenerConfiguracion();
   ConfiguracionArchivo ca;
   Configuracion *_configuracion = ca.obtenerConfiguracion();
 
@@ -250,10 +248,6 @@ int main() {
                         int x = menuConfiguracion.getPressedItem();
                         if (x == 0)
                         {
-                            reg->setSoundEffects(!reg->getSoundEffects()); // pongo el contrario de la configuracion
-                            reg->cargarConfiguracion(reg->getSoundEffects(),reg->getMusic()); // preparo el reg
-                            ca.grabarConfiguracion(*reg); // grabo el reg
-                            sounds.playDisparoPew();
                             _configuracion->setSoundEffects(!_configuracion->getSoundEffects()); // pongo el contrario de la configuracion
                           _configuracion->cargarConfiguracion(_configuracion->getSoundEffects(),_configuracion->getMusic()); // preparo el reg
                             ca.grabarConfiguracion(*_configuracion); // grabo el reg

@@ -34,10 +34,14 @@ void GamePlay::iniciarBalasVector()
   if (_player.Shoot()) {
     if (_bullets.size() < 5 && _timerReload <= 0) {
       /// INSTANCIAMOS UNA BALA DEL PERSONAJE.
-      _bullets.push_back(new Bullet({_player.getBulletOrigin().x, _player.getBulletOrigin().y,}));
-      /// CADA 10MS PODEMOS DISPARAR.
-      _timerReload = 15 * 1;
+
+      if(_soundfx) _sound.playDisparoPew();
     }
+    _bullets.push_back(new Bullet({_player.getBulletOrigin().x, _player.getBulletOrigin().y,}));
+    /// CADA 10MS PODEMOS DISPARAR.
+
+    _timerReload = 15 * 1;
+
   }
 
   if (!_bandera_startBossBullest)
@@ -404,7 +408,8 @@ bool GamePlay::isCollisionWithEnemy() // cuando destruis aviones enemigos
   bool result = false;
   for (int i = 0; i < _bullets.size(); i++) {
     if (_bullets[i]->isCollision(enemigo1)) {
-      _sound.playExplosionSmall();
+        if(_soundfx)
+        _sound.playExplosionSmall();
       _juego.changePuntos(100);
       delete _bullets[i];
       _bullets.erase(_bullets.begin() + i);
@@ -432,7 +437,8 @@ bool GamePlay::isCollision_WithBoss(){
   bool result = false;
   for (int i = 0; i < _bullets.size(); i++) {
     if (_bullets[i]->isCollision(_boss)) {
-      _sound.playExplosionSmall();
+        if(_soundfx)
+        _sound.playExplosionSmall();
       _juego.changePuntos(1000);
       delete _bullets[i];
       _bullets.erase(_bullets.begin() + i);

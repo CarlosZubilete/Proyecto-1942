@@ -98,7 +98,7 @@ void EnemyB::setStateMuerto()
 
 void EnemyB::respawn()
 {
-    _sound.playExplosionSmall();
+  if( _soundfx) _sound.playExplosionSmall();
     //_explosion = new Explosion(_sprite.getPosition().x, _sprite.getPosition().y);
     //_explosion->smallExplosion(_frameExplosion);
 
