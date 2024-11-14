@@ -194,7 +194,7 @@ void MenuConfiguracion::update()
     blinkClock.restart();
   }
 
-  if (enterClock.getElapsedTime().asSeconds() > 0.1f) {
+  if (enterClock.getElapsedTime().asSeconds() > 1.f) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
       if (selectedItemIndex == 0) {  // Sound FX
         _soundfx = !_soundfx;
