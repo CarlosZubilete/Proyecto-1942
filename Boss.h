@@ -19,8 +19,10 @@ public:
     ///void respawn();
     bool canShot();
     void damaged(float &frame);
-
-
+    void setVidas(int vidas);
+    int getVidas()const;
+    void lessVidas();
+    void dibujarMuerte(float &frame);
 private:
 
     sf::Vector2f _velocity;
@@ -28,6 +30,8 @@ private:
     bool _llegeAlaPosicion;
     bool _canShot;
     int _timeReload;
+    int _vidas;
+    int _acumuladorDisminuidorDeFrame;
 };
 
 

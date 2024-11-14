@@ -62,14 +62,17 @@ private:
     std::vector<EnemyBullet *> _enemyBullets;
     Enemy enemigo1;
     ///JEFE:
-    Boss _boss;
-    bool _banderaApareceBoss;
-    bool _banderaAtacanAlBoss;
-    float _frameAtackanAlBoss;
-    float _frameExplosionBoss;
-    bool _bandera_startBossBullest;
-    std::vector<BossBullets *> _bullets_Boss;// BALASJEFE
-
+        Boss _boss;
+        bool _banderaApareceBoss;
+        bool _banderaAtacanAlBoss;
+        float _frameAtackanAlBoss;
+        float _frameExplosionBoss;
+        bool _bandera_startBossBullest;
+        int _ctoCollisiones_withBoss;
+        float _frame_MuerteBoss;
+        bool _bandera_BossMuerto;
+        std::vector<BossBullets *> _bullets_Boss;// BALASJEFE
+    ///
 
     std::vector<Enemy *> _enemies;
     int _timerReload;

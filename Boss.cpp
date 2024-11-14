@@ -4,7 +4,7 @@
 
 Boss::Boss(){
   _texture = new sf::Texture;
-  _texture->loadFromFile("assets/sprites/1942-sprites-enemy.png");
+  _texture->loadFromFile("assets/sprites/1942-sprites-enemy-copia.png");
   _sprite.setTexture(*_texture);
   _sprite.setTextureRect({68,468,65,53});
   //_sprite.setTextureRect({1,468,65,57});
@@ -16,6 +16,8 @@ Boss::Boss(){
   _llegeAlaPosicion = false;
   _canShot = true;
   _timeReload = 60*3;
+  _vidas = 10 ; /// MODO PRUEBA
+  _acumuladorDisminuidorDeFrame = 0;
 }
 
 
@@ -68,6 +70,25 @@ void Boss::update()
   }
 }
 
+void Boss::dibujarMuerte(float &frame)
+{
+
+  frame+=0.2;
+
+  //_sprite.setTextureRect({68*(int)(frame/1.25),468,65,57});
+  //_sprite.setTextureRect({68+67*(int)(frame/1.43),468,65,53});
+
+  int anchoRectangulo = 65;
+
+  if( frame >= 9)
+  {
+    anchoRectangulo  -= 40;
+  }
+
+  _sprite.setTextureRect({68+67*(int)(frame/1.43),468,anchoRectangulo,53});
+
+}
+
 void Boss::draw(sf::RenderTarget &target , sf::RenderStates states)const {
   target.draw(_sprite, states);
 }
@@ -91,4 +112,22 @@ sf::Vector2f Boss::getBulletOrigin()
 sf::Vector2f Boss::getPosition() const
 {
   return _sprite.getPosition();
+}
+
+void Boss::lessVidas()
+{
+  _vidas--;
+}
+
+void Boss::setVidas(int vidas)
+{
+  if (vidas > 0)
+  {
+    _vidas = vidas;
+  }
+}
+
+int Boss::getVidas()const
+{
+  return _vidas;
 }

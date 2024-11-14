@@ -12,6 +12,8 @@ GamePlay::GamePlay()
   _banderaApareceBoss = false;
   _bandera_startBossBullest = false;
   _banderaAtacanAlBoss = false;
+  _ctoCollisiones_withBoss = 0;
+  _bandera_BossMuerto = false;
 }
 
 void GamePlay::iniciarBalasVector()
@@ -115,7 +117,6 @@ void GamePlay::cmd()
         }
       }
     }
-
   }
 }
 
@@ -181,8 +182,6 @@ void GamePlay::update()
       _isExplosionActiveBoss = false;
       _frameExplosionBoss = 0.0f;
     }
-
-
   }
 
   /// RECORREMOS LAS EXPLOSIONES DINAMICAS
@@ -230,11 +229,34 @@ void GamePlay::update()
     enemigo1.update();
   }
 
-
+  /*
   if(isCollision_WithBoss()||
       (isCollision_bullets_whitEnemyB())) {
       _juego.changePuntos(100);
   } // DESTRUYO ENEMIGOS
+  */
+
+  if(isCollision_bullets_whitEnemyB())
+  {
+      _juego.changePuntos(100);
+  } // DESTRUYO ENEMIGOS
+
+  if (isCollision_WithBoss())
+  {
+    _juego.changePuntos(100);
+    _boss.lessVidas(); /// SACAMOS EN UNO LAS VIDAS
+    int vidasJefe = _boss.getVidas();
+    std::cout << " VIDAS " << vidasJefe <<std::endl;
+
+      if(_boss.getVidas() <=0)
+      {
+        //int vidasJefe = _boss.getVidas();
+        std::cout << "VIDAS" << _boss.getVidas() << std::endl;
+        _bandera_BossMuerto = true;
+        _frame_MuerteBoss = .0f;
+      }
+  }
+
 
   if (_banderaAtacanAlBoss)
   {
@@ -245,7 +267,6 @@ void GamePlay::update()
       _frameAtackanAlBoss = 0;
     }
   }
-
 
   if (checkCollision(enemigo1)) {
     _juego.changeVidas();
@@ -259,11 +280,23 @@ void GamePlay::update()
     //std::cout << "entra aca o no? " << std::endl;
   }
 
-
   /// BALAS DEL ENEMIGO CON EL PERSONAJE
   if (isCollision_bulletsBoss_withPersonaje())
   {
     _juego.changeVidas();
+  }
+
+
+  if (_bandera_BossMuerto)
+  {
+    _boss.dibujarMuerte(_frame_MuerteBoss);
+    std::cout << " FRAMES MUERTE BOSS " << _frame_MuerteBoss << std::endl;
+    if (_frame_MuerteBoss >= 16)
+    {
+      std::cout << " FRAMES MUERTE BOSS " << _frame_MuerteBoss << std::endl;
+      _frame_MuerteBoss = 0;
+      _bandera_BossMuerto = false;
+    }
   }
 
   _timerReload--;
