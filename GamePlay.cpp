@@ -60,6 +60,7 @@ void GamePlay::iniciarBalasVector()
     } // Dispara EnemyBullet hacia el jugador
   }
 
+
   /// SI SON 3 SEG O MAS , APARECE EL BOSS nasheii
   if (_frames >= 60*3)
   {

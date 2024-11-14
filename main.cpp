@@ -192,7 +192,7 @@ int main() {
 //
             } else if (x == 3) {
 //
-              sf::RenderWindow CREDITOS(sf::VideoMode(600, 820), "CREDITOS");
+              sf::RenderWindow CREDITOS(sf::VideoMode(600, 800), "CREDITOS");
               Creditos creditosObj;
 
               while (CREDITOS.isOpen()) {
