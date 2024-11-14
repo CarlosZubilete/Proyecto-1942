@@ -5,9 +5,10 @@ MenuRanking::MenuRanking()
 {
 
   RankingArchivo ra("ranking.dat");
-  cantidadRegistros = ra.CantidadRegistros();
-  Ranking *reg = ra.obtenerRegistrosRanking(cantidadRegistros);
-  Ranking::ordenarRanking(reg, cantidadRegistros);
+
+  _cantidadRegistros = ra.CantidadRegistros();
+  Ranking *reg = ra.obtenerRegistrosRanking(_cantidadRegistros);
+  Ranking::ordenarRanking(reg, _cantidadRegistros);
   _rankingleido = "";
   _rankingleido += "POS\tSCORE\tDATE\t\tNAME\n";
   for (int i = 0; i < 10; i++) {
@@ -16,8 +17,8 @@ MenuRanking::MenuRanking()
             std::to_string(i + 1) + "\t" + std::to_string(reg[i].getPuntos()) + "\t" + reg[i].getFecha().toString() +
             "\t" + nom_str + "\n";
   }
-  rankingMasBajo = reg[9].getPuntos();
-  rankingMasAlto = reg[0].getPuntos();
+  _rankingMasBajo = reg[9].getPuntos();
+  _rankingMasAlto = reg[0].getPuntos();
 
 
   if (!font.loadFromFile("assets/fonts/fuente.ttf")) {
@@ -31,7 +32,7 @@ MenuRanking::MenuRanking()
   texto.setCharacterSize(15);
   texto.setLineSpacing(5);
   texto.setOrigin(texto.getLocalBounds().width / 2, texto.getLocalBounds().height / 2);
-  texto.setPosition(600 / 2, 1000);
+  texto.setPosition(600.f / 2, 1000.f);
   if (!fondo_texture.loadFromFile("assets/sprites/1942_clock_3x4.png")) {
     std::cout << "No se pudo cargar la fuente" << std::endl;
   }
@@ -48,8 +49,8 @@ MenuRanking::MenuRanking()
 
 void MenuRanking::update()
 {
-  texto.move(0,-0.2);
-  texto_front.move(0,-0.2);
+  texto.move(0,-0.4);
+  texto_front.move(0,-0.4);
 }
 
 void MenuRanking::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -69,3 +70,14 @@ std::string MenuRanking::getRankingLeido() const
 {
   return lectura_ranking;
 }
+
+int MenuRanking::obtenerRankingMasBajo() const
+{
+  return _rankingMasBajo;
+}
+
+int MenuRanking::obtenerRankingMasAlto() const
+{
+  return _rankingMasAlto;
+}
+

@@ -49,7 +49,7 @@ bool RankingArchivo::grabarRegistroRanking(Ranking &reg)
     }
     fwrite(&reg,sizeof(Ranking),1,_pRanking);
     fclose(_pRanking);
-      std::cout << "Datos guardados correctamente." << std::endl;
+      std::cout << "Datos guardados correctamente en ranking.dat" << std::endl;
     return true;
 }
 

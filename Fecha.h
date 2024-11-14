@@ -6,7 +6,6 @@ class Fecha
 public:
     Fecha(int d = 0, int m = 0, int a = 0);
     void cargar();
-    void mostrar();
     void validarFecha();
     bool validarDia();
     bool validarMes();

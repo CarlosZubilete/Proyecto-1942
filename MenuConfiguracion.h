@@ -1,10 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "ConfiguracionArchivo.h"
+#include "Configuracion.h"
 
-class Menu: public sf::Drawable {
+class MenuConfiguracion: public sf::Drawable
+{
 public:
     //CONSTRUCTOR DE LA CLASE MENU
-    Menu(float width, float height);
+    MenuConfiguracion();
 
     //DIBUJA EN LA VENTANA DE LA APLICACION LOS ELEMENTOS DEL MENU
     void draw(sf::RenderTarget &target , sf::RenderStates states) const override;
@@ -30,6 +33,7 @@ public:
 
 
 
+
 private:
 
     int selectedItemIndex;
@@ -38,7 +42,7 @@ private:
     sf::Font font;
 
     //CANTIDAD DE OPCIONES DEL MENU
-    sf::Text menu[5];
+    sf::Text menu[3];
 
     //TEXTO INSERT COIN
     sf::Text insertCoin;
@@ -66,6 +70,11 @@ private:
 
     bool showInsertCoin;
     bool showMenuOptions;
+
+    bool _soundfx;
+    bool _music;
+
+
 
 
 

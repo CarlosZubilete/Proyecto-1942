@@ -14,10 +14,17 @@
 #include "Ranking.h"
 #include "Fecha.h"
 #include "MenuRanking.h"
-
+#include "MenuConfiguracion.h"
+#include "Configuracion.h"
+#include "ConfiguracionArchivo.h"
 
 
 int main() {
+
+  ConfiguracionArchivo ca("configuracion.dat");
+  Configuracion * reg = ca.obtenerConfiguracion();
+  std::cout << reg->getSoundEffects() << std::endl;
+  std::cout << reg->getMusic() << std::endl;
 
 
   std::srand((unsigned) std::time(0));
@@ -40,7 +47,7 @@ int main() {
   sf::Sound main_theme_v2;
   main_theme_v2.setBuffer(buffer_main_theme_v2);
   main_theme_v2.setVolume(7.f);
-  main_theme_v2.play();
+  if( reg->getMusic()) main_theme_v2.play();
 
   // Main theme 1
   sf::SoundBuffer buffer_main_theme_v1;
@@ -99,7 +106,7 @@ int main() {
               sf::RenderWindow Play(sf::VideoMode(600, 800), "1942");
               Play.setFramerateLimit(60);
               main_theme_v2.stop();
-              main_theme_v1.play();
+              if( reg->getMusic()) main_theme_v1.play();
 
               // GAME LOOP
               while (Play.isOpen()) {
@@ -127,7 +134,7 @@ int main() {
                       continuar_text_fondo.setFillColor(sf::Color(0, 0, 0, 128));
 
                       continuar_text.setFillColor(sf::Color::White);
-                      continuar_text.setString("CONTINUAR  Y   N");
+                      continuar_text.setString("SALIR  Y   N");
                       continuar_text.setCharacterSize(24);
                       continuar_text.setPosition(600 / 2, 800 / 2);
                       continuar_text.setFont(font);
@@ -137,12 +144,18 @@ int main() {
 
                     if (mostrarContinuar) {
                       if (playEvent.key.code == sf::Keyboard::Y) {
-                        mostrarContinuar = false;
-
-                      } else if (playEvent.key.code == sf::Keyboard::N) {
                         main_theme_v1.stop();
                         main_theme_v2.play();
                         Play.close();
+
+                      } else if (playEvent.key.code == sf::Keyboard::N) {
+<<<<<<< HEAD
+                        main_theme_v1.stop();
+                        main_theme_v2.play();
+                        Play.close();
+=======
+                        mostrarContinuar = false;
+>>>>>>> a1a7f0622252c9cccfc529b4170d7d04c79a3d12
                       }
                     }
                   }
@@ -150,7 +163,7 @@ int main() {
 
                 // CMD ////////////////////////////////////////////////////////////
                 if (scene.getJuegoTerminado()) {
-                  main_theme_v1.stop(); ///  STOP MUSICA DEL JUEGO
+                  ///  STOP MUSICA DEL JUEGO
                   scene.setJuegoTerminado(true);
                 }
                 // UPDATE /////////////////////////////////////////////////////////
@@ -204,10 +217,82 @@ int main() {
             } else if (x == 1) // CONFIGURACION
             {
 
+              sf::RenderWindow windowConfiguracion(sf::VideoMode(600,800), "Configuracion");
+              MenuConfiguracion menuConfiguracion;
+              windowConfiguracion.setFramerateLimit(60);
+              while(windowConfiguracion.isOpen())
+              {
+                sf::Event configuracionEvent;
+
+                while(windowConfiguracion.pollEvent(configuracionEvent))
+                {
+                  if (configuracionEvent.type == sf::Event::Closed ||
+                      (configuracionEvent.type == sf::Event::KeyPressed && configuracionEvent.key.code == sf::Keyboard::Escape))
+                  {
+                    if( reg->getMusic()) main_theme_v2.play();
+                    windowConfiguracion.close();
+                  }
+
+                  if (configuracionEvent.type == sf::Event::KeyReleased) {
+                    if (configuracionEvent.key.code == sf::Keyboard::Up) {
+                      menuConfiguracion.moveUp();
+                    } else if (configuracionEvent.key.code == sf::Keyboard::Down) {
+                      menuConfiguracion.moveDown();
+                    } else if (configuracionEvent.key.code == sf::Keyboard::Return) {
+                      if (menuConfiguracion.getShowInsertCoin()) {
+                        menuConfiguracion.handleEnterPress();
+                      } else {
+                        int x = menuConfiguracion.getPressedItem();
+                        if (x == 0)
+                        {
+                            reg->setSoundEffects(!reg->getSoundEffects()); // pongo el contrario de la configuracion
+                            reg->cargarConfiguracion(reg->getSoundEffects(),reg->getMusic()); // preparo el reg
+                            ca.grabarConfiguracion(*reg); // grabo el reg
+
+                        } else if (x == 1)
+                        {
+                          reg->setMusic(!reg->getMusic()); // pongo el contrario de la configuracion
+                          reg->cargarConfiguracion(reg->getSoundEffects(),reg->getMusic()); // preparo el reg
+                          ca.grabarConfiguracion(*reg); // grabo el reg
+                          if (reg->getMusic()) {
+                            main_theme_v2.play();
+                          } else {
+                            main_theme_v2.stop();
+                          }
+
+                        }
+                        else if (x == 2)
+                        {
+                          // TODO: salir
+                          windowConfiguracion.close();
+                        }
+
+
+
+                      }
+
+                    }
+                  }
+
+
+
+
+
+                }
+                // CMD
+                // UPDATE
+                menuConfiguracion.update();
+                // DRAW
+                windowConfiguracion.clear();
+                windowConfiguracion.draw(menuConfiguracion);
+                windowConfiguracion.display();
+                // FLIP
+              }
+
             } else if (x == 2) // RANKING
             {
               main_theme_v2.stop();
-              nostalgia.play();
+              if( reg->getMusic()) nostalgia.play();
               sf::RenderWindow windowRanking(sf::VideoMode(600, 800), "Ranking");
               MenuRanking menuRanking;
               windowRanking.setFramerateLimit(60);
@@ -221,7 +306,7 @@ int main() {
                   if (menuRankingEvent.type == sf::Event::Closed ||
                       (menuRankingEvent.type == sf::Event::KeyPressed && menuRankingEvent.key.code == sf::Keyboard::Escape)) {
                     nostalgia.stop();
-                    main_theme_v2.play();
+                    if( reg->getMusic()) main_theme_v2.play();
                     windowRanking.close();
                   }
                 }
@@ -245,8 +330,9 @@ int main() {
     window.draw(mainMenu);
     window.display();
 //
-//
   }
+
+  delete []reg;
 
   return 0;
 }
